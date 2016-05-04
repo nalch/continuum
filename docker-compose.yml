@@ -1,0 +1,19 @@
+nodejsapp:
+  restart: always
+  build: .
+  container_name: nodejs
+  links:
+   - mongodb
+  ports:
+   - "8300:8300"
+  environment:
+   - STAGE=development
+
+mongodb:
+  image: mongo:3.2
+  container_name: mongodb
+  restart: always
+  ports:
+   - "27017:27017"
+  volumes:
+   - db:/data/db
