@@ -1,3 +1,5 @@
+var extend = require('extend');
+
 var stageConfig = require('./configs/' + (process.env.STAGE || 'development'));
 
 // setting defaults
@@ -10,7 +12,6 @@ var config = {
 		}
 };
 
-// overriding stage specific settings
-config.session.secretKey = stageConfig.session.secretKey;
+extend(true, config, stageConfig);
 
 module.exports = config;
