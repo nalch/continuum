@@ -1,5 +1,4 @@
 nodejsapp:
-  restart: always
   build: .
   container_name: nodejs
   links:
@@ -8,6 +7,8 @@ nodejsapp:
    - "8300:8300"
   environment:
    - STAGE=development
+  volumes:
+   - .:/usr/src/app
 
 mongodb:
   image: mongo:3.2

@@ -9,7 +9,8 @@ var express = require('express')
   , game = require('./routes/game')
   , http = require('http')
   , path = require('path')
-  , session = require('express-session');
+  , session = require('express-session')
+  , mongoose = require('mongoose');
 
 var app = express();
 
@@ -33,6 +34,8 @@ app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
+
+mongoose.connect('mongodb://' + config.db.host + ':' + config.db.port + '/' + config.db.database);
 
 // development only
 if ('development' === app.get('env')) {
