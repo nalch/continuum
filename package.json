@@ -9,6 +9,8 @@
     "express": "3.2.6",
     "express-session": "*",
     "mongoose": "*",
+    "body-parser": "*",
+    "connect-mongo": "*",
     "extend": "*",
     "jade": "*"
   }

@@ -1,8 +1,15 @@
+var game = require('./game')
+	, player = require('./player');
 
-/*
- * GET home page.
- */
+function index(req, res){
+  res.render('index', { title: 'Express title' });
+}
 
-exports.index = function(req, res){
-  res.render('index', { title: 'Express' });
+exports.registerRoutes = function(app) {
+	app.get('/', index);
+	app.get('/games', game.list);
+	
+	app.get('/players', player.list);
+	app.get('/players/:player_id', player.get);
+	app.put('/players/:player_id', player.put);
 };
