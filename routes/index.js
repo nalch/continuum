@@ -7,9 +7,12 @@ function index(req, res){
 
 exports.registerRoutes = function(app) {
 	app.get('/', index);
+	
 	app.get('/games', game.list);
+	app.post('/games', game.post);
+	app.put('/games/:gameId', game.put);
 	
 	app.get('/players', player.list);
-	app.get('/players/:player_id', player.get);
-	app.put('/players/:player_id', player.put);
+	app.get('/players/:playerId', player.get);
+	app.put('/players/:playerId', player.put);
 };
