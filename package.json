@@ -6,9 +6,13 @@
     "start": "node app.js"
   },
   "dependencies": {
-    "express": "3.2.6",
+    "express": "4",
     "express-session": "*",
+    "serve-favicon": "*",
+    "method-override": "*",
+    "morgan": "*",
     "mongoose": "*",
+    "mongoose-unique-validator": "*",
     "body-parser": "*",
     "connect-mongo": "*",
     "extend": "*",
