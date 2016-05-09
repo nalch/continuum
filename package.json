@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node app.js"
+    "start": "node app.js",
+    "postinstall": "node_modules/.bin/bower install"
   },
   "dependencies": {
     "express": "4",
@@ -16,6 +17,7 @@
     "body-parser": "*",
     "connect-mongo": "*",
     "extend": "*",
-    "jade": "*"
+    "jade": "*",
+    "bower": "*"
   }
 }
