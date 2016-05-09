@@ -6,3 +6,7 @@ body {
 a {
   color: #00B7FF;
 }
+
+.spaced {
+	padding: 0 5px 0 5px;
+}

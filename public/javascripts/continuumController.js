@@ -28,21 +28,35 @@ continuumControllers.controller('playController', ['$scope', '$http', '$routePar
   function ($scope, $http, $routeParams) {
 
 	$http.get('/games/' + $routeParams.gameId)
-      .success(function(data) {
+      .success(function (data) {
         $scope.game = data;
       })
-      .error(function(data) {
+      .error(function (data) {
         console.log('Error: ' + data);
       });
 	
-	$scope.setNick = function(data) {
+	$scope.isOwner = function () {
+	  return $scope.userId === $scope.game.owner.publicId; 
+	};
+	
+	$scope.setNick = function (data) {
 	  $http.put('/players/' + $scope.userId, {'nick': data})
-		.success(function(data) {
+		.success(function (data) {
 		  return true;
 		})
-		.error(function(data) {
+		.error(function (data) {
 		  return 'Could not change nick';
 		});
+	};
+	
+	$scope.challengeUser = function (visitor) {
+	  $http.put('/games/' + $routeParams.gameId, {opponentId: visitor.publicId})
+	  .success(function (data) {
+		$scope.game.opponent = visitor;
+      })
+      .error(function (data) {
+        console.log('Error: ' + data);
+      });
 	};
   }
 ]);
