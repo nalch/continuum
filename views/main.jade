@@ -1,0 +1,11 @@
+div(class="jumbotron text-center")
+  h3 Games:
+    span(class="label label-info") {{ games.length }}
+  
+  div(id="game-form", class="row")
+    div(class="col-sm-8 col-sm-offset-2 text-center")
+      form
+        div(class="form-group")
+          input(type="text", class="form-control input-lg text-center", placeholder="Type in game id", ng-model="gameformData.publicId")
+          button(type="submit", class="btn btn-primary btn-lg", ng-click="createGame()") Create game
+          button(type="submit", class="btn btn-primary btn-lg", ng-click="joinGame()") Join game

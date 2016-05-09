@@ -14,6 +14,18 @@ exports.list = function(req, res) {
 	  });
 };
 
+exports.get = function(req, res) {
+	Game.findOne({'publicId': req.params.gameId })
+	  .populate('owner participant')
+	  .exec(function (err, game) {
+	    if (err) {
+		  res.send(err);
+	    }
+	    console.log(game);
+	    res.json(game);
+	  });
+};
+
 exports.post = function(req, res) {
 	Player.findOne({'publicId': req.session.userId }, function (err, player) {
 		if (err) {
@@ -39,15 +51,17 @@ exports.put = function(req, res) {
 		  res.send(err);
 		}
 		
+		console.log(game.owner.publicId);
+		console.log(req.session.userId);
 		if (game.owner.publicId !== req.session.userId) {
-			res.send(403);
+			res.sendStatus(403);
 		}
 		
 		Player.findOne({'publicId': req.body.participantId }, function (err, participant) {
 			if (err) {
 			  res.send(err);
 			}
-			  
+
 			game.update(
 			  {
 			    participant: participant._id 

@@ -1,7 +1,15 @@
 doctype html
-html
+html(ng-app="continuum")
   head
-    title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
+    title Continuum
+    
+    link(rel="stylesheet", href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css")
+    link(rel="stylesheet", href="/stylesheets/style.css")
+    
+    script(src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js")
+    script(src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.18/angular-ui-router.min.js")
+    script(src="/javascripts/continuum.js")
+
   body
     block content

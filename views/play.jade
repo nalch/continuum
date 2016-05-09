@@ -1,0 +1,6 @@
+h3 play {{game.publicId}}
+
+ul
+  li {{ game.owner.nick || game.owner.publicId || "no owner of this game" }}
+    a(ng-click="setNick()") Change nick
+  li {{ game.participant.nick || game.participant.publicId || "no participant yet" }}
