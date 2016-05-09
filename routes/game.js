@@ -5,7 +5,7 @@ var utils = require('../utils');
 
 exports.list = function(req, res) {
 	Game.find()
-	  .populate('owner participant')
+	  .populate('owner opponent')
 	  .exec(function (err, games) {
 	    if (err) {
 		  res.send(err);
@@ -16,12 +16,11 @@ exports.list = function(req, res) {
 
 exports.get = function(req, res) {
 	Game.findOne({'publicId': req.params.gameId })
-	  .populate('owner participant')
+	  .populate('owner opponent visitors')
 	  .exec(function (err, game) {
 	    if (err) {
 		  res.send(err);
 	    }
-	    console.log(game);
 	    res.json(game);
 	  });
 };
@@ -51,20 +50,18 @@ exports.put = function(req, res) {
 		  res.send(err);
 		}
 		
-		console.log(game.owner.publicId);
-		console.log(req.session.userId);
 		if (game.owner.publicId !== req.session.userId) {
 			res.sendStatus(403);
 		}
 		
-		Player.findOne({'publicId': req.body.participantId }, function (err, participant) {
+		Player.findOne({'publicId': req.body.opponentId }, function (err, opponent) {
 			if (err) {
 			  res.send(err);
 			}
 
 			game.update(
 			  {
-			    participant: participant._id 
+			    opponent: opponent._id 
 			  }, function(err, game) {
 				res.json(game);
 			  }

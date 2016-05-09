@@ -1,5 +1,7 @@
 var game = require('./game')
-	, player = require('./player');
+	, player = require('./player'),
+	Game = require('../models/game').Game,
+	Player = require('../models/player').Player;
 
 function index(req, res){
   res.render('index');
@@ -10,7 +12,33 @@ function main(req, res){
 }
 
 function play(req, res){
-  res.render('play', {game: req.params.gameId});
+  Game.findOne({'publicId': req.params.gameId })
+    .populate('owner opponent')
+	.exec(function (err, game) {
+	  if (err) {
+		res.send(err);
+	  }	    
+      
+	  Player.findOne({'publicId': req.session.userId }, function (err, player) {
+	  if (err) {
+	    res.send(err);
+	  }
+	  	  
+	  if (game.owner.publicId !== req.session.userId &&														// visitor is not the owner
+			  ( typeof game.opponent === 'undefined' || game.opponent.publicId !== req.session.userId ) &&  // visitor is not the opponent
+			  game.visitors.indexOf(player._id) === -1) {													// visitor was not seen before
+		game.visitors.push(player._id);
+    	game.save();
+	  }
+	  
+	  Game.populate(game, 'visitors', function (err) {
+		  if (err) {
+			  res.send(err);
+		  }
+		  res.render('play', {userId: req.session.userId, game: game});
+	  });
+	});
+  });
 }
 
 exports.registerRoutes = function(app) {

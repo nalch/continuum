@@ -5,7 +5,8 @@ var mongoose = require('mongoose')
 var gameSchema = new Schema({
   publicId    : { type: String, unique : true, required: true },
   owner       : { type: Schema.Types.ObjectId, ref: 'Player', required: true },
-  participant : { type: Schema.Types.ObjectId, ref: 'Player'},
+  opponent    : { type: Schema.Types.ObjectId, ref: 'Player'},
+  visitors    : [{ type: Schema.Types.ObjectId, ref: 'Player'}],
 });
 gameSchema.plugin(uniqueValidator);
 

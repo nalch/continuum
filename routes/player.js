@@ -14,7 +14,7 @@ exports.list = function(req, res){
 exports.get = function(req, res){
 	// you're only allowed to see your own details
 	if (req.params.playerId !== req.session.userId) {
-		res.send(403);
+		res.sendStatus(403);
 	}
 	
 	// fetch player
@@ -29,7 +29,7 @@ exports.get = function(req, res){
 exports.put = function(req, res){
 	// you're only allowed to change your own details
 	if (req.params.playerId !== req.session.userId) {
-		res.send(403);
+		res.sendStatus(403);
 	}
 	
 	Player.findOne({'publicId': req.session.userId }, function (err, player) {
