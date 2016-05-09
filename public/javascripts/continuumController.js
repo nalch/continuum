@@ -24,8 +24,8 @@ continuumControllers.controller('mainController', ['$scope', '$http', '$location
   }
 ]);
 
-continuumControllers.controller('playController', ['$scope', '$http', '$routeParams',
-  function ($scope, $http, $routeParams) {
+continuumControllers.controller('playController', ['$scope', '$http', '$routeParams', '$location',
+  function ($scope, $http, $routeParams, $location) {
 
 	$http.get('/games/' + $routeParams.gameId)
       .success(function (data) {
@@ -34,6 +34,8 @@ continuumControllers.controller('playController', ['$scope', '$http', '$routePar
       .error(function (data) {
         console.log('Error: ' + data);
       });
+	
+	$scope.location = $location;
 	
 	$scope.isOwner = function () {
 	  return $scope.userId === $scope.game.owner.publicId; 

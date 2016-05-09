@@ -10,3 +10,7 @@ a {
 .spaced {
 	padding: 0 5px 0 5px;
 }
+
+.semi-transparent {
+	opacity: 0.2;
+}
