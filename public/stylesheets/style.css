@@ -14,3 +14,8 @@ a {
 .semi-transparent {
 	opacity: 0.2;
 }
+
+#main-form button {
+	margin: 10px;
+	width: 45%;
+}
