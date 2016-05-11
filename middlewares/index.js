@@ -10,7 +10,7 @@ exports.generateUserId = function (req, res, next) {
 	  Player.create(
 	    {
 		  publicId: req.session.userId
-		}, function(err, todo) {
+		}, function(err, player) {
 			// todo for a later time: http://expressjs.com/de/guide/error-handling.html
 	    }
 	  );

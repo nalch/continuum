@@ -18,13 +18,12 @@ exports.get = function(req, res) {
 	Game.findOne({'publicId': req.params.gameId })
 	  .populate('owner opponent visitors')
 	  .exec(function (err, game) {
-	    if (err) {
-	      res.status(500).send(err);
-	    } else {
-	      res.json(game);
-	    }
+		if (game) {
+		  res.json(game);
+		} else {
+		  res.status(404).send('Not found');
+		}  
 	  });
-	res.status(404).send('Not found');
 };
 
 exports.post = function(req, res) {

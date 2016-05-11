@@ -15,29 +15,19 @@ function play(req, res){
   Game.findOne({'publicId': req.params.gameId })
     .populate('owner opponent')
 	.exec(function (err, game) {
-	  if (err) {
-		res.send(err);
-	  }	    
       
 	  Player.findOne({'publicId': req.session.userId }, function (err, player) {
-	  if (err) {
-	    res.send(err);
-	  }
-	  	  
-	  if (game.owner.publicId !== req.session.userId &&														// visitor is not the owner
-			  ( typeof game.opponent === 'undefined' || game.opponent.publicId !== req.session.userId ) &&  // visitor is not the opponent
-			  game.visitors.indexOf(player._id) === -1) {													// visitor was not seen before
-		game.visitors.push(player._id);
-    	game.save();
-	  }
+		if (game.owner.publicId !== req.session.userId &&												    // visitor is not the owner
+		  	  ( typeof game.opponent === 'undefined' || game.opponent.publicId !== req.session.userId ) &&  // visitor is not the opponent
+			    game.visitors.indexOf(player._id) === -1) {													// visitor was not seen before
+		  game.visitors.push(player._id);
+    	  game.save();
+	    }
 	  
-	  Game.populate(game, 'visitors', function (err) {
-		  if (err) {
-			  res.send(err);
-		  }
+	    Game.populate(game, 'visitors', function (err) {
 		  res.render('play', {userId: req.session.userId, game: game});
+	    });
 	  });
-	});
   });
 }
 
