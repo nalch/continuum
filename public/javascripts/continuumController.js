@@ -43,9 +43,8 @@ continuumControllers.controller('playController', ['$scope', '$http', '$routePar
 	};
 	
 	$scope.setNick = function (data) {
-	  $http.put('/players/' + $scope.userId, {'nick': data})
+      $http.put('/players/' + $scope.userId, {'nick': data})
 		.success(function (data) {
-		  console.log(data);
 		  return true;
 		})
 		.error(function (data) {
@@ -73,11 +72,19 @@ continuumControllers.controller('playController', ['$scope', '$http', '$routePar
         });
 	};
 	
-	$scope.updateView();
-	$scope.heartbeat = $interval($scope.updateView, 5000);
+	$scope.startViewUpdate = function () {
+	  $scope.updateView();
+	  $scope.heartbeat = $interval($scope.updateView, 5000);	
+	};
+	
+	$scope.stopViewUpdate = function () {
+		$interval.cancel($scope.heartbeat);
+	};
+	
+	$scope.startViewUpdate();
 	
 	$scope.$on('$destroy', function() {
-      $interval.cancel($scope.heartbeat);
+      $scope.stopViewUpdate();
     });
 	
 	

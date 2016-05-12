@@ -6,9 +6,10 @@ div(class="jumbotron text-center")
     div(class="col-sm-8 col-sm-offset-2 text-center")
       form(id="main-form")
         div(class="form-group")
+       
           input(type="text", class="form-control input-lg text-center", placeholder="Type in game id", ng-model="gameformData.publicId")
-          button(class="btn btn-primary btn-lg", ng-click="createGame()") Create game
-          button(class="btn btn-primary btn-lg", ng-click="joinGame()") Join game
+          button(class="btn btn-primary btn-lg", ng-click="createGame()", ng-submit="$event.preventDefault()") Create game
+          button(class="btn btn-primary btn-lg", ng-click="joinGame()", ng-submit="$event.preventDefault()") Join game
   
   div(class="list-group")
     b {{ games.length }} games
