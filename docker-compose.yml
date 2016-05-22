@@ -1,20 +1,36 @@
-nodejsapp:
-  build: .
-  container_name: nodejs
-  links:
-   - mongodb
-  ports:
-   - "8300:8300"
-  environment:
-   - STAGE=development
-  volumes:
-   - .:/usr/src/app
+version: '2'
 
-mongodb:
-  image: mongo:3.2
-  container_name: mongodb
-  restart: always
-  ports:
-   - "27017:27017"
-  volumes:
-   - ./db:/data/db
+services:
+  nodejs:
+    build: .
+    container_name: nodejs
+    links:
+      - mongodb
+    ports:
+      - "8300:8300"
+    environment:
+      - STAGE=development
+    volumes:
+      - .:/usr/src/app
+    networks:
+      - backtier
+    logging:
+      driver: json-file
+      options:
+        max-size: 1k
+        max-file: "1"
+  
+  mongodb:
+    image: mongo:3.2
+    container_name: mongodb
+    restart: always
+    ports:
+     - "27017:27017"
+    volumes:
+     - ./database:/data/db
+    networks:
+      - backtier
+
+networks:
+  backtier:
+    driver: bridge

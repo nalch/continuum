@@ -1,0 +1,5 @@
+mixin nick(user)
+  div(ng-if="userId === #{user}.publicId")
+    span(class="glyphicon glyphicon-user spaced", aria-hidden="true")
+    span(editable-text="#{user}.nick", onshow="stopViewUpdate()", onhide="startViewUpdate()", onbeforesave="setNick($data)") {{ #{user}.nick || #{user}.publicId || "no user information" }}
+  span(ng-if="userId !== #{user}.publicId") {{ #{user}.nick || #{user}.publicId || "no user information" }}

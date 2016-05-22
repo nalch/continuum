@@ -1,0 +1,9 @@
+b {{ game.visitors.length }} visitors
+  span(class="list-group-item", ng-repeat="visitor in game.visitors")
+    +nick("visitor")
+    span(
+      ng-if="isOwner()",
+      class="glyphicon glyphicon-screenshot spaced",
+      aria-hidden="true",
+      ng-click="challengeUser(visitor, $index)"
+    )

@@ -1,7 +1,7 @@
 var game = require('./game')
-	, player = require('./player'),
-	Game = require('../models/game').Game,
-	Player = require('../models/player').Player;
+	, player = require('./player')
+	, Game = require('../models/game').Game
+	, Player = require('../models/player').Player;
 
 function index(req, res){
   res.render('index');
