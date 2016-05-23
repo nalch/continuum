@@ -25,7 +25,7 @@ function play(req, res){
 	    }
 	  
 	    Game.populate(game, 'visitors', function (err) {
-		  res.render('play', {userId: req.session.userId, game: game});
+		  res.render('prepare', {userId: req.session.userId, game: game});
 	    });
 	  });
   });
