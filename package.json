@@ -15,6 +15,8 @@
     "mongoose": "*",
     "mongoose-unique-validator": "*",
     "body-parser": "*",
+    "simple-enum": "*",
+    "node-matrix": "*",
     "connect-mongo": "*",
     "extend": "*",
     "jade": "*",

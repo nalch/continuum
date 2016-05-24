@@ -9,4 +9,12 @@ Based on the idea and rules of [kraiz](https://github.com/kraiz)
 The project can be run in a docker container using the provided dockerfile.
 - change into project directory
 - docker-compose up -d
-- call http://localhost:8300/games
+- call http://localhost:8300
+
+## Development
+
+- Server: Node.js
+- Client: AngularJS
+- Codestyle: https://github.com/felixge/node-style-guide
+
+
