@@ -1,0 +1,94 @@
+var Move = require('../models/move').Move;
+var Game = require('../models/game').Game;
+var GameState = require('../models/game').GameState;
+var BoardPiece = require('../models/game').BoardPiece;
+var	Player = require('../models/player').Player;
+
+exports.list = function (req, res) {
+	Game.findOne({'publicId': req.params.gameId })
+	  .populate('moves')
+	  .exec(function (err, game) {
+		if (game) {
+		  res.json(game.moves);
+		} else {
+		  res.status(404).send('Not found');
+		}  
+	  });
+};
+
+exports.post = function (req, res) {	
+	Game.findOne({'publicId': req.params.gameId })
+	  .populate('moves')
+	  .exec(function (err, game) {
+		if (game) {
+			console.log(game.board);
+			if (!GameState.PLAYING.is(game.state)) {
+			  return res.status(403).send('Game is not in progress');
+			}
+			move = {
+			  game: game._id,
+		      number: game.moves.length + 1,
+		      row: req.body.row,
+		      downward: req.body.downward
+			};
+			Player.findOne({'publicId': req.session.userId }, function (err, player) {
+				if (isLegal(player, game, move)) {
+					Move.create(
+					  move, function(err, move) {
+						setMove(player, game, move);
+						res.json(move);
+					  }
+					);
+				} else {
+				  res.status(403).send('Move is not allowed');
+				}
+			});
+		} else {
+		  res.status(404).send('Not found');
+		}  
+	  });
+};
+
+function isLegal(user, game, move) {
+	if (move.row < 0 || move.row > 6) {
+	  return false;
+	}
+	
+	if (move.downward && !BoardPiece.UNDEFINED.is(game.board[move.row][0])) {
+	  return false;
+	}
+	
+	if (!move.downward && !BoardPiece.UNDEFINED.is(game.board[move.row][4])) {
+	  return false;
+	}
+	
+	// owner's move
+	if (move.number % 2 === 1 && user._id !== game.owner._id) {
+	  return false;
+	}
+	
+	// opponent's move
+	if (move.number % 2 === 0 && user._id !== game.opponents._id) {
+	  return false;
+	}
+	
+	return true;
+}
+
+function setMove(player, game, move) {
+  var column = 2;
+  if (move.downward) {
+	while(column >= 0 && !BoardPiece.UNDEFINED.is(game.board[move.row][column])) {
+		column--;
+	}
+  } else {
+	while(column < 5 && !BoardPiece.UNDEFINED.is(game.board[move.row][column])) {
+		column++;
+	}
+  }
+  
+  game.board[move.row][column] = game.owner.publicId === player.publicId ? BoardPiece.OWNER.value : BoardPiece.OPPONENT.value;
+  game.markModified('board');
+  game.moves.push(move);
+  game.save();
+}

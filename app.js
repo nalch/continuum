@@ -2,21 +2,25 @@
  * Module dependencies.
  */
 
-var express = require('express')
-  , config = require('./config')
-  , bodyParser = require('body-parser')
-  , middlewares = require('./middlewares')
-  , routes = require('./routes')
-  , http = require('http')
-  , path = require('path')
-  , session = require('express-session')
-  , favicon = require('serve-favicon')
-  , methodOverride = require('method-override')
-  , morgan = require('morgan')
-  , MongoStore = require('connect-mongo')(session)
-  , mongoose = require('mongoose');
+var express = require('express');
+var config = require('./config');
+var bodyParser = require('body-parser');
+var middlewares = require('./middlewares');
+var routes = require('./routes');
+var http = require('http');
+var path = require('path');
+var session = require('express-session');
+var favicon = require('serve-favicon');
+var methodOverride = require('method-override');
+var morgan = require('morgan');
+var MongoStore = require('connect-mongo')(session);
+var mongoose = require('mongoose');
 
-mongoose.connect('mongodb://' + config.db.host + ':' + config.db.port + '/' + config.db.database);
+mongoose.connect(
+  'mongodb://' + 
+  config.db.host + ':' + config.db.port + '/' +
+  config.db.database
+);
 
 var app = express();
 

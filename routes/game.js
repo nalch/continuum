@@ -1,5 +1,8 @@
-var Game = require('../models/game').Game,
-	Player = require('../models/player').Player;
+var Game = require('../models/game').Game;
+var GameState = require('../models/game').GameState;
+var BoardPiece = require('../models/game').BoardPiece;
+var Player = require('../models/player').Player;
+var Matrix = require('node-matrix');
 
 var utils = require('../utils');
 
@@ -16,10 +19,10 @@ exports.list = function(req, res) {
 
 exports.get = function(req, res) {
 	Game.findOne({'publicId': req.params.gameId })
-	  .populate('owner opponent visitors')
+	  .populate('owner opponent moves visitors')
 	  .exec(function (err, game) {
 		if (game) {
-		  res.json(game);
+	      res.json(game);
 		} else {
 		  res.status(404).send('Not found');
 		}  
@@ -31,11 +34,13 @@ exports.post = function(req, res) {
 		if (err) {
 		  res.send(err);
 		}
-		  
+		
 		Game.create(
 		  {
 		    publicId: req.body.publicId || utils.guid(),
-		    owner: player._id 
+		    owner: player._id,
+		    state: GameState.PREPARED,
+		    board: new Matrix({ rows: 7, columns: 5, values: BoardPiece.UNDEFINED.value })
 		  }, function(err, game) {
 			res.json(game);
 		  }
@@ -55,7 +60,9 @@ exports.put = function(req, res) {
 			res.sendStatus(403);
 		}
 		
-		Player.findOne({'publicId': req.body.opponentId }, function (err, opponent) {
+		Player.findOne(
+		  {'publicId': req.body.opponentId},
+		  function (err, opponent) {
 			if (err) {
 			  res.send(err);
 			}

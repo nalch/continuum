@@ -1,7 +1,8 @@
-var game = require('./game')
-	, player = require('./player')
-	, Game = require('../models/game').Game
-	, Player = require('../models/player').Player;
+var game = require('./game'),
+	player = require('./player'),
+	move = require('./move'),
+	Game = require('../models/game').Game,
+	Player = require('../models/player').Player;
 
 function index(req, res){
   res.render('index');
@@ -11,7 +12,7 @@ function main(req, res){
   res.render('main');
 }
 
-function play(req, res){
+function prepare(req, res){
   Game.findOne({'publicId': req.params.gameId })
     .populate('owner opponent')
 	.exec(function (err, game) {
@@ -34,12 +35,15 @@ function play(req, res){
 exports.registerRoutes = function(app) {
 	app.get('/', index);
 	app.get('/main', main);
-	app.get('/continuum/:gameId', play);
+	app.get('/continuum/:gameId', prepare);
 	
 	app.get('/games', game.list);
 	app.post('/games', game.post);
 	app.put('/games/:gameId', game.put);
 	app.get('/games/:gameId', game.get);
+	
+	app.get('/games/:gameId/moves', move.list);
+	app.post('/games/:gameId/moves', move.post);
 	
 	app.get('/players', player.list);
 	app.get('/players/:playerId', player.get);
