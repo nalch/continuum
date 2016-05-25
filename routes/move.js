@@ -21,14 +21,13 @@ exports.post = function (req, res) {
 	  .populate('moves')
 	  .exec(function (err, game) {
 		if (game) {
-			console.log(game.board);
 			if (!GameState.PLAYING.is(game.state)) {
 			  return res.status(403).send('Game is not in progress');
 			}
 			move = {
 			  game: game._id,
 		      number: game.moves.length + 1,
-		      row: req.body.row,
+		      column: req.body.column,
 		      downward: req.body.downward
 			};
 			Player.findOne({'publicId': req.session.userId }, function (err, player) {
@@ -50,15 +49,15 @@ exports.post = function (req, res) {
 };
 
 function isLegal(user, game, move) {
-	if (move.row < 0 || move.row > 6) {
+	if (move.column < 0 || move.column > 6) {
 	  return false;
 	}
 	
-	if (move.downward && !BoardPiece.UNDEFINED.is(game.board[move.row][0])) {
+	if (move.downward && !BoardPiece.UNDEFINED.is(game.board[move.column][0])) {
 	  return false;
 	}
 	
-	if (!move.downward && !BoardPiece.UNDEFINED.is(game.board[move.row][4])) {
+	if (!move.downward && !BoardPiece.UNDEFINED.is(game.board[move.column][4])) {
 	  return false;
 	}
 	
@@ -76,18 +75,18 @@ function isLegal(user, game, move) {
 }
 
 function setMove(player, game, move) {
-  var column = 2;
+  var row = 2;
   if (move.downward) {
-	while(column >= 0 && !BoardPiece.UNDEFINED.is(game.board[move.row][column])) {
-		column--;
+	while(row >= 0 && !BoardPiece.UNDEFINED.is(game.board[row][move.column])) {
+		row--;
 	}
   } else {
-	while(column < 5 && !BoardPiece.UNDEFINED.is(game.board[move.row][column])) {
-		column++;
+	while(row < 5 && !BoardPiece.UNDEFINED.is(game.board[row][move.column])) {
+		row++;
 	}
   }
   
-  game.board[move.row][column] = game.owner.publicId === player.publicId ? BoardPiece.OWNER.value : BoardPiece.OPPONENT.value;
+  game.board[row][move.column] = game.owner.publicId === player.publicId ? BoardPiece.OWNER.value : BoardPiece.OPPONENT.value;
   game.markModified('board');
   game.moves.push(move);
   game.save();

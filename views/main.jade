@@ -20,5 +20,5 @@ div(class="jumbotron")
 div(class="jumbotron")
   h3 {{ games.length }} games available
   div(class="list-group")
-    a(href="/#/play/{{ game.publicId }}", class="list-group-item", ng-repeat="game in games")
+    a(href="/#/lobby/{{ game.publicId }}", class="list-group-item", ng-repeat="game in games")
       {{ game.publicId }}

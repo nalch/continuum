@@ -10,7 +10,12 @@ input(type="hidden", name="userId", ng-model="userId", ng-init="userId='#{userId
 div(class="row row-offcanvas row-offcanvas-right")
   div(class="col-xs-12 col-sm-9")
     div(class="jumbotron")
-      something
+      {{ board }}
+      table(class="table table-bordered")
+        tbody
+          tr(ng-repeat="row in rows")
+            td(ng-repeat="column in columns")
+              Cell
 
   // sidebar
   div(class="col-xs-6 col-sm-3 sidebar-offcanvas", id="sidebar")
@@ -28,9 +33,3 @@ div(class="row row-offcanvas row-offcanvas-right")
       b {{ game.visitors.length }} visitors
       span(class="list-group-item", ng-repeat="visitor in game.visitors")
         +nick("visitor")
-        span(
-          ng-if="isOwner()",
-          class="glyphicon glyphicon-screenshot spaced",
-          aria-hidden="true",
-          ng-click="challengeUser(visitor, $index)"
-        )
