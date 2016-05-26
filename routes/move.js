@@ -53,21 +53,21 @@ function isLegal(user, game, move) {
 	  return false;
 	}
 	
-	if (move.downward && !BoardPiece.UNDEFINED.is(game.board[move.column][0])) {
+	if (move.downward && !BoardPiece.UNDEFINED.is(game.board[0][move.column])) {
 	  return false;
 	}
 	
-	if (!move.downward && !BoardPiece.UNDEFINED.is(game.board[move.column][4])) {
+	if (!move.downward && !BoardPiece.UNDEFINED.is(game.board[4][move.column])) {
 	  return false;
 	}
 	
 	// owner's move
-	if (move.number % 2 === 1 && user._id !== game.owner._id) {
+	if (move.number % 2 === 1 && user._id.toString() != game.owner.toString()) {
 	  return false;
 	}
 	
 	// opponent's move
-	if (move.number % 2 === 0 && user._id !== game.opponents._id) {
+	if (move.number % 2 === 0 && user._id.toString() != game.opponent.toString()) {
 	  return false;
 	}
 	
@@ -85,8 +85,8 @@ function setMove(player, game, move) {
 		row++;
 	}
   }
-  
-  game.board[row][move.column] = game.owner.publicId === player.publicId ? BoardPiece.OWNER.value : BoardPiece.OPPONENT.value;
+    
+  game.board[row][move.column] = game.owner.toString() == player._id.toString() ? BoardPiece.OWNER.value : BoardPiece.OPPONENT.value;
   game.markModified('board');
   game.moves.push(move);
   game.save();

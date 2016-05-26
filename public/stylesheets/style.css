@@ -1,10 +1,10 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+	padding: 50px;
+	font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 a {
-  color: #00B7FF;
+	color: #00B7FF;
 }
 
 .spaced {
@@ -18,4 +18,19 @@ a {
 #main-form button {
 	margin: 10px;
 	width: 45%;
+}
+
+#board .borderless {
+	border: 0;
+}
+
+#board .ng-hide {
+	display: inline!important;
+	visibility: hidden;
+}
+
+#board .cell {
+	background-color: #ffffff;
+	border-left: 1px solid #ddd;
+	border-right: 1px solid #ddd;
 }

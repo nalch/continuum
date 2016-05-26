@@ -40,7 +40,13 @@ exports.post = function(req, res) {
 		    publicId: req.body.publicId || utils.guid(),
 		    owner: player._id,
 		    state: GameState.PREPARED,
-		    board: new Matrix({ rows: 5, columns: 7, values: BoardPiece.UNDEFINED.value })
+		    board: new Matrix(
+		      {
+		        rows: 5,
+		        columns: 7,
+		        values: BoardPiece.UNDEFINED.value
+		      }
+		    )
 		  }, function(err, game) {
 			res.json(game);
 		  }

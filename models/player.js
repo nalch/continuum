@@ -1,6 +1,6 @@
-var mongoose = require('mongoose')
-	, Schema = mongoose.Schema
-	, uniqueValidator = require('mongoose-unique-validator');
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
+var uniqueValidator = require('mongoose-unique-validator');
 
 var playerSchema = new Schema({
   publicId : {type: String, unique : true, required : true},
