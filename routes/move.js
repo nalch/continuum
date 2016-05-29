@@ -18,7 +18,7 @@ exports.list = function (req, res) {
 
 exports.post = function (req, res) {	
 	Game.findOne({'publicId': req.params.gameId })
-	  .populate('moves')
+	  .populate('moves owner opponent')
 	  .exec(function (err, game) {
 		if (game) {
 			if (!GameState.PLAYING.is(game.state)) {
@@ -62,12 +62,12 @@ function isLegal(user, game, move) {
 	}
 	
 	// owner's move
-	if (move.number % 2 === 1 && user._id.toString() != game.owner.toString()) {
+	if (move.number % 2 === 1 && !user._id.equals(game.owner._id)) {
 	  return false;
 	}
 	
 	// opponent's move
-	if (move.number % 2 === 0 && user._id.toString() != game.opponent.toString()) {
+	if (move.number % 2 === 0 && !user._id.equals(game.opponent._id)) {
 	  return false;
 	}
 	
@@ -85,8 +85,9 @@ function setMove(player, game, move) {
 		row++;
 	}
   }
-    
-  game.board[row][move.column] = game.owner.toString() == player._id.toString() ? BoardPiece.OWNER.value : BoardPiece.OPPONENT.value;
+  
+  game.board[row][move.column] = 
+	move.number % 2 === 1 ? BoardPiece.OWNER.value : BoardPiece.OPPONENT.value;
   game.markModified('board');
   game.moves.push(move);
   game.save();

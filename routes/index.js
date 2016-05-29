@@ -18,7 +18,7 @@ function prepare(req, res){
     .populate('owner opponent')
 	.exec(function (err, game) {
       Player.findOne({'publicId': req.session.userId }, function (err, player) {
-		if (game.owner.publicId !== req.session.userId &&												    // visitor is not the owner
+    	if (!game.owner._id.equals(player._id) &&												    			// visitor is not the owner
 		  	  ( typeof game.opponent === 'undefined' || game.opponent.publicId !== req.session.userId ) &&  // visitor is not the opponent
 			    game.visitors.indexOf(player._id) === -1) {													// visitor was not seen before
 		  game.visitors.push(player._id);
@@ -36,6 +36,7 @@ function play(req, res){
   Game.findOne({'publicId': req.params.gameId })
     .populate('owner opponent')
 	.exec(function (err, game) {
+	  // TODO test, if game exists
 	  if (GameState.PREPARED.is(game.state) && game.opponent) {
 		game.state = GameState.PLAYING.value;
 		game.save();
