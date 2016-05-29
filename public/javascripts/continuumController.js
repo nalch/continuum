@@ -138,7 +138,7 @@ continuumControllers.controller(
 	  	    }
 	  	  ).success(
 	  	    function (data) {
-	  	      console.log(data);
+	  	      $scope.game.board[data.row][data.column] = data.number % 2 === 1 ? 1 : 2;
 	  	    }
 	  	  );
 	  	};

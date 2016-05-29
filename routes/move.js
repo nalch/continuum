@@ -85,6 +85,8 @@ function setMove(player, game, move) {
 		row++;
 	}
   }
+  move.row = row;
+  move.save();
   
   game.board[row][move.column] = 
 	move.number % 2 === 1 ? BoardPiece.OWNER.value : BoardPiece.OPPONENT.value;

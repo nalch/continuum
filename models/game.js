@@ -14,6 +14,6 @@ var gameSchema = new Schema({
 });
 gameSchema.plugin(uniqueValidator);
 
-exports.GameState = new Enum(['PREPARED', 'PLAYING', 'FINISHED']);
-exports.BoardPiece = new Enum(['UNDEFINED', 'OWNER', 'OPPONENT']);
+exports.GameState = new Enum({'PREPARED': 0, 'PLAYING': 1, 'FINISHED': 2});
+exports.BoardPiece = new Enum({'UNDEFINED': 0, 'OWNER': 1, 'OPPONENT': 2});
 exports.Game = mongoose.model('Game', gameSchema);
