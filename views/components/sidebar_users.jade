@@ -9,13 +9,15 @@ div(class="col-xs-6 col-sm-3 sidebar-offcanvas", id="sidebar")
         h3(class="panel-title") Opponent
       div(class="panel-body")
         +nick("game.opponent")
-    div(class="list-group")
-      b {{ game.visitors.length }} visitors
-      span(class="list-group-item", ng-repeat="visitor in game.visitors")
-        +nick("visitor")
-        span(
+    
+    b {{ game.visitors.length }} visitors
+      div(class="list-group")
+        a(
           ng-if="isOwner()",
-          class="glyphicon glyphicon-screenshot spaced",
-          aria-hidden="true",
-          ng-click="challengeUser(visitor, $index)"
+          ng-click="challengeUser(visitor, $index)",
+          class="list-group-item",
+          ng-repeat="visitor in game.visitors"
         )
+          +nick("visitor")
+        span(ng-if="!isOwner()", class="list-group-item", ng-repeat="visitor in game.visitors")
+          +nick("visitor")
