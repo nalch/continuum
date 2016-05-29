@@ -10,7 +10,10 @@ div(class="col-xs-6 col-sm-3 sidebar-offcanvas", id="sidebar")
       div(class="panel-body")
         +nick("game.opponent")
     
-    b {{ game.visitors.length }} visitors
+    div(class="panel panel-default")
+      div(class="panel-heading")
+        h3(class="panel-title") {{ game.visitors.length }} visitors
+      
       div(class="list-group")
         a(
           ng-if="isOwner()",
