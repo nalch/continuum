@@ -95,7 +95,6 @@ continuumControllers.controller(
 	    });
 		
 		$scope.startGame = function() {
-		  console.log('/continuum/' + $routeParams.gameId);
 		  $location.path('/continuum/' + $routeParams.gameId);
 		};
 		
@@ -109,9 +108,13 @@ continuumControllers.controller(
     '$scope', '$http', '$routeParams', '$location', '$interval',
     function ($scope, $http, $routeParams, $location, $interval) {
 	  	$scope.location = $location;
+	  	$scope.errors = [];
 	  	
 	  	$scope.isOwner = function () {
-	  	  return $scope.userId === $scope.game.owner.publicId; 
+	  	  // TODO postpone until game is updated
+	  	  if ($scope.game) {
+	  	    return $scope.userId === $scope.game.owner.publicId;
+	  	  }
 	  	};
 	  	
 	  	$scope.setNick = function (data) {
@@ -140,10 +143,17 @@ continuumControllers.controller(
 	  	    function (data) {
 	  	      $scope.game.board[data.row][data.column] = data.number % 2 === 1 ? 1 : 2;
 	  	    }
-	  	  );
+	  	  ).error(
+	  	    function (error) {
+	  	      console.log($scope.errors);
+	  	      $scope.errors.push('Illegal move');
+	  	    }
+	      );
 	  	};
 	  	
 	  	$scope.playersTurn = function () {
+	  		if (!$scope.game)
+	  		  return false;
 	  		if ($scope.userId === $scope.game.owner.publicId && $scope.game.moves.length % 2 === 1) {
 	  		  return true;
 	  		}

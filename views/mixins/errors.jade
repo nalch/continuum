@@ -1,0 +1,6 @@
+mixin errors(errors)
+  div(class="container alert alert-danger", role="alert")
+    span(class="glyphicon glyphicon-exclamation-sign spaced", aria-hidden="true")
+    span Errors
+    ul
+      li(ng-repeat="error in errors track by $index") {{ error }}

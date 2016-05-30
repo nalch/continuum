@@ -1,15 +1,10 @@
-mixin nick(user)
-  div(ng-if="userId === #{user}.publicId")
-    span(class="glyphicon glyphicon-user spaced", aria-hidden="true")
-    span(editable-text="#{user}.nick", onshow="stopViewUpdate()", onhide="startViewUpdate()", onbeforesave="setNick($data)") {{ #{user}.nick || #{user}.publicId || "no user information" }}
-  span(ng-if="userId !== #{user}.publicId") {{ #{user}.nick || #{user}.publicId || "no user information" }}
-
-// let the page know, which user it is
-input(type="hidden", name="userId", ng-model="userId", ng-init="userId='#{userId}'", value="#{userId}", disabled="disabled")
+include ./mixins/users.jade
+include ./mixins/errors.jade
 
 div(class="row row-offcanvas row-offcanvas-right")
   div(class="col-xs-12 col-sm-9")
     div(class="jumbotron")
+      +errors("errors")
       table(class="table text-center", id="board", ng-Mouseout="activeRow=null; activeColumn=null;")
         tbody(class="board-body")
           tr(ng-if="playersTurn()")
@@ -38,7 +33,7 @@ div(class="row row-offcanvas row-offcanvas-right")
                 class="glyphicon glyphicon-chevron-up",
                 aria-hidden="true",
                 ng-show="column === activeColumn && activeRow > 2"
-              ) 
+              )
 
   // sidebar
   div(class="col-xs-6 col-sm-3 sidebar-offcanvas", id="sidebar")
