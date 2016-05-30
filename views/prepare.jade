@@ -19,7 +19,7 @@ div(class="row row-offcanvas row-offcanvas-right")
                   li
                     a(href="mailto:?subject=Join a game of continuum&body=", class="btn btn-primary", role="button") Send mail to friend
         
-        div(class="col-sm-6 col-md-4", ng-class="{'semi-transparent': game.visitors.length == 0}")
+        div(class="col-sm-6 col-md-4", ng-class="{'semi-transparent': game.visitors.length == 0 && !game.opponent}")
           div(class="thumbnail")
             img(src="/images/state_choose_opponent.png", alt="choose opponent")
             div(class="caption")

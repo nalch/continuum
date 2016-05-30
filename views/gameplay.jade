@@ -12,7 +12,7 @@ div(class="row row-offcanvas row-offcanvas-right")
     div(class="jumbotron")
       table(class="table text-center", id="board", ng-Mouseout="activeRow=null; activeColumn=null;")
         tbody(class="board-body")
-          tr
+          tr(ng-if="playersTurn()")
             td(ng-repeat="column in columns", class="borderless", ng-Mouseover="hoverBoard(-1, column)")
               span(
                 class="glyphicon glyphicon-chevron-down",
@@ -32,7 +32,7 @@ div(class="row row-offcanvas row-offcanvas-right")
                 ng-class="{'glyphicon-remove': game.board[row][column] === 1, 'glyphicon-record': game.board[row][column] === 2}",
                 aria-hidden="true"
               )
-          tr
+          tr(ng-if="playersTurn()")
             td(ng-repeat="column in columns", class="borderless", ng-Mouseover="hoverBoard(5, column)")
               span(
                 class="glyphicon glyphicon-chevron-up",

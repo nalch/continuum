@@ -9,6 +9,9 @@ div(class="col-xs-6 col-sm-3 sidebar-offcanvas", id="sidebar")
         h3(class="panel-title") Opponent
       div(class="panel-body")
         +nick("game.opponent")
+      div(class="panel-body text-center", ng-if="isOwner()")
+        button(class="btn btn-primary", ng-click="challengeUser(game.owner)")
+          span Play against local player
     
     div(class="panel panel-default")
       div(class="panel-heading")

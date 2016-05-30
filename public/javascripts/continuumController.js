@@ -143,6 +143,18 @@ continuumControllers.controller(
 	  	  );
 	  	};
 	  	
+	  	$scope.playersTurn = function () {
+	  		if ($scope.userId === $scope.game.owner.publicId && $scope.game.moves.length % 2 === 1) {
+	  		  return true;
+	  		}
+	  		
+	  		if ($scope.userId === $scope.game.opponent.publicId && $scope.game.moves.length % 2 === 0) {
+	  		  return true;
+	  		}
+	  		
+	  		return false;
+	  	};
+	  	
 	  	$scope.updateView = function () {
 	        $http.get('/games/' + $routeParams.gameId)
 	          .success(function (data) {
