@@ -105,8 +105,8 @@ continuumControllers.controller(
 continuumControllers.controller(
   'playController',
   [
-    '$scope', '$http', '$routeParams', '$location', '$interval',
-    function ($scope, $http, $routeParams, $location, $interval) {
+    '$scope', '$http', '$routeParams', '$location', '$interval', '$timeout',
+    function ($scope, $http, $routeParams, $location, $interval, $timeout) {
 	  	$scope.location = $location;
 	  	$scope.errors = [];
 	  	
@@ -145,10 +145,19 @@ continuumControllers.controller(
 	  	    }
 	  	  ).error(
 	  	    function (error) {
-	  	      console.log($scope.errors);
-	  	      $scope.errors.push('Illegal move');
+	  	      $scope.addError(error);
 	  	    }
 	      );
+	  	};
+	  	
+	  	$scope.addError = function (error) {
+	  		if ($scope.errorsTimeout) {
+	  		  $timeout.cancel($scope.errorsTimeout);
+	  		}	  			
+	  		$scope.errors.push(error);
+	  		$scope.errorsTimeout = $timeout(function () {
+	  		  $scope.errors = [];
+	  		}, 3000);
 	  	};
 	  	
 	  	$scope.playersTurn = function () {
