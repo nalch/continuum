@@ -26,8 +26,7 @@ var app = express();
 
 app.use(session({
   cookie: {
-	expires: new Date(0),
-	maxAge: 0,
+	expires: new Date(2147483647000),  // Tue, 19 Jan 2038 03:14:07 GMT
 	secure: false
   },
   resave: true,
