@@ -1,5 +1,5 @@
 /**
- * New node file
+ * 
  */
 
 var playController = angular.module('playController', []);
@@ -7,10 +7,12 @@ var playController = angular.module('playController', []);
 playController.controller(
   'playController',
   [
-    '$scope', '$http', '$routeParams', '$location', '$interval', '$timeout',
-    function ($scope, $http, $routeParams, $location, $interval, $timeout) {
+    '$controller', '$scope', '$http', '$routeParams', '$location', '$interval', '$timeout',
+    function ($controller, $scope, $http, $routeParams, $location, $interval, $timeout) {
+    	
+    	$controller('errorController', {$scope: $scope});
+    	
 	  	$scope.location = $location;
-	  	$scope.errors = [];
 	  	
 	  	$scope.isOwner = function () {
 	  	  // TODO postpone until game is updated
@@ -20,13 +22,13 @@ playController.controller(
 	  	};
 	  	
 	  	$scope.setNick = function (data) {
-	        $http.put('/players/' + $scope.userId, {'nick': data})
-	  		.success(function (data) {
-	  		  return true;
-	  		})
-	  		.error(function (data) {
-	  		  return 'Could not change nick';
-	  		});
+	      $http.put('/players/' + $scope.userId, {'nick': data})
+	      .success(function (data) {
+	  	    return true;
+	  	  })
+	  	  .error(function (data) {
+	  		return 'Could not change nick';
+	  	  });
 	  	};
 	  	
 	  	$scope.hoverBoard = function (row, column) {
@@ -50,16 +52,6 @@ playController.controller(
 	  	      $scope.addError(error);
 	  	    }
 	      );
-	  	};
-	  	
-	  	$scope.addError = function (error) {
-	  		if ($scope.errorsTimeout) {
-	  		  $timeout.cancel($scope.errorsTimeout);
-	  		}	  			
-	  		$scope.errors.push(error);
-	  		$scope.errorsTimeout = $timeout(function () {
-	  		  $scope.errors = [];
-	  		}, 3000);
 	  	};
 	  	
 	  	$scope.playersTurn = function () {

@@ -1,4 +1,5 @@
 mixin errors(errors)
+  {{ test }}
   div(class="container alert alert-danger animate-repeat", role="alert", ng-show="errors.length > 0", ng-repeat="error in errors track by $index")
     span(class="glyphicon glyphicon-exclamation-sign spaced", aria-hidden="true")
     {{ error }}

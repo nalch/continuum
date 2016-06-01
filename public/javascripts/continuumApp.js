@@ -4,6 +4,7 @@ var continuumApp = angular.module(
     'ngRoute',
     'xeditable',
     'ngAnimate',
+    'errorController',
     'startController',
     'lobbyController',
     'playController'
