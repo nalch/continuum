@@ -33,24 +33,25 @@ exports.post = function(req, res) {
 	Player.findOne({'publicId': req.session.userId }, function (err, player) {
 		if (err) {
 		  res.send(err);
+		} else {
+			console.log(player);
+			Game.create(
+			  {
+			    publicId: req.body.publicId || utils.guid(),
+			    owner: player._id,
+			    state: GameState.PREPARED,
+			    board: new Matrix(
+			      {
+			        rows: 5,
+			        columns: 7,
+			        values: BoardPiece.UNDEFINED.value
+			      }
+			    )
+			  }, function(err, game) {
+				res.json(game);
+			  }
+			);
 		}
-		
-		Game.create(
-		  {
-		    publicId: req.body.publicId || utils.guid(),
-		    owner: player._id,
-		    state: GameState.PREPARED,
-		    board: new Matrix(
-		      {
-		        rows: 5,
-		        columns: 7,
-		        values: BoardPiece.UNDEFINED.value
-		      }
-		    )
-		  }, function(err, game) {
-			res.json(game);
-		  }
-		);
 	});
 };
 

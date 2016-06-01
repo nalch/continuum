@@ -9,11 +9,11 @@ function index(req, res){
   res.render('index');
 }
 
-function main(req, res){
-  res.render('main');
+function start(req, res){
+  res.render('start');
 }
 
-function prepare(req, res){
+function lobby(req, res){
   Game.findOne({'publicId': req.params.gameId })
     .populate('owner opponent')
 	.exec(function (err, game) {
@@ -26,7 +26,7 @@ function prepare(req, res){
 	    }
 	  
 	    Game.populate(game, 'visitors', function (err) {
-		  res.render('prepare', {userId: req.session.userId, game: game});
+		  res.render('lobby', {userId: req.session.userId, game: game});
 	    });
 	  });
   });
@@ -53,7 +53,7 @@ function play(req, res){
 	    }
 	  
 	    Game.populate(game, 'visitors', function (err) {
-		  res.render('gameplay', {userId: req.session.userId, game: game});
+		  res.render('play', {userId: req.session.userId, game: game});
 	    });
 	  });
   });
@@ -61,8 +61,8 @@ function play(req, res){
 
 exports.registerRoutes = function(app) {
 	app.get('/', index);
-	app.get('/main', main);
-	app.get('/lobby/:gameId', prepare);
+	app.get('/main', start);
+	app.get('/lobby/:gameId', lobby);
 	app.get('/continuum/:gameId', play);
 	
 	app.get('/games', game.list);

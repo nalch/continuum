@@ -1,15 +1,25 @@
-var continuum = angular.module('continuum', ['ngRoute', 'continuumController', 'xeditable', 'ngAnimate']);
+var continuumApp = angular.module(
+  'continuum',
+  [
+    'ngRoute',
+    'xeditable',
+    'ngAnimate',
+    'startController',
+    'lobbyController',
+    'playController'
+  ]
+);
 
-continuum.run(function(editableOptions) {
+continuumApp.run(function(editableOptions) {
   editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'
 });
 
-continuum.config(['$routeProvider',
+continuumApp.config(['$routeProvider',
  function($routeProvider) {
    $routeProvider.
      when('/', {
        templateUrl: '/main',
-       controller: 'mainController'
+       controller: 'startController'
      }).
      when('/lobby/:gameId', {
        templateUrl: function($routeParams) {
