@@ -6,16 +6,18 @@ var Player = require('../models/player').Player;
 
 describe('Tests for move routes', function() {
 
-  before(function() {
-    fixture.createTestDB();
+  before(function(done) {
+	this.timeout(10000);
+    fixture.createTestDB(done);
   });
   
   after(function() {
 	fixture.dropTestDB();
   });
 	
-  beforeEach(function() {
+  beforeEach(function(done) {
     this.isLegal = move.isLegal;
+    done();
   });
 
   afterEach(function() {
@@ -23,8 +25,12 @@ describe('Tests for move routes', function() {
 
   describe('isLegal', function() {
     it('should test for invalid rows', function() {
-      //expect(this.isLegal(fixture.player1, null, fixture.move)).to.be.false;
-      expect(true).to.be.false;
+    	return fixture.player1.exec().then(function (player1) {
+    	  return fixture.player2.exec().then(function (player2) {
+    		expect(player1.publicId).to.equal('testplayer1');
+    	  });
+    	});
     });
+
   });
 });

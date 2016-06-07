@@ -15,22 +15,25 @@ mongoose.connect(
   config.db.database
 );
 
-exports.createTestDB = function () {
-  Player.create({publicId: 'testplayer1'});
-  Player.create({publicId: 'testplayer2'});
-  
-  Game.create({
-    publicId: 'testgame-playing',
-    opponent: 2,
-    owner: 1,
-    state: GameState.PLAYING,
-    board: new Matrix(
-      {
-        rows: 5,
-        columns: 7,
-        values: BoardPiece.UNDEFINED.value
-      }
-    )
+exports.createTestDB = function (done) {
+  Player.create({publicId: 'testplayer1'}).then(function (player1) {
+    Player.create({publicId: 'testplayer2'}).then(function (player2) {
+      Game.create({
+        publicId: 'testgame-playing',
+        opponent: player2._id,
+        owner: player1._id,
+        state: GameState.PLAYING,
+        board: new Matrix(
+          {
+            rows: 5,
+            columns: 7,
+            values: BoardPiece.UNDEFINED.value
+          }
+        )
+      }).then(function (game) {
+    	done();
+      });
+    });
   });
 };
 
@@ -38,3 +41,6 @@ exports.dropTestDB = function () {
   Player.find().remove().exec();
   Game.find().remove().exec();
 };
+
+exports.player1 = Player.findOne({publicId: 'testplayer1'});
+exports.player2 = Player.findOne({publicId: 'testplayer2'});
