@@ -94,3 +94,5 @@ function setMove(player, game, move) {
   game.moves.push(move);
   game.save();
 }
+
+exports.isLegal = isLegal;

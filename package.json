@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node app.js",
+    "test": "mocha",
     "postinstall": "node_modules/.bin/bower install"
   },
   "dependencies": {

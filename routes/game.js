@@ -34,7 +34,6 @@ exports.post = function(req, res) {
 		if (err) {
 		  res.send(err);
 		} else {
-			console.log(player);
 			Game.create(
 			  {
 			    publicId: req.body.publicId || utils.guid(),
