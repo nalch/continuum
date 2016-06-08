@@ -55,8 +55,17 @@ playController.controller(
 	  	};
 	  	
 	  	$scope.playersTurn = function () {
-	  		if (!$scope.game)
+	  		// no game fetched right now
+	  		if (!$scope.game) {
 	  		  return false;
+	  		}
+	  		
+	  		// game is finished
+	  		if ($scope.game.state === 2) {
+	  		  return false;
+	  		}
+	  		
+	  		// active player
 	  		if ($scope.userId === $scope.game.owner.publicId && $scope.game.moves.length % 2 === 1) {
 	  		  return true;
 	  		}
