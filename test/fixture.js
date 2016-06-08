@@ -44,3 +44,4 @@ exports.dropTestDB = function () {
 
 exports.player1 = Player.findOne({publicId: 'testplayer1'});
 exports.player2 = Player.findOne({publicId: 'testplayer2'});
+exports.testgamePlaying = Game.findOne({publicId: 'testgame-playing'});
