@@ -5,19 +5,17 @@ var Matrix = require('node-matrix');
 var BoardPiece = require('../models/game').BoardPiece;
 var Game = require('../models/game').Game;
 var GameState = require('../models/game').GameState;
-var Move = require('../models/move').Move;
 var Player = require('../models/player').Player;
 
-
 mongoose.connect(
-  'mongodb://' + 
+  'mongodb://' +
   config.db.host + ':' + config.db.port + '/' +
   config.db.database
 );
 
-exports.createTestDB = function (done) {
-  Player.create({publicId: 'testplayer1'}).then(function (player1) {
-    Player.create({publicId: 'testplayer2'}).then(function (player2) {
+exports.createTestDB = function(done) {
+  Player.create({publicId: 'testplayer1'}).then(function(player1) {
+    Player.create({publicId: 'testplayer2'}).then(function(player2) {
       Game.create({
         publicId: 'testgame-playing',
         opponent: player2._id,
@@ -30,14 +28,14 @@ exports.createTestDB = function (done) {
             values: BoardPiece.UNDEFINED.value
           }
         )
-      }).then(function (game) {
-    	done();
+      }).then(function() {
+        done();
       });
     });
   });
 };
 
-exports.dropTestDB = function () {
+exports.dropTestDB = function() {
   Player.find().remove().exec();
   Game.find().remove().exec();
 };
