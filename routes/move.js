@@ -123,7 +123,7 @@ function isFinished(game, move) {
 	  connectedPieces++;
 	}
   }
-  if (connectedPieces > 4) {
+  if (connectedPieces >= 4) {
 	return true;
   }
   
@@ -137,7 +137,7 @@ function isFinished(game, move) {
 	  connectedPieces++;
 	}
   }
-  if (connectedPieces > 4) {
+  if (connectedPieces >= 4) {
 	return true;
   }
   
@@ -151,7 +151,7 @@ function isFinished(game, move) {
 	  connectedPieces++;
 	}
   }
-  if (connectedPieces > 4) {
+  if (connectedPieces >= 4) {
 	return true;
   }
   
@@ -165,7 +165,7 @@ function isFinished(game, move) {
 	  connectedPieces++;
 	}
   }
-  if (connectedPieces > 4) {
+  if (connectedPieces >= 4) {
 	return true;
   }
   
