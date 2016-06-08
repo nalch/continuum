@@ -3,6 +3,7 @@ var Game = require('../models/game').Game;
 var GameState = require('../models/game').GameState;
 var BoardPiece = require('../models/game').BoardPiece;
 var	Player = require('../models/player').Player;
+var config = require('../config');
 
 exports.list = function (req, res) {
 	Game.findOne({'publicId': req.params.gameId })
@@ -35,6 +36,9 @@ exports.post = function (req, res) {
 					Move.create(
 					  move, function(err, move) {
 						setMove(player, game, move);
+						if (isFinished(game, move)) {
+						  game.state = GameState.FINISHED;
+						}
 						res.json(move);
 					  }
 					);
@@ -48,7 +52,18 @@ exports.post = function (req, res) {
 	  });
 };
 
-function isLegal(user, game, move) {
+/**
+ * Check, if a move is allowed in the current game phase. Checks, that:
+ *   the column is in the allowed bounds
+ *   the row is not full already
+ *   it's the users turn
+ * @param player the player, that wants to set the move
+ * @param game the current game
+ * @param move the move, that should be placed on the board
+ * @return true, if all of the above mentioned conditions are met.
+ *   False otherwise
+ */
+function isLegal(player, game, move) {
 	if (move.column < 0 || move.column > 6) {
 	  return false;
 	}
@@ -62,12 +77,12 @@ function isLegal(user, game, move) {
 	}
 	
 	// owner's move
-	if (move.number % 2 === 1 && !user._id.equals(game.owner._id)) {
+	if (move.number % 2 === 1 && !player._id.equals(game.owner._id)) {
 	  return false;
 	}
 	
 	// opponent's move
-	if (move.number % 2 === 0 && !user._id.equals(game.opponent._id)) {
+	if (move.number % 2 === 0 && !player._id.equals(game.opponent._id)) {
 	  return false;
 	}
 	
@@ -95,4 +110,69 @@ function setMove(player, game, move) {
   game.save();
 }
 
-exports.isLegal = isLegal;
+function isFinished(game, move) {
+  var piece = game.board[move.row][move.column];
+  
+  // \
+  var connectedPieces = 1;
+  for (var i=1; i<4; i++) {
+	if (game.board[(move.row-i+5) % 5][(move.column-i+7) % 7] === piece) {
+	  connectedPieces++;
+	}
+	if (game.board[(move.row+i) % 5][(move.column+i) % 7] === piece) {
+	  connectedPieces++;
+	}
+  }
+  if (connectedPieces > 4) {
+	return true;
+  }
+  
+  // /
+  connectedPieces = 1;
+  for (i=1; i<4; i++) {
+	if (game.board[(move.row+i) % 5][(move.column-i+7) % 7] === piece) {
+	  connectedPieces++;
+	}
+	if (game.board[(move.row-i+5) % 5][(move.column+i) % 7] === piece) {
+	  connectedPieces++;
+	}
+  }
+  if (connectedPieces > 4) {
+	return true;
+  }
+  
+  // -
+  connectedPieces = 1;
+  for (i=1; i<4; i++) {
+	if (game.board[move.row][(move.column-i+7) % 7] === piece) {
+	  connectedPieces++;
+	}
+	if (game.board[move.row][(move.column+i) % 7] === piece) {
+	  connectedPieces++;
+	}
+  }
+  if (connectedPieces > 4) {
+	return true;
+  }
+  
+  // |
+  connectedPieces = 1;
+  for (i=1; i<4; i++) {
+	if (game.board[(move.row+i) % 5][move.column] === piece) {
+	  connectedPieces++;
+	}
+	if (game.board[(move.row-i+5) % 5][move.column] === piece) {
+	  connectedPieces++;
+	}
+  }
+  if (connectedPieces > 4) {
+	return true;
+  }
+  
+  return false;
+}
+
+if (config.stage === 'testing') {
+  exports.isLegal = isLegal;
+  exports.isFinished = isFinished;
+}
