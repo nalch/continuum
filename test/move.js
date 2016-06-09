@@ -137,6 +137,15 @@ describe('Test for Routes: Move', function() {
         game.board[1][2] = BoardPiece.OPPONENT.value;
         game.board[0][2] = BoardPiece.OWNER.value;
         expect(moveModule.isFinished(game, {column: 2, row: 2})).to.be.false;
+
+        game.board = prepareBoard([
+          [0, 2, BoardPiece.OWNER.value],
+          [1, 2, BoardPiece.OPPONENT.value],
+          [2, 2, BoardPiece.OWNER.value],
+          [3, 2, BoardPiece.OPPONENT.value],
+          [4, 2, BoardPiece.OWNER.value]
+        ]);
+        expect(moveModule.isFinished(game, {column: 2, row: 2})).to.be.false;
       });
     });
 
