@@ -1,4 +1,6 @@
 var chai = require('chai');
+var dirtyChai = require('dirty-chai');
+chai.use(dirtyChai);
 var expect = chai.expect;
 var Matrix = require('node-matrix');
 
@@ -63,9 +65,9 @@ describe('Test for Routes: Move', function() {
             downward: false
           };
           // column is not in bounds
-          expect(moveModule.isLegal(player1, game, testmove)).to.be.false;
+          expect(moveModule.isLegal(player1, game, testmove)).to.be.false();
           testmove.downward = true;
-          expect(moveModule.isLegal(player1, game, testmove)).to.be.false;
+          expect(moveModule.isLegal(player1, game, testmove)).to.be.false();
         });
       });
     });
@@ -81,12 +83,12 @@ describe('Test for Routes: Move', function() {
               downward: false
             };
             // owner wants to set move
-            expect(moveModule.isLegal(player1, game, testmove)).to.be.true;
+            expect(moveModule.isLegal(player1, game, testmove)).to.be.true();
             // opponent wants to set move
-            expect(moveModule.isLegal(player2, game, testmove)).to.be.false;
+            expect(moveModule.isLegal(player2, game, testmove)).to.be.false();
             testmove.number += 1;
-            expect(moveModule.isLegal(player2, game, testmove)).to.be.true;
-            expect(moveModule.isLegal(player1, game, testmove)).to.be.false;
+            expect(moveModule.isLegal(player2, game, testmove)).to.be.true();
+            expect(moveModule.isLegal(player1, game, testmove)).to.be.false();
             testmove.number = game.moves.length + 1;
           });
         });
@@ -117,12 +119,12 @@ describe('Test for Routes: Move', function() {
            * 4 - - -
            */
 
-          expect(moveModule.isLegal(player1, game, testmove)).to.be.false;
+          expect(moveModule.isLegal(player1, game, testmove)).to.be.false();
           testmove.downward = false;
-          expect(moveModule.isLegal(player1, game, testmove)).to.be.true;
+          expect(moveModule.isLegal(player1, game, testmove)).to.be.true();
 
           game.board[4][2] = BoardPiece.OWNER;
-          expect(moveModule.isLegal(player1, game, testmove)).to.be.false;
+          expect(moveModule.isLegal(player1, game, testmove)).to.be.false();
         });
       });
     });
@@ -132,11 +134,11 @@ describe('Test for Routes: Move', function() {
     it('should return false for not finished games', function() {
       return fixture.testgamePlaying.populate('owner opponent').exec().then(function(game) {
         game.board[2][2] = BoardPiece.OWNER.value;
-        expect(moveModule.isFinished(game, {column: 2, row: 2})).to.be.false;
+        expect(moveModule.isFinished(game, {column: 2, row: 2})).to.be.false();
 
         game.board[1][2] = BoardPiece.OPPONENT.value;
         game.board[0][2] = BoardPiece.OWNER.value;
-        expect(moveModule.isFinished(game, {column: 2, row: 2})).to.be.false;
+        expect(moveModule.isFinished(game, {column: 2, row: 2})).to.be.false();
 
         game.board = prepareBoard([
           [0, 2, BoardPiece.OWNER.value],
@@ -145,7 +147,7 @@ describe('Test for Routes: Move', function() {
           [3, 2, BoardPiece.OPPONENT.value],
           [4, 2, BoardPiece.OWNER.value]
         ]);
-        expect(moveModule.isFinished(game, {column: 2, row: 2})).to.be.false;
+        expect(moveModule.isFinished(game, {column: 2, row: 2})).to.be.false();
       });
     });
 
@@ -157,7 +159,7 @@ describe('Test for Routes: Move', function() {
           [0, 2, BoardPiece.OWNER.value],
           [3, 2, BoardPiece.OWNER.value]
         ]);
-        expect(moveModule.isFinished(game, {column: 2, row: 2})).to.be.true;
+        expect(moveModule.isFinished(game, {column: 2, row: 2})).to.be.true();
 
         game.board = prepareBoard([
           [2, 2, BoardPiece.OPPONENT.value],
@@ -165,7 +167,7 @@ describe('Test for Routes: Move', function() {
           [2, 4, BoardPiece.OPPONENT.value],
           [2, 5, BoardPiece.OPPONENT.value]
         ]);
-        expect(moveModule.isFinished(game, {column: 2, row: 2})).to.be.true;
+        expect(moveModule.isFinished(game, {column: 2, row: 2})).to.be.true();
       });
     });
   });

@@ -3,5 +3,10 @@
     "rules": {
       "max-len": [1, 120, 2]
     },
+    "env": {
+      "node": true,
+      "mocha": true,
+      "jquery": true
+    },
     "installedESLint": true
 }

@@ -9,7 +9,7 @@ startController.controller(
   [
     '$scope', '$http', '$location',
   function ($scope, $http, $location) {
-	$scope.formData = {};
+    $scope.formData = {};
     
     $http.get('/games')
         .success(function(data) {
@@ -32,12 +32,12 @@ startController.controller(
     $scope.joinGame = function() {
       $http.get('/games/' + $scope.gameformData.publicId)
         .success(function (data) {
-    	  $location.path('/lobby/' + $scope.gameformData.publicId);
+          $location.path('/lobby/' + $scope.gameformData.publicId);
         })
         .error(function (data) { 
           console.log('Error: ' + data);
-	        });
-	    };
+            });
+        };
     }
   ]
 );

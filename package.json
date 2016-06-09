@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "node app.js",
-    "test": "mocha && eslint 'configs/**' 'middlewares/**' 'models/**' 'routes/**' 'test/**' '*.js'",
+    "test": "TESTING=true mocha",
+    "lint": "eslint 'configs/**' 'middlewares/**' 'models/**' 'routes/**' 'test/**' '*.js'",
     "postinstall": "node_modules/.bin/bower install"
   },
   "dependencies": {
@@ -28,6 +29,7 @@
     "eslint": "~2.11.1",
     "mocha": "*",
     "chai": "*",
+    "dirty-chai": "*",
     "sinon": "*"
   }
 }

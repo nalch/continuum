@@ -24,16 +24,16 @@ continuumApp.config(['$routeProvider',
      }).
      when('/lobby/:gameId', {
        templateUrl: function($routeParams) {
-     	  return '/lobby/' + $routeParams.gameId;
+          return '/lobby/' + $routeParams.gameId;
          },
        controller: 'lobbyController'
      }).
      when('/continuum/:gameId', {
-	   templateUrl: function($routeParams) {
-	 	  return '/continuum/' + $routeParams.gameId;
-	     },
-	   controller: 'playController'
-	 }).
+       templateUrl: function($routeParams) {
+          return '/continuum/' + $routeParams.gameId;
+         },
+       controller: 'playController'
+     }).
      otherwise({
        redirectTo: '/'
      });
