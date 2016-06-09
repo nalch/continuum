@@ -148,6 +148,13 @@ describe('Test for Routes: Move', function() {
           [4, 2, BoardPiece.OWNER.value]
         ]);
         expect(moveModule.isFinished(game, {column: 2, row: 2})).to.be.false();
+
+        game.board = prepareBoard([
+          [2, 2, BoardPiece.OWNER.value],
+          [2, 3, BoardPiece.OPPONENT.value],
+          [3, 3, BoardPiece.OWNER.value]
+        ]);
+        expect(moveModule.isFinished(game, {column: 2, row: 2})).to.be.false();
       });
     });
 

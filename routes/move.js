@@ -147,9 +147,12 @@ function isFinished(game, move) {
 
     for (var directionIndex = 0; directionIndex < directions.length; directionIndex++) {
       var direction = directions[directionIndex];
-      var currentRow = (move.row + rowDelta * direction * i + 5) % 5;
-      var currentColumn = (move.column + columnDelta * direction * i + 7) % 7;
-      while (i < 4 && game.board[currentRow][currentColumn] === piece) {
+      while (i < 4 &&
+              game.board[
+                (move.row + rowDelta * direction * i + 5) % 5
+              ][
+                (move.column + columnDelta * direction * i + 7) % 7
+              ] === piece) {
         connectedPieces++;
         i++;
       }
