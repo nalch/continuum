@@ -33,7 +33,7 @@ Otherwise start the services, enter the nodejs service and call
 
 The codestyle is enforced via eslint. The stylebundle is eslint-config-google, with
 a modified linelength of 120.
-The imports should follow the order and be ordered alphabetically inside their blocks:
+The imports should follow the listed example and be ordered alphabetically inside their blocks:
 ```
 var npmModule = require('npm-package');
 
