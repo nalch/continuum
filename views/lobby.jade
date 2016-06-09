@@ -1,6 +1,9 @@
 include ./mixins/users.jade
 
-div(class="row row-offcanvas row-offcanvas-right")
+div(class="row row-offcanvas row-offcanvas-right", ng-if="!game")
+  include ./mixins/spinner.jade
+
+div(class="row row-offcanvas row-offcanvas-right", ng-if="game")
   div(class="col-xs-12 col-sm-9")
     div(class="jumbotron")
       h3 Welcome to game {{ game.publicId }}
