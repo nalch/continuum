@@ -20,25 +20,26 @@ The project can be run in a docker container using the provided dockerfile.
 ### Tests
 
 The tests are run via Mocha and Chai and reside in the test subfolder.
-To run the tests with a local npm, run the mongodb service and call
-::
-  STAGE=travis npm test
+To run the tests with a local npm, run the mongodb service and call `npm test` and `npm run-script lint`.
 
 Otherwise start the services, enter the nodejs service and call
-::
+```
   docker-compose exec nodejs /bin/bash
-  STAGE=testing npm test
+  npm test
+  npm run-script lint
+```
 
 ### Codestyle
 
 The codestyle is enforced via eslint. The stylebundle is eslint-config-google, with
 a modified linelength of 120.
 The imports should follow the order and be ordered alphabetically inside their blocks:
-::
-  var npmModule = require('npm-package');
+```
+var npmModule = require('npm-package');
 
-  var npmModuleClass = require('npm-package').Class;
+var npmModuleClass = require('npm-package').Class;
 
-  var ownModule = require('../own/module');
+var ownModule = require('../own/module');
 
-  var npmModuleClass = require('../own/module').Class;
+var npmModuleClass = require('../own/module').Class;
+```
