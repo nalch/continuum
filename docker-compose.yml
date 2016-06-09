@@ -9,7 +9,7 @@ services:
     ports:
       - "8300:8300"
     environment:
-      - STAGE=development
+      - STAGE=docker
     volumes:
       - .:/usr/src/app
     networks:
