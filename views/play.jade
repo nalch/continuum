@@ -23,8 +23,8 @@ div(class="row row-offcanvas row-offcanvas-right")
               ng-class="{borderless:$parent.$first}"
             ) 
               span(
-                class="glyphicon",
-                ng-class="{'glyphicon-remove': game.board[row][column] === 1, 'glyphicon-record': game.board[row][column] === 2}",
+                class="fa",
+                ng-class="{'fa-times': game.board[row][column] === 1, 'fa-circle-o': game.board[row][column] === 2}",
                 aria-hidden="true"
               )
           tr(ng-if="playersTurn()")
