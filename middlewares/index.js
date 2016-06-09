@@ -9,6 +9,13 @@ var Player = require('../models/player').Player;
  * @param {func} next finished callback
  */
 exports.generateUserId = function(req, res, next) {
+  if (req.session.userId) {
+    Player.findOne({publicId: req.session.userId}, function(err, player) {
+      if (player === null) {
+        delete req.session.userId;
+      }
+    });
+  }
   if (!req.session.userId) {
     req.session.userId = utils.guid();
     Player.create({
