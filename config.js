@@ -5,6 +5,7 @@ var stageConfig = require('./configs/' + (process.env.STAGE || 'development'));
 // setting defaults
 var config = {
   stage: process.env.STAGE || 'development',
+  testing: process.env.TESTING || false,
   session: {
     secretKey: ''
   },

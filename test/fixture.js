@@ -12,7 +12,7 @@ var Player = require('../models/player').Player;
 mongoose.connect(
   'mongodb://' +
   config.db.host + ':' + config.db.port + '/' +
-  config.db.database
+  'test_' + config.db.database
 );
 
 exports.createTestDB = function(done) {
