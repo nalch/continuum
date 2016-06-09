@@ -27,7 +27,12 @@ continuumApp.config(['$routeProvider',
        templateUrl: function($routeParams) {
           return '/lobby/' + $routeParams.gameId;
          },
-       controller: 'lobbyController'
+       controller: 'lobbyController',
+       resolve: {
+         initialGame: function($route, GameService) {
+           return GameService.get({gameId: $route.current.params.gameId}).$promise;
+         }
+       }
      }).
      when('/continuum/:gameId', {
        templateUrl: function($routeParams) {

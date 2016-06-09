@@ -6,10 +6,10 @@ var lobbyController = angular.module('lobbyController', []);
 
 lobbyController.controller(
   'lobbyController',
-  [
-    '$scope', '$http', '$routeParams', '$location', '$interval',
-    function ($scope, $http, $routeParams, $location, $interval) {
-        $scope.location = $location;
+  function ($scope, $http, $routeParams, $location, $interval, GameService, initialGame) {
+        $scope.game = initialGame;
+	  
+	    $scope.location = $location;
         
         $scope.isOwner = function () {
           return $scope.userId === $scope.game.owner.publicId; 
@@ -36,13 +36,9 @@ lobbyController.controller(
         };
         
         $scope.updateView = function () {
-          $http.get('/games/' + $routeParams.gameId)
-            .success(function (data) {
-              $scope.game = data;
-            })
-            .error(function (data) {
-              console.log('Error: ' + data);
-            });
+          GameService.get({gameId: '/games/' + $routeParams.gameId}, function(game) {
+            $scope.game = game;
+          });
         };
         
         $scope.startViewUpdate = function () {
@@ -65,5 +61,4 @@ lobbyController.controller(
         };
         
     }
-  ]
 );
