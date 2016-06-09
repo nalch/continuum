@@ -123,9 +123,23 @@ function setMove(player, game, move) {
   game.save();
 }
 
+/**
+ * Check, if a move results in a game winning situation (four or more pieces in a row)
+ * @param {Game} game the ongoing game
+ * @param {Move} move the new move
+ * @return {Boolean} true, if the move produced at least four in a row, false otherwise
+ */
 function isFinished(game, move) {
   var piece = game.board[move.row][move.column];
 
+  /**
+   * check a single direction for a move. For example horizontal is a rowDelta of 0 and a columnDelta of -1 or 1.
+   * There is no difference between checkDirection(-1, 0) and checkDirection(1, 0).
+   * The number of connecting pieces in horizontal direction is checkDirection(0, 1) or checkDirection(0, -1).
+   * @param {Number} rowDelta the change of the row for the neighbouring fields in [-1, 0,- 1]
+   * @param {Number} columnDelta the change of the column for the neighbouring fields in [-1, 0,- 1]
+   * @return {Number} the number of connecting pieces (between 1 and 7)
+   */
   function checkDirection(rowDelta, columnDelta) {
     var i = 1;
     var connectedPieces = 1;
