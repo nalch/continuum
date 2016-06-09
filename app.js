@@ -51,6 +51,4 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 routes.registerRoutes(app);
 
-http.createServer(app).listen(config.web.port, function() {
-  console.log('Express server listening on port ' + config.web.port);
-});
+http.createServer(app).listen(config.web.port);

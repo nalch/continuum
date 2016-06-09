@@ -31,8 +31,9 @@ Otherwise start the services, enter the nodejs service and call
 
 ### Codestyle
 
-The codestyle is enforced via eslint. The stylebundle is eslint-config-google, with
-a modified linelength of 120.
+The codestyle is enforced via eslint. The stylebundle is eslint:recommended, proceeded with google.
+Custom rulechanges:
+  - modified linelength of 120.
 The imports should follow the listed example and be ordered alphabetically inside their blocks:
 ```
 var npmModule = require('npm-package');
