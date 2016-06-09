@@ -172,7 +172,7 @@ function isFinished(game, move) {
   return false;
 }
 
-if (config.stage === 'testing') {
+if (['testing', 'travis'].indexOf(config.stage) > -1) {
   exports.isLegal = isLegal;
   exports.isFinished = isFinished;
 }

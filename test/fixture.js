@@ -1,6 +1,8 @@
-var config = require('../config');
 var mongoose = require('mongoose');
+
 var Matrix = require('node-matrix');
+
+var config = require('../config');
 
 var BoardPiece = require('../models/game').BoardPiece;
 var Game = require('../models/game').Game;

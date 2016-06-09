@@ -1,10 +1,11 @@
+var Matrix = require('node-matrix');
+
+var utils = require('../utils');
+
 var Game = require('../models/game').Game;
 var GameState = require('../models/game').GameState;
 var BoardPiece = require('../models/game').BoardPiece;
 var Player = require('../models/player').Player;
-var Matrix = require('node-matrix');
-
-var utils = require('../utils');
 
 exports.list = function(req, res) {
 	Game.find()

@@ -1,5 +1,6 @@
-var Player = require('../models/player').Player;
 var utils = require('../utils');
+
+var Player = require('../models/player').Player;
 
 /**
  * generate user id, if it is not already in the session

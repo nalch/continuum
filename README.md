@@ -15,6 +15,30 @@ The project can be run in a docker container using the provided dockerfile.
 
 - Server: Node.js
 - Client: AngularJS
-- Codestyle: https://github.com/felixge/node-style-guide
+- Tests: Mocha, Chai, Sinon, ESLint
 
+### Tests
 
+The tests are run via Mocha and Chai and reside in the test subfolder.
+To run the tests with a local npm, run the mongodb service and call
+::
+  STAGE=travis npm test
+
+Otherwise start the services, enter the nodejs service and call
+::
+  docker-compose exec nodejs /bin/bash
+  STAGE=testing npm test
+
+### Codestyle
+
+The codestyle is enforced via eslint. The stylebundle is eslint-config-google, with
+a modified linelength of 120.
+The imports should follow the order and be ordered alphabetically inside their blocks:
+::
+  var npmModule = require('npm-package');
+
+  var npmModuleClass = require('npm-package').Class;
+
+  var ownModule = require('../own/module');
+
+  var npmModuleClass = require('../own/module').Class;

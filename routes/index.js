@@ -1,6 +1,7 @@
 var game = require('./game');
-var player = require('./player');
 var move = require('./move');
+var player = require('./player');
+
 var Game = require('../models/game').Game;
 var GameState = require('../models/game').GameState;
 var Player = require('../models/player').Player;

@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
 var uniqueValidator = require('mongoose-unique-validator');
+
+var Schema = mongoose.Schema;
 
 var playerSchema = new Schema({
   publicId: {type: String, unique: true, required: true},

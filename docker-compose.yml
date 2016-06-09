@@ -14,11 +14,6 @@ services:
       - .:/usr/src/app
     networks:
       - backtier
-    logging:
-      driver: json-file
-      options:
-        max-size: 1k
-        max-file: "1"
   
   mongodb:
     image: mongo:3.2

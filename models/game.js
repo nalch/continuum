@@ -1,7 +1,8 @@
 var Enum = require('enum');
 var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
 var uniqueValidator = require('mongoose-unique-validator');
+
+var Schema = mongoose.Schema;
 
 var gameSchema = new Schema({
   publicId: {type: String, unique: true, required: true},
