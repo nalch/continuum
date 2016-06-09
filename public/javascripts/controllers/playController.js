@@ -6,21 +6,18 @@ var playController = angular.module('playController', []);
 
 playController.controller(
   'playController',
-  [
-    '$controller', '$scope', '$http', '$routeParams', '$location', '$interval', '$timeout',
-    function ($controller, $scope, $http, $routeParams, $location, $interval, $timeout) {
+  function ($controller, $scope, $http, $routeParams, $location, $interval, $timeout, GameService, initialGame) {
         
         $controller('errorController', {$scope: $scope});
-        
+
+        $scope.game = initialGame;
+
         $scope.location = $location;
         
         $scope.isOwner = function () {
-          // TODO postpone until game is updated
-          if ($scope.game) {
-            return $scope.userId === $scope.game.owner.publicId;
-          }
+          return $scope.userId === $scope.game.owner.publicId;
         };
-        
+
         $scope.setNick = function (data) {
           $http.put('/players/' + $scope.userId, {'nick': data})
           .success(function (data) {
@@ -54,12 +51,7 @@ playController.controller(
           );
         };
         
-        $scope.playersTurn = function () {
-            // no game fetched right now
-            if (!$scope.game) {
-              return false;
-            }
-            
+        $scope.playersTurn = function() {
             // game is finished
             if ($scope.game.state === 2) {
               return false;
@@ -73,45 +65,36 @@ playController.controller(
             if ($scope.userId === $scope.game.opponent.publicId && $scope.game.moves.length % 2 === 0) {
               return true;
             }
-            
             return false;
         };
         
-        $scope.updateView = function () {
-            $http.get('/games/' + $routeParams.gameId)
-              .success(function (data) {
-                $scope.game = data;
-                
-                $scope.rows = Array.apply(
-                  null,
-                  new Array(data.board.numRows)).map(function (_, i) {return i;}
-                );
-                $scope.columns = Array.apply(
-                  null,
-                  new Array(data.board.numCols)).map(function (_, i) {return i;}
-                );
-                
-              })
-              .error(function (data) {
-                console.log('Error: ' + data);
-              });
+        $scope.updateView = function() {
+          GameService.get({gameId: $routeParams.gameId}, function(game) {
+        	$scope.game = game;
+            
+            $scope.rows = Array.apply(
+              null,
+              new Array(game.board.numRows)).map(function (_, i) {return i;}
+            );
+            $scope.columns = Array.apply(
+              null,
+              new Array(game.board.numCols)).map(function (_, i) {return i;}
+            );  
+          });
         };
         
-        $scope.startViewUpdate = function () {
+        $scope.startViewUpdate = function() {
           $scope.updateView();
           $scope.heartbeat = $interval($scope.updateView, 5000);    
         };
         
-        $scope.stopViewUpdate = function () {
+        $scope.stopViewUpdate = function() {
             $interval.cancel($scope.heartbeat);
         };
         
         $scope.startViewUpdate();
-        
         $scope.$on('$destroy', function() {
             $scope.stopViewUpdate();
         });
-        
     }
-  ]
 );

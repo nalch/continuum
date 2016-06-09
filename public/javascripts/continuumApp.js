@@ -7,7 +7,8 @@ var continuumApp = angular.module(
     'errorController',
     'startController',
     'lobbyController',
-    'playController'
+    'playController',
+    'services',
   ]
 );
 
@@ -32,7 +33,12 @@ continuumApp.config(['$routeProvider',
        templateUrl: function($routeParams) {
           return '/continuum/' + $routeParams.gameId;
          },
-       controller: 'playController'
+       controller: 'playController',
+       resolve: {
+         initialGame: function($route, GameService) {
+           return GameService.get({gameId: $route.current.params.gameId}).$promise;
+         }
+       }
      }).
      otherwise({
        redirectTo: '/'
