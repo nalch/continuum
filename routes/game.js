@@ -45,7 +45,7 @@ exports.post = function(req, res) {
           columns: 7,
           values: BoardPiece.UNDEFINED.value
         })
-      }, function(game) {
+      }, function(err, game) {
         res.json(game);
       });
     }

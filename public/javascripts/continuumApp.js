@@ -21,7 +21,12 @@ continuumApp.config(['$routeProvider',
    $routeProvider.
      when('/', {
        templateUrl: '/main',
-       controller: 'startController'
+       controller: 'startController',
+       resolve: {
+         initialGames: function(GameService) {
+           return GameService.query().$promise;
+         }
+       }
      }).
      when('/lobby/:gameId', {
        templateUrl: function($routeParams) {

@@ -6,9 +6,10 @@ var startController = angular.module('startController', []);
 
 startController.controller(
   'startController',
-  function ($scope, $http, $location, GameService) {
+  function ($scope, $http, $location, GameService, initialGames) {
     $scope.formData = {};
-    
+    $scope.games = initialGames;
+
     $scope.createGame = function() {
       $http.post('/games', $scope.gameformData)
         .success(function(data) {
