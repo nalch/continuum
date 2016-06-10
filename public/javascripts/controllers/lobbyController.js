@@ -36,7 +36,7 @@ lobbyController.controller(
         };
         
         $scope.updateView = function () {
-          GameService.get({gameId: '/games/' + $routeParams.gameId}, function(game) {
+          GameService.get({gameId: $routeParams.gameId}, function(game) {
             $scope.game = game;
           });
         };
