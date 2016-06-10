@@ -1,3 +1,5 @@
+![Build status](https://travis-ci.org/nalch/continuum.svg?branch=master)
+
 # continuum
 
 A connect four derivative, that allows connections over the boards borders and insertions of pieces at the bottom and top falling to the middle of the board.
