@@ -18,7 +18,6 @@ function lobby(req, res, next) {
   Game.findOne({publicId: req.params.gameId})
     .populate('owner opponent')
     .exec(function(err, game) {
-
       if (err) {
         return next(new Error([err]));
       }
@@ -43,7 +42,6 @@ function play(req, res, next) {
   Game.findOne({publicId: req.params.gameId})
     .populate('owner opponent')
     .exec(function(err, game) {
-
       if (err) {
         return next(new Error([err]));
       }
