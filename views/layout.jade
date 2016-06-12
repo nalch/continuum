@@ -2,12 +2,12 @@ doctype html
 html(ng-app="continuum")
   head
     title Continuum
-    
+
     link(rel="stylesheet", href="/components/bootstrap-css/css/bootstrap.min.css")
     link(rel="stylesheet", href="/stylesheets/font-awesome.min.css")
     link(rel="stylesheet", href="/stylesheets/style.css")
     link(rel="stylesheet", href="/stylesheets/xeditable.min.css")
-    
+
     script(src="/components/jquery/dist/jquery.min.js")
     script(src="/components/angular/angular.min.js")
     script(src="/components/angular-animate/angular-animate.min.js")
@@ -22,4 +22,10 @@ html(ng-app="continuum")
     script(src="/javascripts/xeditable.min.js")
 
   body
+    nav(class="navbar navbar-default")
+      div(class="container-fluid")
+        div(class="navbar-header")
+          a(class="navbar-brand" href="/#/")
+            img(class="logo", alt="Continuum logo", src="/images/logo.png")
+
     block content
