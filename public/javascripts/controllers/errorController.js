@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 
 var errorController = angular.module('errorController', []);
@@ -10,13 +10,10 @@ errorController.controller(
     $scope.errors = [];
 
     $scope.addError = function (error) {
-      if ($scope.errorsTimeout) {
-        $timeout.cancel($scope.errorsTimeout);
-      }               
       $scope.errors.push(error);
-      $scope.errorsTimeout = $timeout(function () {
-        $scope.errors = [];
-      }, 3000);
+      $timeout(function () {
+        $scope.errors.pop(0);
+      }, 5000);
     };
   }
 );
