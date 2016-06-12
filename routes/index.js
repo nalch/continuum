@@ -7,17 +7,25 @@ var GameState = require('../models/game').GameState;
 var Player = require('../models/player').Player;
 
 function index(req, res) {
-  res.render('index');
+  res.render('layout');
 }
 
 function start(req, res) {
   res.render('start');
 }
 
-function lobby(req, res) {
+function lobby(req, res, next) {
   Game.findOne({publicId: req.params.gameId})
     .populate('owner opponent')
     .exec(function(err, game) {
+
+      if (err) {
+        return next(new Error([err]));
+      }
+      if (!game) {
+        return next(new Error(['game does not exist']));
+      }
+
       Player.findOne({publicId: req.session.userId}, function(err, player) {
         if (isNewVisitor(game, player)) {
           game.visitors.push(player._id);
@@ -31,10 +39,18 @@ function lobby(req, res) {
     });
 }
 
-function play(req, res) {
+function play(req, res, next) {
   Game.findOne({publicId: req.params.gameId})
     .populate('owner opponent')
     .exec(function(err, game) {
+
+      if (err) {
+        return next(new Error([err]));
+      }
+      if (!game) {
+        return next(new Error(['game does not exist']));
+      }
+
       if (GameState.PREPARED.is(game.state) && game.opponent) {
         game.state = GameState.PLAYING.value;
         game.save();

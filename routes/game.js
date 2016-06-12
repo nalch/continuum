@@ -31,7 +31,7 @@ exports.get = function(req, res) {
     });
 };
 
-exports.post = function(req, res) {
+exports.post = function(req, res, next) {
   Player.findOne({publicId: req.session.userId}, function(err, player) {
     if (err) {
       res.send(err);
@@ -46,6 +46,10 @@ exports.post = function(req, res) {
           values: BoardPiece.UNDEFINED.value
         })
       }, function(err, game) {
+        if (err) {
+          res.status(500).send(err);
+          return next();
+        }
         res.json(game);
       });
     }
