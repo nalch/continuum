@@ -1,37 +1,40 @@
 include ./mixins/users.jade
 
-div(class="row row-offcanvas row-offcanvas-right")
-  div(class="col-xs-12 col-sm-9")
-    div(class="jumbotron")
-      h3 Welcome to game {{ game.publicId }}
-      p Follow these steps to start the game
-      div(class="row")
-                
-        div(class="col-sm-6 col-md-4")
-          div(class="thumbnail")
-            img(src="/images/state_waiting.png", alt="invite other players")
-            div(class="caption")
-              h4 Step 1: Invite other players
-              span
-                ul
-                  li wait for visitors
-                  li share this #[a(href="{{ location.absUrl() }}") link]
-                  li
-                    a(href="mailto:?subject=Join a game of continuum&body=", class="btn btn-primary", role="button") Send mail to friend
-        
-        div(class="col-sm-6 col-md-4", ng-class="{'semi-transparent': game.visitors.length == 0 && !game.opponent}")
-          div(class="thumbnail")
-            img(src="/images/state_choose_opponent.png", alt="choose opponent")
-            div(class="caption")
-              h4 Step 2: Choose an opponent
-              span Click on a visitor to challenge him
-        
-        div(class="col-sm-6 col-md-4", ng-class="{'semi-transparent': !game.opponent}")
-          div(class="thumbnail")
-            img(src="/images/state_starting.png", alt="start the game")
-            div(class="caption")
-              h4 Step 3: Start the game
-              a(ng-click="startGame()", class="btn btn-primary", role="button", ng-if="game.opponent") Start the game
+extends baseView.jade
 
-  // sidebar
-  include ./components/sidebar_users.jade
+block content
+  div(class="row row-offcanvas row-offcanvas-right")
+    div(class="col-xs-12 col-sm-9")
+      div(class="jumbotron")
+        h3 Welcome to game {{ game.publicId }}
+        p Follow these steps to start the game
+        div(class="row")
+
+          div(class="col-sm-6 col-md-4")
+            div(class="thumbnail")
+              img(src="/images/state_waiting.png", alt="invite other players")
+              div(class="caption")
+                h4 Step 1: Invite other players
+                span
+                  ul
+                    li wait for visitors
+                    li share this #[a(href="{{ location.absUrl() }}") link]
+                    li
+                      a(href="mailto:?subject=Join a game of continuum&body=", class="btn btn-primary", role="button") Send mail to friend
+
+          div(class="col-sm-6 col-md-4", ng-class="{'semi-transparent': game.visitors.length == 0 && !game.opponent}")
+            div(class="thumbnail")
+              img(src="/images/state_choose_opponent.png", alt="choose opponent")
+              div(class="caption")
+                h4 Step 2: Choose an opponent
+                span Click on a visitor to challenge him
+
+          div(class="col-sm-6 col-md-4", ng-class="{'semi-transparent': !game.opponent}")
+            div(class="thumbnail")
+              img(src="/images/state_starting.png", alt="start the game")
+              div(class="caption")
+                h4 Step 3: Start the game
+                a(ng-click="startGame()", class="btn btn-primary", role="button", ng-if="game.opponent") Start the game
+
+    // sidebar
+    include ./components/sidebar_users.jade

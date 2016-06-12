@@ -1,24 +1,27 @@
-div(class="jumbotron")
-  div(id="game-form", class="row text-center")
-    div(class="col-sm-8 col-sm-offset-2 text-center")
-      form(id="main-form")
-        div(class="form-group")
-       
-          input(type="text", class="form-control input-lg text-center", placeholder="Type in game id", ng-model="gameformData.publicId")
-          button(class="btn btn-primary btn-lg", ng-click="createGame()", ng-submit="$event.preventDefault()") Create game
-          button(class="btn btn-primary btn-lg", ng-click="joinGame()", ng-submit="$event.preventDefault()") Join game
-  
-  div(class="row")
-    div(class="col-sm-6 col-md-6")
-      h4 Create a new game
-      span Type a game id (otherwise an id is generated) and press the "Create game" button
-  
-    div(class="col-sm-6 col-md-6")
-      h4 Join an existing game
-      span Type a game id and press the "Join game" button or click an existing game from the list below
+extends baseView.jade
 
-div(class="jumbotron")
-  h3 {{ games.length }} games available
-  div(class="list-group")
-    a(href="/#/lobby/{{ game.publicId }}", class="list-group-item", ng-repeat="game in games")
-      {{ game.publicId }}
+block content
+  div(class="jumbotron")
+    div(id="game-form", class="row text-center")
+      div(class="col-sm-8 col-sm-offset-2 text-center")
+        form(id="main-form")
+          div(class="form-group")
+
+            input(type="text", class="form-control input-lg text-center", placeholder="Type in game id", ng-model="gameformData.publicId")
+            button(class="btn btn-primary btn-lg", ng-click="createGame()", ng-submit="$event.preventDefault()") Create game
+            button(class="btn btn-primary btn-lg", ng-click="joinGame()", ng-submit="$event.preventDefault()") Join game
+
+    div(class="row")
+      div(class="col-sm-6 col-md-6")
+        h4 Create a new game
+        span Type a game id (otherwise an id is generated) and press the "Create game" button
+
+      div(class="col-sm-6 col-md-6")
+        h4 Join an existing game
+        span Type a game id and press the "Join game" button or click an existing game from the list below
+
+  div(class="jumbotron")
+    h3 {{ games.length }} games available
+    div(class="list-group")
+      a(href="/#/lobby/{{ game.publicId }}", class="list-group-item", ng-repeat="game in games")
+        {{ game.publicId }}

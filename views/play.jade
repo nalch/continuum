@@ -1,53 +1,56 @@
 include ./mixins/users.jade
 include ./mixins/errors.jade
 
-div(class="row row-offcanvas row-offcanvas-right")
-  div(class="col-xs-12 col-sm-9")
-    div(class="jumbotron")
-      +errors("errors")
-      table(class="table text-center", id="board", ng-Mouseout="activeRow=null; activeColumn=null;")
-        tbody(class="board-body")
-          tr(ng-if="playersTurn()")
-            td(ng-repeat="column in columns", class="borderless", ng-Mouseover="hoverBoard(-1, column)")
-              span(
-                class="fa fa-chevron-down",
-                aria-hidden="true",
-                ng-show="column === activeColumn && activeRow < 3"
-              )
-          tr(ng-repeat="row in rows")
-            td(
-              ng-repeat="column in columns",
-              ng-Mouseover="hoverBoard(row, column)",
-              ng-Click="setMove(row, column)",
-              class="cell",
-              ng-class="{borderless:$parent.$first}"
-            ) 
-              span(
-                class="fa",
-                ng-class="{'fa-times': game.board[row][column] === 1, 'fa-circle-o': game.board[row][column] === 2}",
-                aria-hidden="true"
-              )
-          tr(ng-if="playersTurn()")
-            td(ng-repeat="column in columns", class="borderless", ng-Mouseover="hoverBoard(5, column)")
-              span(
-                class="fa fa-chevron-up",
-                aria-hidden="true",
-                ng-show="column === activeColumn && activeRow > 2"
-              )
+extends baseView.jade
 
-  // sidebar
-  div(class="col-xs-6 col-sm-3 sidebar-offcanvas", id="sidebar")
-    div(class="panel panel-default")
-      div(class="panel-heading")
-        h3(class="panel-title") Owner
-      div(class="panel-body")
-        +nick("game.owner")
-    div(class="panel panel-default")
-      div(class="panel-heading")
-        h3(class="panel-title") Opponent
-      div(class="panel-body")
-        +nick("game.opponent")
-    div(class="list-group")
-      b {{ game.visitors.length }} visitors
-      span(class="list-group-item", ng-repeat="visitor in game.visitors")
-        +nick("visitor")
+block content
+  div(class="row row-offcanvas row-offcanvas-right")
+    div(class="col-xs-12 col-sm-9")
+      div(class="jumbotron")
+        +errors("errors")
+        table(class="table text-center", id="board", ng-Mouseout="activeRow=null; activeColumn=null;")
+          tbody(class="board-body")
+            tr(ng-if="playersTurn()")
+              td(ng-repeat="column in columns", class="borderless", ng-Mouseover="hoverBoard(-1, column)")
+                span(
+                  class="fa fa-chevron-down",
+                  aria-hidden="true",
+                  ng-show="column === activeColumn && activeRow < 3"
+                )
+            tr(ng-repeat="row in rows")
+              td(
+                ng-repeat="column in columns",
+                ng-Mouseover="hoverBoard(row, column)",
+                ng-Click="setMove(row, column)",
+                class="cell",
+                ng-class="{borderless:$parent.$first}"
+              )
+                span(
+                  class="fa",
+                  ng-class="{'fa-times': game.board[row][column] === 1, 'fa-circle-o': game.board[row][column] === 2}",
+                  aria-hidden="true"
+                )
+            tr(ng-if="playersTurn()")
+              td(ng-repeat="column in columns", class="borderless", ng-Mouseover="hoverBoard(5, column)")
+                span(
+                  class="fa fa-chevron-up",
+                  aria-hidden="true",
+                  ng-show="column === activeColumn && activeRow > 2"
+                )
+
+    // sidebar
+    div(class="col-xs-6 col-sm-3 sidebar-offcanvas", id="sidebar")
+      div(class="panel panel-default")
+        div(class="panel-heading")
+          h3(class="panel-title") Owner
+        div(class="panel-body")
+          +nick("game.owner")
+      div(class="panel panel-default")
+        div(class="panel-heading")
+          h3(class="panel-title") Opponent
+        div(class="panel-body")
+          +nick("game.opponent")
+      div(class="list-group")
+        b {{ game.visitors.length }} visitors
+        span(class="list-group-item", ng-repeat="visitor in game.visitors")
+          +nick("visitor")
