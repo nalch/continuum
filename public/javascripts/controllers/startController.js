@@ -1,29 +1,36 @@
 /**
- * 
+ *
  */
 
 var startController = angular.module('startController', []);
 
 startController.controller(
   'startController',
-  function ($scope, $http, $location, GameService, initialGames) {
+  function ($controller, $scope, $http, $location, GameService, initialGames) {
+    $controller('errorController', {$scope: $scope});
     $scope.formData = {};
     $scope.games = initialGames;
 
     $scope.createGame = function() {
-      $http.post('/games', $scope.gameformData)
-        .success(function(data) {
-          $location.path('/lobby/' + data.publicId);
-        })
-        .error(function(data) {
-          console.log('Error: ' + data);
-        });
-    };
-    
-    $scope.joinGame = function() {
-      GameService.get({gameId: '/games/' + $scope.gameformData.publicId}, function() {
-        $location.path('/lobby/' + $scope.gameformData.publicId);
+      data = {}
+      if ($scope.gameformData) {
+        data = $scope.gameformData;
+      }
+      GameService.save(data, function(game) {
+        $location.path('/lobby/' + game.publicId);
+      }, function(error) {
+        $scope.addError(error);
       });
+    };
+
+    $scope.joinGame = function() {
+      if ($scope.gameformData) {
+        GameService.get({gameId: $scope.gameformData.publicId}, function(game) {
+          $location.path('/lobby/' + game.publicId);
+        }, function(error) {
+          $scope.addError(error);
+        });
+      }
     };
   }
 );
