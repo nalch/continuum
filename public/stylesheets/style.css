@@ -10,6 +10,24 @@ body {
   height: 20px;
 }
 
+.navbar-nav .alert-danger {
+  display: block;
+  float: right;
+  line-height: 20px;
+  max-width: 1000px;
+  overflow: hidden;
+  padding: 10px 15px;
+  padding-bottom: 15px;
+  padding-top: 15px;
+  position: relative;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.navbar-nav .alert-danger .fa-exclamation-circle:before {
+  padding-right: 10px;
+}
+
 a {
 	color: #00B7FF;
 }
