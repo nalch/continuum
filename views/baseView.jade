@@ -4,11 +4,9 @@ nav(class="navbar navbar-default")
       a(class="navbar-brand" href="/#/")
         img(class="logo", alt="Continuum logo", src="/images/logo.png")
       ul(class="nav navbar-nav show-hide", ng-show="errors.length > 0")
-        li(class="alert-danger")
-          i(class="fa fa-exclamation-circle", aria-hidden="true")
-            strong Errors:
-            ul
-              li(ng-repeat="error in errors track by $index") {{ error }}
+        li(class="alert-danger animate-repeat", ng-repeat="error in errors track by $index")
+            i(class="fa fa-exclamation-circle", aria-hidden="true")
+            span {{ error }}
 
 div(class="container")
   block content

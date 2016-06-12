@@ -12,9 +12,6 @@ lobbyController.controller(
 	  $scope.location = $location;
 
     $scope.isOwner = function () {
-      console.log('hoi?');
-      console.log($scope.userId);
-      console.log($scope.game.owner.publicId);
       return $scope.userId === $scope.game.owner.publicId;
     };
 
