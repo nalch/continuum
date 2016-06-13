@@ -32,6 +32,6 @@ deploy:
   domain: nalch
   app: continuum
   on:
-    branch: deployment
+    branch: master
     node: '5'
     repo: nalch/continuum
