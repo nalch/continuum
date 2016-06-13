@@ -27,7 +27,7 @@ deploy:
   password:
     secure: POj3IkDytC3K/py1yjTSiYicoCf3PKtxCWNqy1ZjWwrZpqa7Tf0Zvwk/QmUxSUGR3x5nnxH+CbgC/itNa4NJLisNi5IgJq09nQy750EwMkKnrCIk53X9fgv3Eb1QrU1ALdMOiujqcXz/5Z9sB2EvcX6l2jphxwrN8RGzJTeFjKOnLdmkk9fxbgDJCFJZ3QGSFDP0+cgwY62RIdsPiCIOA6lQlOIpIOoTPQU5SnBwlYO11IMmQcmVgMoFDoxDs3pswcJd8gqb0U59dQ/n8kodNBw2//NeievgS9CCxclYP7BNFS2doV3WMNCV1fj2P1PhETfQH3voP7vCE7jL6Gz2CAt8cVcZTy7Xo46lYiCo8GkkjSaMtAfpBFJ5yMYonKH77Ywn3HwrqEx+hwe4qFlyCCnRbGWX5v6YYa4VjU9nGfHeOj4/iR8tJEavut/ezmWL1/2HG2FWU7mTGDwor7aceFXeKFWGyV7cojLycYb1nRcUu+WrDiT4lOg+oRNG1rVZClg9z6V5j0ZwwPvvx+MkzxpRCXD3y4WYiGPJRbNSMyrALZUsseHONdtncT4nacXsZy/44XkJP1ATWQGA+KcnyBlk1aYPTkxr/OBlNf2rW2UqCykzkjn3ck6ldPhnnlFePF3TEpjIrxZdpSeCFdYMB0NHb9RdGTpw6ZgQToGEm5M=
   domain: nalch
-  app: continuumgame
+  app: continuum
   on:
     branch: master
     node: "5"
