@@ -16,11 +16,13 @@ var morgan = require('morgan');
 var MongoStore = require('connect-mongo')(session);
 var mongoose = require('mongoose');
 
-mongoose.connect(
-  'mongodb://' +
+var mongodbConnectionString = 'mongodb://' +
   config.db.host + ':' + config.db.port + '/' +
-  config.db.database
-);
+  config.db.database;
+if (process.env.OPENSHIFT_MONGODB_DB_URL) {
+  mongodbConnectionString = process.env.OPENSHIFT_MONGODB_DB_URL + config.db.database;
+}
+mongoose.connect(mongodbConnectionString);
 
 var app = express();
 
@@ -51,4 +53,4 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 routes.registerRoutes(app);
 
-http.createServer(app).listen(config.web.port);
+http.createServer(app).listen(config.web.port, config.web.ip);

@@ -8,6 +8,7 @@
     "lint": "eslint 'configs/**' 'middlewares/**' 'models/**' 'routes/**' 'test/**' '*.js'",
     "postinstall": "node_modules/.bin/bower install"
   },
+  "main": "app.js",
   "dependencies": {
     "express": "4",
     "express-session": "*",
