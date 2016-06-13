@@ -5,6 +5,7 @@ var continuumApp = angular.module(
     'xeditable',
     'ngAnimate',
     'errorController',
+    'gameUpdateController',
     'startController',
     'lobbyController',
     'playController',

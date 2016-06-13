@@ -7,7 +7,7 @@ var lobbyController = angular.module('lobbyController', []);
 lobbyController.controller(
   'lobbyController',
   function ($controller, $scope, $http, $routeParams, $location, $interval, GameService, initialGame) {
-    $controller('errorController', {$scope: $scope});
+    $controller('gameUpdateController', {$scope: $scope});
     $scope.game = initialGame;
 	  $scope.location = $location;
 
@@ -34,27 +34,6 @@ lobbyController.controller(
         console.log('Error: ' + data);
       });
     };
-
-    $scope.updateView = function () {
-      GameService.get({gameId: $routeParams.gameId}, function(game) {
-        $scope.game = game;
-      });
-    };
-
-    $scope.startViewUpdate = function () {
-      $scope.updateView();
-      $scope.heartbeat = $interval($scope.updateView, 5000);
-    };
-
-    $scope.stopViewUpdate = function () {
-        $interval.cancel($scope.heartbeat);
-    };
-
-    $scope.startViewUpdate();
-
-    $scope.$on('$destroy', function() {
-      $scope.stopViewUpdate();
-    });
 
     $scope.startGame = function() {
       $location.path('/continuum/' + $routeParams.gameId);

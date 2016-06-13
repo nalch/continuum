@@ -7,7 +7,7 @@ var playController = angular.module('playController', []);
 playController.controller(
   'playController',
   function ($controller, $scope, $http, $routeParams, $location, $interval, $timeout, GameService, initialGame) {
-    $controller('errorController', {$scope: $scope});
+    $controller('gameUpdateController', {$scope: $scope});
     $scope.game = initialGame;
     $scope.location = $location;
 
@@ -64,34 +64,5 @@ playController.controller(
         }
         return false;
     };
-
-    $scope.updateView = function() {
-      GameService.get({gameId: $routeParams.gameId}, function(game) {
-      $scope.game = game;
-
-        $scope.rows = Array.apply(
-          null,
-          new Array(game.board.numRows)).map(function (_, i) {return i;}
-        );
-        $scope.columns = Array.apply(
-          null,
-          new Array(game.board.numCols)).map(function (_, i) {return i;}
-        );
-      });
-    };
-
-    $scope.startViewUpdate = function() {
-      $scope.updateView();
-      $scope.heartbeat = $interval($scope.updateView, 5000);
-    };
-
-    $scope.stopViewUpdate = function() {
-        $interval.cancel($scope.heartbeat);
-    };
-
-    $scope.startViewUpdate();
-    $scope.$on('$destroy', function() {
-        $scope.stopViewUpdate();
-    });
   }
 );

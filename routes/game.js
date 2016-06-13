@@ -19,10 +19,14 @@ exports.list = function(req, res) {
     });
 };
 
-exports.get = function(req, res) {
+exports.get = function(req, res, next) {
   Game.findOne({publicId: req.params.gameId})
     .populate('owner opponent moves visitors')
     .exec(function(err, game) {
+      if (err) {
+        res.status(500).send('Could not get game');
+        return next();
+      }
       if (game) {
         res.json(game);
       } else {
