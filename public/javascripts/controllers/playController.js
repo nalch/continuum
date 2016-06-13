@@ -31,21 +31,24 @@ playController.controller(
     };
 
     $scope.setMove = function (row, column) {
-      $http.post(
-        '/games/' + $routeParams.gameId + '/moves',
-        {
-          'downward': row < 3,
-          'column': column
-        }
-      ).success(
-        function (data) {
-          $scope.game.board[data.row][data.column] = data.number % 2 === 1 ? 1 : 2;
-        }
-      ).error(
-        function (error) {
-          $scope.addError(error);
-        }
-      );
+      if ($scope.playersTurn()) {
+        $http.post(
+          '/games/' + $routeParams.gameId + '/moves',
+          {
+            'downward': row < 3,
+            'column': column
+          }
+        ).success(
+          function (data) {
+            $scope.game.board[data.row][data.column] = data.number % 2 === 1 ? 1 : 2;
+            $scope.updateView();
+          }
+        ).error(
+          function (error) {
+            $scope.addError(error);
+          }
+        );
+      }
     };
 
     $scope.playersTurn = function() {
