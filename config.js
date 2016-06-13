@@ -11,8 +11,7 @@ var config = {
     secretKey: ''
   },
   web: {
-    ip: '127.0.0.1',
-    port: process.env.WEB_PORT || 8080
+    port: process.env.WEB_PORT || 8300
   }
 };
 

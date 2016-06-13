@@ -53,4 +53,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 routes.registerRoutes(app);
 
-http.createServer(app).listen(config.web.port, config.web.ip);
+if (config.web.ip) {
+  http.createServer(app).listen(config.web.port, config.web.ip);
+} else {
+  http.createServer(app).listen(config.web.port);
+}
