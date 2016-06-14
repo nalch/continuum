@@ -6,10 +6,21 @@ var startController = angular.module('startController', []);
 
 startController.controller(
   'startController',
-  function ($controller, $scope, $http, $location, GameService, initialGames) {
+  function ($controller, $scope, $http, $filter, $location, GameService, initialGames) {
     $controller('errorController', {$scope: $scope});
     $scope.formData = {};
-    $scope.games = initialGames;
+    $scope.games = $filter('orderBy')(
+      $filter('filter')(
+        initialGames,
+        function(value, index, array) {
+          return value.state !== 2;
+        },
+        true
+      ),
+      function(game) {
+        return game.state;
+      }
+    );
 
     $scope.createGame = function() {
       data = {}

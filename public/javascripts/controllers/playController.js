@@ -31,22 +31,33 @@ playController.controller(
     };
 
     $scope.setMove = function (row, column) {
-      $http.post(
-        '/games/' + $routeParams.gameId + '/moves',
-        {
-          'downward': row < 3,
-          'column': column
-        }
-      ).success(
-        function (data) {
-          $scope.game.board[data.row][data.column] = data.number % 2 === 1 ? 1 : 2;
-        }
-      ).error(
-        function (error) {
-          $scope.addError(error);
-        }
-      );
+      if ($scope.playersTurn()) {
+        $http.post(
+          '/games/' + $routeParams.gameId + '/moves',
+          {
+            'downward': row < 3,
+            'column': column
+          }
+        ).success(
+          function (data) {
+            $scope.game.board[data.row][data.column] = data.number % 2 === 1 ? 1 : 2;
+            $scope.updateView();
+          }
+        ).error(
+          function (error) {
+            $scope.addError(error);
+          }
+        );
+      }
     };
+
+    $scope.currentPlayer = function() {
+      return $scope.game.moves.length % 2 === 0 ? $scope.game.owner.publicId : $scope.game.opponent.publicId;
+    };
+
+    $scope.ownersTurn = function() {
+      return $scope.game.moves.length % 2 === 0;
+    }
 
     $scope.playersTurn = function() {
         // game is finished
@@ -55,13 +66,10 @@ playController.controller(
         }
 
         // active player
-        if ($scope.userId === $scope.game.owner.publicId && $scope.game.moves.length % 2 === 0) {
+        if ($scope.userId === $scope.currentPlayer()) {
           return true;
         }
 
-        if ($scope.userId === $scope.game.opponent.publicId && $scope.game.moves.length % 2 === 1) {
-          return true;
-        }
         return false;
     };
   }

@@ -36,7 +36,13 @@ lobbyController.controller(
     };
 
     $scope.startGame = function() {
-      $location.path('/continuum/' + $routeParams.gameId);
+      GameService.get({gameId: $routeParams.gameId}, function(game) {
+        if (game.state !== 2) {
+          $location.path('/continuum/' + $routeParams.gameId);
+        } else {
+          $scope.addError('Game is finished');
+        }
+      });
     };
 
     }

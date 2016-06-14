@@ -46,16 +46,20 @@ function play(req, res, next) {
         return next(new Error([err]));
       }
       if (!game) {
-        return next(new Error(['game does not exist']));
+        return next(new Error(['Game does not exist']));
       }
 
+      // start game
       if (GameState.PREPARED.is(game.state) && game.opponent) {
         game.state = GameState.PLAYING.value;
         game.save();
       }
+
       if (!GameState.PLAYING.is(game.state)) {
-        res.status(403).send();
+        res.status(404);
+        return next(new Error(['Game is not open for playing']));
       }
+
       Player.findOne({publicId: req.session.userId}, function(err, player) {
         if (isNewVisitor(game, player)) {
           game.visitors.push(player._id);

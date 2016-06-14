@@ -8,14 +8,20 @@ block content
   div(class="row row-offcanvas row-offcanvas-right")
     div(class="col-xs-12 col-sm-9")
       div(class="jumbotron")
+
+        h4(ng-if="game.state === 2 && !ownersTurn()")
+          The owner {{ game.owner.nick || game.owner.publicId }} has won the game
+        h4(ng-if="game.state === 2 && ownersTurn()")
+          The opponent {{ game.opponent.nick || game.opponent.publicId }} has won the game
+
         table(class="table text-center", id="board", ng-Mouseout="activeRow=null; activeColumn=null;")
           tbody(class="board-body")
-            tr(ng-if="playersTurn()")
+            tr
               td(ng-repeat="column in columns", class="borderless", ng-Mouseover="hoverBoard(-1, column)")
                 span(
                   class="fa fa-chevron-down",
                   aria-hidden="true",
-                  ng-show="column === activeColumn && activeRow < 3"
+                  ng-show="column === activeColumn && activeRow < 3 && playersTurn()"
                 )
             tr(ng-repeat="row in rows")
               td(
@@ -30,25 +36,43 @@ block content
                   ng-class="{'fa-times': game.board[row][column] === 1, 'fa-circle-o': game.board[row][column] === 2}",
                   aria-hidden="true"
                 )
-            tr(ng-if="playersTurn()")
+            tr
               td(ng-repeat="column in columns", class="borderless", ng-Mouseover="hoverBoard(5, column)")
                 span(
                   class="fa fa-chevron-up",
                   aria-hidden="true",
-                  ng-show="column === activeColumn && activeRow > 2"
+                  ng-show="column === activeColumn && activeRow > 2 && playersTurn()"
                 )
 
     // sidebar
     div(class="col-xs-6 col-sm-3 sidebar-offcanvas", id="sidebar")
       div(class="panel panel-default")
         div(class="panel-heading")
+          span(
+            class="fa fa-times spaced",
+            aria-hidden="true"
+          )
           h3(class="panel-title") Owner
         div(class="panel-body")
+          span(
+            class="fa fa-chevron-left play-indicator",
+            aria-hidden="true",
+            ng-if="ownersTurn()"
+          )
           +nick("game.owner")
       div(class="panel panel-default")
         div(class="panel-heading")
+          span(
+            class="fa fa-circle-o spaced",
+            aria-hidden="true"
+          )
           h3(class="panel-title") Opponent
         div(class="panel-body")
+          span(
+            class="fa fa-chevron-left play-indicator",
+            aria-hidden="true",
+            ng-if="!ownersTurn()"
+          )
           +nick("game.opponent")
       div(class="list-group")
         b {{ game.visitors.length }} visitors
