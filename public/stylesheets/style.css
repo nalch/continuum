@@ -46,6 +46,10 @@ body {
     padding: 0;
 }
 
+.navbar-right .helpicon {
+  font-size: 24px;
+}
+
 .show-hide {
   transition: all linear 0.5s;
 }
@@ -113,6 +117,10 @@ a {
 	background-color: #ffffff;
 	border-left: 1px solid #ddd;
 	border-right: 1px solid #ddd;
+}
+
+#board .winningcell {
+  background-color: #dff0d8;
 }
 
 #sidebar .panel-heading .fa {

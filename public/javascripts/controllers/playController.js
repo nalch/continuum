@@ -10,6 +10,7 @@ playController.controller(
     $controller('gameUpdateController', {$scope: $scope});
     $scope.game = initialGame;
     $scope.location = $location;
+    $scope.winningCells = [];
 
     $scope.isOwner = function () {
       return $scope.userId === $scope.game.owner.publicId;
@@ -29,6 +30,20 @@ playController.controller(
       $scope.activeColumn = column;
       $scope.activeRow = row;
     };
+
+    $scope.afterUpdate = function(game) {
+      $scope.rows = Array.apply(
+        null,
+        new Array(game.board.numRows)).map(function (_, i) {return i;}
+      );
+      $scope.columns = Array.apply(
+        null,
+        new Array(game.board.numCols)).map(function (_, i) {return i;}
+      );
+      if ($scope.game.state === enumvalues.GameState.FINISHED) {
+        $scope.prepareWinningMoves($scope.game.moves[$scope.game.moves.length - 1]);
+      }
+    }
 
     $scope.setMove = function (row, column) {
       if ($scope.playersTurn()) {
@@ -72,5 +87,21 @@ playController.controller(
 
         return false;
     };
+
+    $scope.prepareWinningMoves = function(lastMove) {
+      $scope.winningCells = [];
+      var winningCells = continuumhelpers.winningCells($scope.game, lastMove);
+      for(var directionIndex=0; directionIndex < winningCells.length; directionIndex++) {
+        var directionCells = winningCells[directionIndex];
+        for(var cellIndex=0; cellIndex < directionCells.length; cellIndex++) {
+          var id = 'cell-' + directionCells[cellIndex].row + '-' + directionCells[cellIndex].column;
+          $scope.winningCells.push(id);
+        }
+      }
+    };
+
+    if ($scope.game.state === enumvalues.GameState.FINISHED) {
+      $scope.prepareWinningMoves($scope.game.moves[$scope.game.moves.length - 1]);
+    }
   }
 );

@@ -3,10 +3,17 @@ nav(class="navbar navbar-default")
     div(class="navbar-header")
       a(class="navbar-brand" href="/#/")
         img(class="logo", alt="Continuum logo", src="/images/logo.png")
+    div(class="navbar-collapse collapse")
       ul(class="nav navbar-nav show-hide", ng-show="errors.length > 0")
         li(class="alert-danger animate-repeat", ng-repeat="error in errors track by $index")
             i(class="fa fa-exclamation-circle", aria-hidden="true")
             span {{ error }}
+      ul(class="nav navbar-nav navbar-right")
+        li
+          a(
+            class="helpicon fa fa-question-circle-o",
+            aria-hidden="true",
+          )
 
 div(class="container")
   block content
