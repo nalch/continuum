@@ -66,6 +66,8 @@ startController.controller(
         }, function(error) {
           $scope.addError('Game does not exist');
         });
+      } else {
+        $scope.addError('Game id is empty');
       }
     };
 
