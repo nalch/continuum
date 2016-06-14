@@ -28,7 +28,6 @@ startController.controller(
     $scope.updateView = function() {
       GameService.query(function(games) {
         $scope.games = $scope.filterGames(games);
-        console.log($scope.games);
       }, function(error) {
         $scope.addError('Could not get games');
       });
