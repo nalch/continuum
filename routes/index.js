@@ -55,11 +55,6 @@ function play(req, res, next) {
         game.save();
       }
 
-      if (!GameState.PLAYING.is(game.state)) {
-        res.status(404);
-        return next(new Error(['Game is not open for playing']));
-      }
-
       Player.findOne({publicId: req.session.userId}, function(err, player) {
         if (isNewVisitor(game, player)) {
           game.visitors.push(player._id);
