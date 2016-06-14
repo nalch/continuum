@@ -4,6 +4,8 @@ var uniqueValidator = require('mongoose-unique-validator');
 
 var Schema = mongoose.Schema;
 
+var continuumEnumvalues = require('../public/javascripts/continuumlogic/enumvalues');
+
 var gameSchema = new Schema({
   publicId: {type: String, unique: true, required: true},
   owner: {type: Schema.Types.ObjectId, ref: 'Player', required: true},
@@ -15,6 +17,6 @@ var gameSchema = new Schema({
 });
 gameSchema.plugin(uniqueValidator);
 
-exports.GameState = new Enum({PREPARED: 0, PLAYING: 1, FINISHED: 2});
-exports.BoardPiece = new Enum({UNDEFINED: 0, OWNER: 1, OPPONENT: 2});
+exports.GameState = new Enum(continuumEnumvalues.GameState);
+exports.BoardPiece = new Enum(continuumEnumvalues.BoardPiece);
 exports.Game = mongoose.model('Game', gameSchema);

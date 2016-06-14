@@ -25,11 +25,12 @@ block content
                 )
             tr(ng-repeat="row in rows")
               td(
+                id="cell-{{ column }}-{{ row }}",
                 ng-repeat="column in columns",
                 ng-Mouseover="hoverBoard(row, column)",
                 ng-Click="setMove(row, column)",
                 class="cell",
-                ng-class="{borderless:$parent.$first}"
+                ng-class="{borderless:$parent.$first, 'alert-success winningcell':winningCells.indexOf('cell-{{ row }}-{{ column }}') > -1}"
               )
                 span(
                   class="fa",

@@ -4,8 +4,8 @@ chai.use(dirtyChai);
 var expect = chai.expect;
 var Matrix = require('node-matrix');
 
-var moveModule = require('../routes/move');
 var fixture = require('../test/fixture');
+var moveModule = require('../routes/move');
 
 var BoardPiece = require('../models/game').BoardPiece;
 
