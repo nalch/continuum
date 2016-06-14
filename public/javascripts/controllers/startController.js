@@ -39,7 +39,7 @@ startController.controller(
         GameService.get({gameId: $scope.gameformData.publicId}, function(game) {
           $location.path('/lobby/' + game.publicId);
         }, function(error) {
-          $scope.addError(error);
+          $scope.addError('Game does not exist');
         });
       }
     };
