@@ -87,6 +87,10 @@ a {
 	padding: 0 5px 0 5px;
 }
 
+.spaced-big {
+	padding: 0 15px 0 5px;
+}
+
 .semi-transparent {
 	opacity: 0.2;
 }

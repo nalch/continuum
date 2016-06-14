@@ -24,4 +24,10 @@ block content
     h3 {{ games.length }} games available
     div(class="list-group")
       a(href="/#/lobby/{{ game.publicId }}", class="list-group-item", ng-repeat="game in games")
+        span(
+          class="fa spaced-big",
+          ng-class="{'fa-play': game.state === 1, 'fa-hourglass-start': game.state === 0}",
+          aria-hidden="true"
+        )
         {{ game.publicId }}
+        span(class="badge") {{ game.visitors.length + 1 }}
