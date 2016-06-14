@@ -25,7 +25,6 @@ block content
                 )
             tr(ng-repeat="row in rows")
               td(
-                id="cell-{{ column }}-{{ row }}",
                 ng-repeat="column in columns",
                 ng-Mouseover="hoverBoard(row, column)",
                 ng-Click="setMove(row, column)",

@@ -119,6 +119,10 @@ a {
 	border-right: 1px solid #ddd;
 }
 
+#board .winningcell {
+  background-color: #dff0d8;
+}
+
 #sidebar .panel-heading .fa {
   float: left;
   font-size: 16px;
