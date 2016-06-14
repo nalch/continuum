@@ -24,7 +24,7 @@ gameUpdateController.controller(
 
     $scope.startViewUpdate = function() {
       $scope.updateView();
-      $scope.heartbeat = $interval($scope.updateView, 5000);
+      $scope.heartbeat = $interval($scope.updateView, 1000);
     };
 
     $scope.stopViewUpdate = function() {
