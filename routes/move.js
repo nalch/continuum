@@ -32,7 +32,7 @@ exports.post = function(req, res, next) {
       }
       if (game) {
         if (!GameState.PLAYING.is(game.state)) {
-          return res.status(403);
+          res.status(403);
           return next(new Error(['Game is not in progress']));
         }
         var move = {
