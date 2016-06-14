@@ -46,6 +46,10 @@ body {
     padding: 0;
 }
 
+.navbar-right .helpicon {
+  font-size: 24px;
+}
+
 .show-hide {
   transition: all linear 0.5s;
 }
