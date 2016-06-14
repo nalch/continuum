@@ -8,15 +8,9 @@ gameUpdateController.controller(
     $scope.updateView = function() {
       GameService.get({gameId: $routeParams.gameId}, function(game) {
         $scope.game = game;
-
-        $scope.rows = Array.apply(
-          null,
-          new Array(game.board.numRows)).map(function (_, i) {return i;}
-        );
-        $scope.columns = Array.apply(
-          null,
-          new Array(game.board.numCols)).map(function (_, i) {return i;}
-        );
+        if ($scope.afterUpdate) {
+          $scope.afterUpdate(game);
+        }
       }, function(error) {
         $scope.addError('Could not get game');
       });

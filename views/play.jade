@@ -29,7 +29,7 @@ block content
                 ng-Mouseover="hoverBoard(row, column)",
                 ng-Click="setMove(row, column)",
                 class="cell",
-                ng-class="{borderless:$parent.$first}"
+                ng-class="{borderless:$parent.$first, 'alert-success winningcell': winningCells['cell-{{ row }}-{{ column }}']}"
               )
                 span(
                   class="fa",
