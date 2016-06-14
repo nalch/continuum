@@ -88,9 +88,8 @@ playController.controller(
         return false;
     };
 
-    $scope.changed = false;
     $scope.prepareWinningMoves = function(lastMove) {
-      $scope.winningCells = {};
+      $scope.winningCells = [];
       var winningCells = continuumhelpers.winningCells($scope.game, lastMove);
       for(var directionIndex=0; directionIndex < winningCells.length; directionIndex++) {
         var directionCells = winningCells[directionIndex];
