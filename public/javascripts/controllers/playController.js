@@ -10,6 +10,7 @@ playController.controller(
     $controller('gameUpdateController', {$scope: $scope});
     $scope.game = initialGame;
     $scope.location = $location;
+    $scope.winningCells = [];
 
     $scope.isOwner = function () {
       return $scope.userId === $scope.game.owner.publicId;
@@ -95,7 +96,7 @@ playController.controller(
         var directionCells = winningCells[directionIndex];
         for(var cellIndex=0; cellIndex < directionCells.length; cellIndex++) {
           var id = 'cell-' + directionCells[cellIndex].row + '-' + directionCells[cellIndex].column;
-          $scope.winningCells[id] = true;
+          $scope.winningCells.push(id);
         }
       }
     };
