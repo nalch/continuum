@@ -51,6 +51,14 @@ playController.controller(
       }
     };
 
+    $scope.currentPlayer = function() {
+      return $scope.game.moves.length % 2 === 0 ? $scope.game.owner.publicId : $scope.game.opponent.publicId;
+    };
+
+    $scope.ownersTurn = function() {
+      return $scope.game.moves.length % 2 === 0;
+    }
+
     $scope.playersTurn = function() {
         // game is finished
         if ($scope.game.state === 2) {
@@ -58,13 +66,10 @@ playController.controller(
         }
 
         // active player
-        if ($scope.userId === $scope.game.owner.publicId && $scope.game.moves.length % 2 === 0) {
+        if ($scope.userId === $scope.currentPlayer()) {
           return true;
         }
 
-        if ($scope.userId === $scope.game.opponent.publicId && $scope.game.moves.length % 2 === 1) {
-          return true;
-        }
         return false;
     };
   }

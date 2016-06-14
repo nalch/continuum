@@ -114,3 +114,13 @@ a {
 	border-left: 1px solid #ddd;
 	border-right: 1px solid #ddd;
 }
+
+#sidebar .panel-heading .fa {
+  float: left;
+  font-size: 16px;
+}
+
+#sidebar .play-indicator {
+  float: right;
+  font-size: 16px;
+}
