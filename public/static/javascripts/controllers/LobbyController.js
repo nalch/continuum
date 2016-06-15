@@ -5,8 +5,9 @@ angular.module('LobbyController', []).controller('LobbyController', [
   '$location',
   'GameService',
   'UserService',
+  'UserUtilsService',
   'initialGame',
-  function($controller, $scope, $routeParams, $location, GameService, UserService, initialGame) {
+  function($controller, $scope, $routeParams, $location, GameService, UserService, UserUtilsService, initialGame) {
     // controller initialisation
     var vm = this;
     $controller('GameUpdateController', {vm: vm, $scope: $scope});
@@ -15,7 +16,7 @@ angular.module('LobbyController', []).controller('LobbyController', [
 
     // available functions
     vm.isOwner = isOwner;
-    vm.setNick = setNick;
+    vm.setNick = UserUtilsService.setNick;
     vm.challengeUser = challengeUser;
     vm.startGame = startGame;
 
@@ -23,20 +24,6 @@ angular.module('LobbyController', []).controller('LobbyController', [
     // function implementations
     function isOwner() {
       return vm.userId === vm.game.owner.publicId;
-    }
-
-    function setNick(data) {
-      UserService.patch(
-        {publicId: vm.userId},
-        {nick: data},
-        function() {
-          return true;
-        },
-        function() {
-          vm.addError('Could not change nick');
-          return false;
-        }
-      );
     }
 
     function challengeUser(visitor) {

@@ -11,6 +11,7 @@ angular.module('ErrorController', []).controller(
         $timeout(function() {
           vm.errors.pop(0);
         }, 5000);
+        return false;
       };
     }
   ]

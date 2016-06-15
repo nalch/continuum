@@ -7,8 +7,9 @@ angular.module('PlayController', []).controller(
     '$location',
     'MoveService',
     'UserService',
+    'UserUtilsService',
     'initialGame',
-    function($controller, $scope, $routeParams, $location, MoveService, UserService, initialGame) {
+    function($controller, $scope, $routeParams, $location, MoveService, UserService, UserUtilsService, initialGame) {
       // controller initialisation
       var vm = this;
       $controller('GameUpdateController', {vm: vm, $scope: $scope});
@@ -19,7 +20,6 @@ angular.module('PlayController', []).controller(
 
       // available functions
       vm.isOwner = isOwner;
-      vm.setNick = setNick;
       vm.hoverBoard = hoverBoard;
       vm.afterUpdate = afterUpdate;
       vm.setMove = setMove;
@@ -27,6 +27,8 @@ angular.module('PlayController', []).controller(
       vm.currentPlayer = currentPlayer;
       vm.ownersTurn = ownersTurn;
       vm.prepareWinningMoves = prepareWinningMoves;
+
+      vm.setNick = UserUtilsService.setNick;
 
       // controller start
       if (vm.game.state === enumvalues.GameState.FINISHED) {
@@ -36,20 +38,6 @@ angular.module('PlayController', []).controller(
       // function implementations
       function isOwner() {
         return vm.userId === vm.game.owner.publicId;
-      }
-
-      function setNick(data) {
-        UserService.patch(
-          {publicId: vm.userId},
-          {nick: data},
-          function() {
-            return true;
-          },
-          function() {
-            vm.addError('Could not change nick');
-            return false;
-          }
-        );
       }
 
       function hoverBoard(row, column) {
