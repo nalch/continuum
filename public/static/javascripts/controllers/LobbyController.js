@@ -1,13 +1,12 @@
 angular.module('LobbyController', []).controller('LobbyController', [
   '$controller',
-  '$http',
   '$scope',
   '$routeParams',
   '$location',
   'GameService',
   'UserService',
   'initialGame',
-  function($controller, $http, $scope, $routeParams, $location, GameService, UserService, initialGame) {
+  function($controller, $scope, $routeParams, $location, GameService, UserService, initialGame) {
     // controller initialisation
     var vm = this;
     $controller('GameUpdateController', {vm: vm, $scope: $scope});
