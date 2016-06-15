@@ -5,11 +5,22 @@ angular.module('PlayController', []).controller(
     '$scope',
     '$routeParams',
     '$location',
+    'GameService',
     'MoveService',
     'UserService',
     'UserUtilsService',
     'initialGame',
-    function($controller, $scope, $routeParams, $location, MoveService, UserService, UserUtilsService, initialGame) {
+    function(
+      $controller,
+      $scope,
+      $routeParams,
+      $location,
+      GameService,
+      MoveService,
+      UserService,
+      UserUtilsService,
+      initialGame
+    ) {
       // controller initialisation
       var vm = this;
       $controller('GameUpdateController', {vm: vm, $scope: $scope});
@@ -27,6 +38,7 @@ angular.module('PlayController', []).controller(
       vm.currentPlayer = currentPlayer;
       vm.ownersTurn = ownersTurn;
       vm.prepareWinningMoves = prepareWinningMoves;
+      vm.openRevengeGame = openRevengeGame;
 
       vm.setNick = UserUtilsService.setNick;
 
@@ -116,6 +128,36 @@ angular.module('PlayController', []).controller(
             vm.winningCells.push(id);
           }
         }
+      }
+
+      function openRevengeGame() {
+        GameService.save(
+          {},
+          function(revanchegame) {
+            GameService.patch(
+              {gameId: revanchegame.publicId},
+              {opponentId: isOwner() ? vm.game.opponent.publicId : vm.game.owner.publicId},
+              function() {
+                GameService.patch(
+                  {gameId: vm.game.publicId},
+                  {revancheId: revanchegame.publicId},
+                  function() {
+                    $location.path('/continuum/' + revanchegame.publicId);
+                  },
+                  function() {
+                    vm.addError('Could not set revanche');
+                  }
+                );
+              },
+              function() {
+                vm.addError('Could not set opponent');
+              }
+            );
+          },
+          function(error) {
+            vm.addError(error);
+          }
+        );
       }
     }
   ]

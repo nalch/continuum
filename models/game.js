@@ -13,7 +13,8 @@ var gameSchema = new Schema({
   visitors: [{type: Schema.Types.ObjectId, ref: 'Player'}],
   moves: [{type: Schema.Types.ObjectId, ref: 'Move'}],
   state: {type: Schema.Types.Mixed},
-  board: {type: Schema.Types.Mixed}
+  board: {type: Schema.Types.Mixed},
+  revanche: {type: Schema.Types.ObjectId, ref: 'Game'}
 });
 gameSchema.plugin(uniqueValidator);
 

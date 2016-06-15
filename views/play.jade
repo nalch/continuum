@@ -8,10 +8,17 @@ block content
     div(class="col-xs-12 col-sm-9")
       div(class="jumbotron")
 
-        h4(ng-if="vm.game.state === vm.enumvalues.GameState.FINISHED && !vm.ownersTurn()")
-          The owner {{ vm.game.owner.nick || vm.game.owner.publicId }} has won the game
-        h4(ng-if="vm.game.state === vm.enumvalues.GameState.FINISHED && vm.ownersTurn()")
-          The opponent {{ vm.game.opponent.nick || vm.game.opponent.publicId }} has won the game
+        div(ng-if="vm.game.state === vm.enumvalues.GameState.FINISHED")
+          h4(ng-if="vm.currentPlayer() !== vm.userId")
+            p You won this time
+            a(ng-click="vm.openRevengeGame()", class="btn btn-primary", role="button", ng-if="!vm.game.revanche") Play another round
+          h4(ng-if="vm.currentPlayer() === vm.userId")
+            p You lost this time
+            a(ng-click="vm.openRevengeGame()", class="btn btn-primary", role="button", ng-if="!vm.game.revanche") Get revenge on a revanche
+
+          h4(ng-if="vm.game.revanche")
+            p Your opponent wants a revanche
+            a(ng-click="vm.location.path('/continuum/' + vm.game.revanche.publicId)", class="btn btn-primary", role="button") Join the revanche
 
         table(class="table text-center", id="board", ng-Mouseout="vm.activeRow=null; vm.activeColumn=null;")
           tbody(class="board-body")
