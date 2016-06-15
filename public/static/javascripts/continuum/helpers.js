@@ -1,5 +1,4 @@
-(function(exports){
-
+(function(exports) {
   /**
    * Check, if a move is allowed in the current game phase. Checks, that:
    *   the column is in the allowed bounds
@@ -16,11 +15,11 @@
       return false;
     }
 
-    if (move.downward && 0 !== game.board[0][move.column]) {
+    if (move.downward && game.board[0][move.column] !== 0) {
       return false;
     }
 
-    if (!move.downward && 0 !== game.board[4][move.column]) {
+    if (!move.downward && game.board[4][move.column] !== 0) {
       return false;
     }
 
@@ -35,7 +34,7 @@
     }
 
     return true;
-  }
+  };
 
   /**
    * Return all parts of a winning move (connected at least four in a row) sorted by direction (\ | / -)
@@ -82,10 +81,10 @@
       }
 
       return connectedPieces;
-    };
+    }
 
     // check directions: \ | / -
-    winningStreaks = [
+    var winningStreaks = [
       connectedPieces(-1, -1),
       connectedPieces(-1, 0),
       connectedPieces(-1, 1),
@@ -95,7 +94,7 @@
     });
 
     return winningStreaks;
-  }
+  };
 
   /**
    * Check, if a move results in a game winning situation (four or more pieces in a row)
@@ -106,5 +105,4 @@
   exports.isFinished = function(game, move) {
     return exports.winningCells(game, move).length > 0;
   };
-
 }(typeof exports === 'undefined' ? this.continuumhelpers = {} : exports));
