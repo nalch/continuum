@@ -42,14 +42,14 @@ app.use(middlewares.generateUserId);
 // all environments
 app.set('views', path.join(__dirname, '/views'));
 app.set('view engine', 'jade');
-app.use(favicon(path.join(__dirname, '/public/xo.ico')));
+app.use(favicon(path.join(__dirname, '/public/static/xo.ico')));
 app.use(methodOverride('X-HTTP-Method-Override'));
 app.use(morgan('combined'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
 }));
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public', 'static')));
 
 routes.registerRoutes(app);
 
