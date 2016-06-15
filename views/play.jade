@@ -1,7 +1,6 @@
 extends baseView.jade
 
 include ./mixins/users.jade
-include ./mixins/errors.jade
 
 block content
   input(type="hidden", name="userId", ng-model="userId", ng-init="userId='#{userId}'", value="#{userId}", disabled="disabled")
