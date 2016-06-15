@@ -1,4 +1,4 @@
-var continuumApp = angular.module(
+angular.module(
   'continuum',
   [
     'ngRoute',
@@ -9,18 +9,13 @@ var continuumApp = angular.module(
     'StartController',
     'LobbyController',
     'PlayController',
-    'services',
+    'services'
   ]
-);
-
-continuumApp.run(function(editableOptions) {
+).run(function(editableOptions) {
   editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'
-});
-
-continuumApp.config(['$routeProvider',
- function($routeProvider) {
-   $routeProvider.
-     when('/', {
+}).config(function continuumConfig($routeProvider) {
+  $routeProvider
+     .when('/', {
        templateUrl: '/main',
        controller: 'StartController',
        controllerAs: 'vm',
@@ -29,11 +24,11 @@ continuumApp.config(['$routeProvider',
            return GameService.query().$promise;
          }
        }
-     }).
-     when('/lobby/:gameId', {
+     })
+     .when('/lobby/:gameId', {
        templateUrl: function($routeParams) {
-          return '/lobby/' + $routeParams.gameId;
-         },
+         return '/lobby/' + $routeParams.gameId;
+       },
        controller: 'LobbyController',
        controllerAs: 'vm',
        resolve: {
@@ -41,11 +36,11 @@ continuumApp.config(['$routeProvider',
            return GameService.get({gameId: $route.current.params.gameId}).$promise;
          }
        }
-     }).
-     when('/continuum/:gameId', {
+     })
+     .when('/continuum/:gameId', {
        templateUrl: function($routeParams) {
-          return '/continuum/' + $routeParams.gameId;
-         },
+         return '/continuum/' + $routeParams.gameId;
+       },
        controller: 'PlayController',
        controllerAs: 'vm',
        resolve: {
@@ -53,9 +48,8 @@ continuumApp.config(['$routeProvider',
            return GameService.get({gameId: $route.current.params.gameId}).$promise;
          }
        }
-     }).
-     otherwise({
+     })
+     .otherwise({
        redirectTo: '/'
      });
- }]
-);
+});
