@@ -1,6 +1,6 @@
 angular.module('GameUpdateController', []).controller(
   'GameUpdateController',
-  function (vm, $scope, $controller, $timeout, $interval, GameService, $routeParams) {
+  function(vm, $scope, $controller, $timeout, $interval, GameService, $routeParams) {
     $controller('ErrorController', {vm: vm});
 
     vm.updateView = function() {
@@ -9,7 +9,7 @@ angular.module('GameUpdateController', []).controller(
         if (vm.afterUpdate) {
           vm.afterUpdate(game);
         }
-      }, function(error) {
+      }, function() {
         vm.addError('Could not get game');
       });
     };
