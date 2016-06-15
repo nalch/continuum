@@ -1,102 +1,149 @@
 angular.module('PlayController', []).controller(
   'PlayController',
-  function ($controller, $scope, $http, $routeParams, $location, $interval, $timeout, GameService, initialGame) {
-    var vm = this;
-    $controller('GameUpdateController', {vm: vm, $scope:$scope});
-    $scope.game = initialGame;
-    $scope.location = $location;
-    $scope.winningCells = [];
+  [
+    '$controller',
+    '$scope',
+    '$routeParams',
+    '$location',
+    'MoveService',
+    'UserService',
+    'initialGame',
+    function($controller, $scope, $routeParams, $location, MoveService, UserService, initialGame) {
+      // controller initialisation
+      var vm = this;
+      $controller('GameUpdateController', {vm: vm, $scope: $scope});
+      vm.game = initialGame;
+      vm.location = $location;
+      vm.winningCells = [];
 
-    $scope.isOwner = function () {
-      return $scope.userId === $scope.game.owner.publicId;
-    };
+      // available functions
+      vm.isOwner = isOwner;
+      vm.setNick = setNick;
+      vm.hoverBoard = hoverBoard;
+      vm.afterUpdate = afterUpdate;
+      vm.setMove = setMove;
+      vm.playersTurn = playersTurn;
+      vm.currentPlayer = currentPlayer;
+      vm.ownersTurn = ownersTurn;
+      vm.prepareWinningMoves = prepareWinningMoves;
 
-    $scope.setNick = function (data) {
-      $http.put('/players/' + $scope.userId, {'nick': data})
-      .success(function (data) {
-        return true;
-      })
-      .error(function (data) {
-        return 'Could not change nick';
-      });
-    };
-
-    $scope.hoverBoard = function (row, column) {
-      $scope.activeColumn = column;
-      $scope.activeRow = row;
-    };
-
-    $scope.afterUpdate = function(game) {
-      $scope.rows = Array.apply(
-        null,
-        new Array(game.board.numRows)).map(function (_, i) {return i;}
-      );
-      $scope.columns = Array.apply(
-        null,
-        new Array(game.board.numCols)).map(function (_, i) {return i;}
-      );
-      if ($scope.game.state === enumvalues.GameState.FINISHED) {
-        $scope.prepareWinningMoves($scope.game.moves[$scope.game.moves.length - 1]);
+      // controller start
+      if (vm.game.state === enumvalues.GameState.FINISHED) {
+        vm.prepareWinningMoves(vm.game.moves[vm.game.moves.length - 1]);
       }
-    }
 
-    $scope.setMove = function (row, column) {
-      if ($scope.playersTurn()) {
-        $http.post(
-          '/games/' + $routeParams.gameId + '/moves',
-          {
-            'downward': row < 3,
-            'column': column
-          }
-        ).success(
-          function (data) {
-            $scope.game.board[data.row][data.column] = data.number % 2 === 1 ? 1 : 2;
-            $scope.updateView();
-          }
-        ).error(
-          function (error) {
-            $scope.addError(error);
+      // function implementations
+      function isOwner() {
+        return vm.userId === vm.game.owner.publicId;
+      }
+
+      function setNick(data) {
+        UserService.patch(
+          {publicId: vm.userId},
+          {nick: data},
+          function() {
+            return true;
+          },
+          function() {
+            vm.addError('Could not change nick');
+            return false;
           }
         );
       }
-    };
 
-    $scope.currentPlayer = function() {
-      return $scope.game.moves.length % 2 === 0 ? $scope.game.owner.publicId : $scope.game.opponent.publicId;
-    };
+      function hoverBoard(row, column) {
+        vm.activeColumn = column;
+        vm.activeRow = row;
+      }
 
-    $scope.ownersTurn = function() {
-      return $scope.game.moves.length % 2 === 0;
-    }
+      function afterUpdate(game) {
+        vm.rows = Array.apply(
+          null,
+          new Array(game.board.numRows)).map(function(_, i) {
+            return i;
+          }
+        );
+        vm.columns = Array.apply(
+          null,
+          new Array(game.board.numCols)).map(function(_, i) {
+            return i;
+          }
+        );
+        if (vm.game.state === enumvalues.GameState.FINISHED) {
+          vm.prepareWinningMoves(vm.game.moves[vm.game.moves.length - 1]);
+        }
+      }
 
-    $scope.playersTurn = function() {
+      function setMove(row, column) {
+        if (vm.playersTurn()) {
+          MoveService.save(
+            {
+              gameId: $routeParams.gameId
+            },
+            {
+              downward: row < 3,
+              column: column
+            },
+            function(move) {
+              vm.game.board[move.row][move.column] = move.number % 2 === 1 ? 1 : 2;
+              vm.updateView();
+            },
+            function(error) {
+              vm.addError(error);
+            }
+          );
+//          $http.post(
+//            '/games/' + $routeParams.gameId + '/moves',
+//            {
+//              'downward': row < 3,
+//              'column': column
+//            }
+//          ).success(
+//            function (data) {
+//              vm.game.board[data.row][data.column] = data.number % 2 === 1 ? 1 : 2;
+//              vm.updateView();
+//            }
+//          ).error(
+//            function (error) {
+//              vm.addError(error);
+//            }
+//          );
+        }
+      }
+
+      function currentPlayer() {
+        return vm.ownersTurn() ? vm.game.owner.publicId : vm.game.opponent.publicId;
+      }
+
+      function ownersTurn() {
+        return vm.game.moves.length % 2 === 0;
+      }
+
+      function playersTurn() {
         // game is finished
-        if ($scope.game.state === 2) {
+        if (vm.game.state === enumvalues.GameState.FINISHED) {
           return false;
         }
 
         // active player
-        if ($scope.userId === $scope.currentPlayer()) {
+        if (vm.userId === vm.currentPlayer()) {
           return true;
         }
 
         return false;
-    };
+      }
 
-    $scope.prepareWinningMoves = function(lastMove) {
-      $scope.winningCells = [];
-      var winningCells = continuumhelpers.winningCells($scope.game, lastMove);
-      for(var directionIndex=0; directionIndex < winningCells.length; directionIndex++) {
-        var directionCells = winningCells[directionIndex];
-        for(var cellIndex=0; cellIndex < directionCells.length; cellIndex++) {
-          var id = 'cell-' + directionCells[cellIndex].row + '-' + directionCells[cellIndex].column;
-          $scope.winningCells.push(id);
+      function prepareWinningMoves(lastMove) {
+        vm.winningCells = [];
+        var winningCells = continuumhelpers.winningCells(vm.game, lastMove);
+        for (var directionIndex = 0; directionIndex < winningCells.length; directionIndex++) {
+          var directionCells = winningCells[directionIndex];
+          for (var cellIndex = 0; cellIndex < directionCells.length; cellIndex++) {
+            var id = 'cell-' + directionCells[cellIndex].row + '-' + directionCells[cellIndex].column;
+            vm.winningCells.push(id);
+          }
         }
       }
-    };
-
-    if ($scope.game.state === enumvalues.GameState.FINISHED) {
-      $scope.prepareWinningMoves($scope.game.moves[$scope.game.moves.length - 1]);
     }
-  }
+  ]
 );
