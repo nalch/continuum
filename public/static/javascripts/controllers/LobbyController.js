@@ -37,13 +37,16 @@ angular.module('LobbyController', []).controller('LobbyController', [
     }
 
     function challengeUser(visitor) {
-      $http.put('/games/' + $routeParams.gameId, {opponentId: visitor.publicId})
-      .success(function() {
-        vm.game.opponent = visitor;
-      })
-      .error(function() {
-        vm.addError('Could not challenge user');
-      });
+      GameService.patch(
+        {gameId: $routeParams.gameId},
+        {opponentId: visitor.publicId},
+        function() {
+          vm.game.opponent = visitor;
+        },
+        function() {
+          vm.addError('Could not challenge user');
+        }
+      )
     }
 
     function startGame() {
