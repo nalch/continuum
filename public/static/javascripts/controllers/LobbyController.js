@@ -5,8 +5,9 @@ angular.module('LobbyController', []).controller('LobbyController', [
   '$routeParams',
   '$location',
   'GameService',
+  'UserService',
   'initialGame',
-  function($controller, $http, $scope, $routeParams, $location, GameService, initialGame) {
+  function($controller, $http, $scope, $routeParams, $location, GameService, UserService, initialGame) {
     // controller initialisation
     var vm = this;
     $controller('GameUpdateController', {vm: vm, $scope: $scope});
@@ -26,14 +27,17 @@ angular.module('LobbyController', []).controller('LobbyController', [
     }
 
     function setNick(data) {
-      $http.put('/players/' + vm.userId, {nick: data})
-        .success(function() {
+      UserService.patch(
+        {publicId: vm.userId},
+        {nick: data},
+        function() {
           return true;
-        })
-        .error(function() {
+        },
+        function() {
           vm.addError('Could not change nick');
-          return 'Could not change nick';
-        });
+          return false;
+        }
+      );
     }
 
     function challengeUser(visitor) {
@@ -46,7 +50,7 @@ angular.module('LobbyController', []).controller('LobbyController', [
         function() {
           vm.addError('Could not challenge user');
         }
-      )
+      );
     }
 
     function startGame() {
