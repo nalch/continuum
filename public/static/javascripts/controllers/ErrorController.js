@@ -1,18 +1,12 @@
-/**
- *
- */
+angular.module('ErrorController', []).controller(
+  'ErrorController',
+  function (vm, $timeout) {
+    vm.errors = [];
 
-var errorController = angular.module('errorController', []);
-
-errorController.controller(
-  'errorController',
-  function ($scope, $timeout) {
-    $scope.errors = [];
-
-    $scope.addError = function (error) {
-      $scope.errors.push(error);
+    vm.addError = function (error) {
+      vm.errors.push(error);
       $timeout(function () {
-        $scope.errors.pop(0);
+        vm.errors.pop(0);
       }, 5000);
     };
   }

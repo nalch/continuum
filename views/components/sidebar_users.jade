@@ -3,27 +3,27 @@ div(class="col-xs-6 col-sm-3 sidebar-offcanvas", id="sidebar")
       div(class="panel-heading")
         h3(class="panel-title") Owner
       div(class="panel-body")
-        +nick("game.owner")
+        +nick("vm.game.owner")
     div(class="panel panel-default")
       div(class="panel-heading")
         h3(class="panel-title") Opponent
       div(class="panel-body")
-        +nick("game.opponent")
-      div(class="panel-body text-center", ng-if="isOwner()")
-        button(class="btn btn-primary", ng-click="challengeUser(game.owner)")
+        +nick("vm.game.opponent")
+      div(class="panel-body text-center", ng-if="vm.isOwner()")
+        button(class="btn btn-primary", ng-click="challengeUser(vm.game.owner)")
           span Play against local player
-    
+
     div(class="panel panel-default")
       div(class="panel-heading")
-        h3(class="panel-title") {{ game.visitors.length }} visitors
-      
+        h3(class="panel-title") {{ vm.game.visitors.length }} visitors
+
       div(class="list-group")
         a(
-          ng-if="isOwner()",
-          ng-click="challengeUser(visitor, $index)",
+          ng-if="vm.isOwner()",
+          ng-click="vm.challengeUser(visitor, $index)",
           class="list-group-item",
-          ng-repeat="visitor in game.visitors"
+          ng-repeat="visitor in vm.game.visitors"
         )
           +nick("visitor")
-        span(ng-if="!isOwner()", class="list-group-item", ng-repeat="visitor in game.visitors")
+        span(ng-if="!vm.isOwner()", class="list-group-item", ng-repeat="visitor in vm.game.visitors")
           +nick("visitor")

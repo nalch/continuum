@@ -1,33 +1,31 @@
-var gameUpdateController = angular.module('gameUpdateController', []);
+angular.module('GameUpdateController', []).controller(
+  'GameUpdateController',
+  function (vm, $scope, $controller, $timeout, $interval, GameService, $routeParams) {
+    $controller('ErrorController', {vm: vm});
 
-gameUpdateController.controller(
-  'gameUpdateController',
-  function ($scope, $controller, $timeout, $interval, GameService, $routeParams) {
-    $controller('errorController', {$scope: $scope});
-
-    $scope.updateView = function() {
+    vm.updateView = function() {
       GameService.get({gameId: $routeParams.gameId}, function(game) {
-        $scope.game = game;
-        if ($scope.afterUpdate) {
-          $scope.afterUpdate(game);
+        vm.game = game;
+        if (vm.afterUpdate) {
+          vm.afterUpdate(game);
         }
       }, function(error) {
-        $scope.addError('Could not get game');
+        vm.addError('Could not get game');
       });
     };
 
-    $scope.startViewUpdate = function() {
-      $scope.updateView();
-      $scope.heartbeat = $interval($scope.updateView, 1000);
+    vm.startViewUpdate = function() {
+      vm.updateView();
+      vm.heartbeat = $interval(vm.updateView, 1000);
     };
 
-    $scope.stopViewUpdate = function() {
-        $interval.cancel($scope.heartbeat);
+    vm.stopViewUpdate = function() {
+      $interval.cancel(vm.heartbeat);
     };
 
-    $scope.startViewUpdate();
+    vm.startViewUpdate();
     $scope.$on('$destroy', function() {
-        $scope.stopViewUpdate();
+      vm.stopViewUpdate();
     });
   }
 );

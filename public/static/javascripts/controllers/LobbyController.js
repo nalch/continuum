@@ -1,13 +1,8 @@
-/**
- *
- */
-
-var lobbyController = angular.module('lobbyController', []);
-
-lobbyController.controller(
-  'lobbyController',
+angular.module('LobbyController', []).controller(
+  'LobbyController',
   function ($controller, $scope, $http, $routeParams, $location, $interval, GameService, initialGame) {
-    $controller('gameUpdateController', {$scope: $scope});
+    var vm = this;
+    $controller('GameUpdateController', {vm: vm});
     $scope.game = initialGame;
 	  $scope.location = $location;
 

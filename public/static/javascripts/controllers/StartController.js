@@ -1,10 +1,11 @@
 angular.module('StartController', []).controller(
   'StartController',
-  function ($controller, $scope, $http, $interval, $filter, $location, GameService, initialGames) {
-    $controller('errorController', {$scope: $scope});
-    $scope.formData = {};
+  function($controller, $scope, $interval, $filter, $location, GameService, initialGames) {
+    var vm = this;
+    $controller('ErrorController', {vm: vm});
+    vm.formData = {};
 
-    $scope.filterGames = function(games) {
+    vm.filterGames = function(games) {
       return $filter('orderBy')(
         $filter('filter')(
           games,
@@ -19,52 +20,52 @@ angular.module('StartController', []).controller(
       );
     }
 
-    $scope.updateView = function() {
+    vm.updateView = function() {
       GameService.query(function(games) {
-        $scope.games = $scope.filterGames(games);
+        vm.games = vm.filterGames(games);
       }, function(error) {
-        $scope.addError('Could not get games');
+        vm.addError('Could not get games');
       });
     };
 
-    $scope.startViewUpdate = function() {
-      $scope.updateView();
-      $scope.heartbeat = $interval($scope.updateView, 1000);
+    vm.startViewUpdate = function() {
+      vm.updateView();
+      vm.heartbeat = $interval(vm.updateView, 1000);
     };
 
-    $scope.stopViewUpdate = function() {
-        $interval.cancel($scope.heartbeat);
+    vm.stopViewUpdate = function() {
+      $interval.cancel(vm.heartbeat);
     };
 
-    $scope.startViewUpdate();
+    vm.startViewUpdate();
     $scope.$on('$destroy', function() {
-        $scope.stopViewUpdate();
+      vm.stopViewUpdate();
     });
 
-    $scope.createGame = function() {
+    vm.createGame = function() {
       data = {}
-      if ($scope.gameformData) {
-        data = $scope.gameformData;
+      if (vm.gameformData) {
+        data = vm.gameformData;
       }
       GameService.save(data, function(game) {
         $location.path('/lobby/' + game.publicId);
       }, function(error) {
-        $scope.addError(error);
+        vm.addError(error);
       });
     };
 
-    $scope.joinGame = function() {
-      if ($scope.gameformData) {
-        GameService.get({gameId: $scope.gameformData.publicId}, function(game) {
+    vm.joinGame = function() {
+      if (vm.gameformData) {
+        GameService.get({gameId: vm.gameformData.publicId}, function(game) {
           $location.path('/lobby/' + game.publicId);
         }, function(error) {
-          $scope.addError('Game does not exist');
+          vm.addError('Game does not exist');
         });
       } else {
-        $scope.addError('Game id is empty');
+        vm.addError('Game id is empty');
       }
     };
 
-    $scope.games = $scope.filterGames(initialGames);
+    vm.updateView();
   }
 );

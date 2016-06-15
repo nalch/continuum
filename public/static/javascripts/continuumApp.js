@@ -23,6 +23,7 @@ continuumApp.config(['$routeProvider',
      when('/', {
        templateUrl: '/main',
        controller: 'StartController',
+       controllerAs: 'vm',
        resolve: {
          initialGames: function(GameService) {
            return GameService.query().$promise;
@@ -34,6 +35,7 @@ continuumApp.config(['$routeProvider',
           return '/lobby/' + $routeParams.gameId;
          },
        controller: 'LobbyController',
+       controllerAs: 'vm',
        resolve: {
          initialGame: function($route, GameService) {
            return GameService.get({gameId: $route.current.params.gameId}).$promise;
@@ -45,6 +47,7 @@ continuumApp.config(['$routeProvider',
           return '/continuum/' + $routeParams.gameId;
          },
        controller: 'PlayController',
+       controllerAs: 'vm',
        resolve: {
          initialGame: function($route, GameService) {
            return GameService.get({gameId: $route.current.params.gameId}).$promise;
