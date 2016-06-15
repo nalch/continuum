@@ -23,7 +23,7 @@ block content
   div(class="jumbotron")
     h3 {{ vm.games.length }} games available
     div(class="list-group")
-      a(href="/#/lobby/{{ vm.game.publicId }}", class="list-group-item", ng-repeat="game in vm.games")
+      a(href="/#/lobby/{{ game.publicId }}", class="list-group-item", ng-repeat="game in vm.games")
         span(
           class="fa spaced-big",
           ng-class="{'fa-play': game.state === 1, 'fa-hourglass-start': game.state === 0}",
