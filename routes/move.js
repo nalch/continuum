@@ -93,8 +93,3 @@ function setMove(player, game, move) {
   game.moves.push(move);
   game.save();
 }
-
-if (config.testing) {
-  exports.isLegal = continuumhelpers.isLegal;
-  exports.isFinished = continuumhelpers.isFinished;
-}
