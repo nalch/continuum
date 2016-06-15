@@ -11,5 +11,9 @@
       "browser": true,
       "jquery": true
     },
+    "globals": {
+      "enumvalues": false,
+      "continuumhelpers": false
+    },
     "installedESLint": true
 }
