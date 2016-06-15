@@ -4,7 +4,6 @@ var GameState = require('../models/game').GameState;
 var Move = require('../models/move').Move;
 var Player = require('../models/player').Player;
 
-var config = require('../config');
 var continuumhelpers = require('../public/static/javascripts/continuum/helpers');
 
 exports.list = function(req, res) {
