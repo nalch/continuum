@@ -2,7 +2,5 @@ mixin nick(user)
   div(ng-if="vm.userId === #{user}.publicId")
     span(class="glyphicon glyphicon-user spaced", aria-hidden="true")
     span(editable-text="#{user}.nick", onshow="vm.stopViewUpdate()", onhide="vm.startViewUpdate()", onbeforesave="vm.setNick($data)") {{ #{user}.nick || #{user}.publicId || "no user information" }}
-  span(ng-if="vm.userId !== #{user}.publicId") {{ #{user}.nick || #{user}.publicId || "no user information" }}
 
-// let the page know, which user it is
-input(type="hidden", name="userId", ng-model="vm.userId", ng-init="vm.userId='#{userId}'", value="#{userId}", disabled="disabled")
+  span(ng-if="vm.userId !== #{user}.publicId") {{ #{user}.nick || #{user}.publicId || "no user information" }}

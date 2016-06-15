@@ -3,7 +3,7 @@ extends baseView.jade
 include ./mixins/users.jade
 
 block content
-  input(type="hidden", name="userId", ng-model="userId", ng-init="userId='#{userId}'", value="#{userId}", disabled="disabled")
+  input(type="hidden", name="userId", ng-model="vm.userId", ng-init="vm.userId='#{userId}'", value="#{userId}", disabled="disabled")
   div(class="row row-offcanvas row-offcanvas-right")
     div(class="col-xs-12 col-sm-9")
       div(class="jumbotron")

@@ -2,7 +2,7 @@ angular.module('PlayController', []).controller(
   'PlayController',
   function ($controller, $scope, $http, $routeParams, $location, $interval, $timeout, GameService, initialGame) {
     var vm = this;
-    $controller('GameUpdateController', {vm: vm});
+    $controller('GameUpdateController', {vm: vm, $scope:$scope});
     $scope.game = initialGame;
     $scope.location = $location;
     $scope.winningCells = [];
