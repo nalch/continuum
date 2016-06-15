@@ -1,11 +1,5 @@
-/**
- *
- */
-
-var startController = angular.module('startController', []);
-
-startController.controller(
-  'startController',
+angular.module('StartController', []).controller(
+  'StartController',
   function ($controller, $scope, $http, $interval, $filter, $location, GameService, initialGames) {
     $controller('errorController', {$scope: $scope});
     $scope.formData = {};

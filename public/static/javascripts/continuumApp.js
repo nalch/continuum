@@ -4,11 +4,11 @@ var continuumApp = angular.module(
     'ngRoute',
     'xeditable',
     'ngAnimate',
-    'errorController',
-    'gameUpdateController',
-    'startController',
-    'lobbyController',
-    'playController',
+    'ErrorController',
+    'GameUpdateController',
+    'StartController',
+    'LobbyController',
+    'PlayController',
     'services',
   ]
 );
@@ -22,7 +22,7 @@ continuumApp.config(['$routeProvider',
    $routeProvider.
      when('/', {
        templateUrl: '/main',
-       controller: 'startController',
+       controller: 'StartController',
        resolve: {
          initialGames: function(GameService) {
            return GameService.query().$promise;
@@ -33,7 +33,7 @@ continuumApp.config(['$routeProvider',
        templateUrl: function($routeParams) {
           return '/lobby/' + $routeParams.gameId;
          },
-       controller: 'lobbyController',
+       controller: 'LobbyController',
        resolve: {
          initialGame: function($route, GameService) {
            return GameService.get({gameId: $route.current.params.gameId}).$promise;
@@ -44,7 +44,7 @@ continuumApp.config(['$routeProvider',
        templateUrl: function($routeParams) {
           return '/continuum/' + $routeParams.gameId;
          },
-       controller: 'playController',
+       controller: 'PlayController',
        resolve: {
          initialGame: function($route, GameService) {
            return GameService.get({gameId: $route.current.params.gameId}).$promise;
