@@ -14,6 +14,7 @@ angular.module('PlayController', []).controller(
       $controller('GameUpdateController', {vm: vm, $scope: $scope});
       vm.game = initialGame;
       vm.location = $location;
+      vm.enumvalues = enumvalues;
       vm.winningCells = [];
 
       // available functions
@@ -89,25 +90,9 @@ angular.module('PlayController', []).controller(
               vm.updateView();
             },
             function(error) {
-              vm.addError(error);
+              vm.addError(error.data);
             }
           );
-//          $http.post(
-//            '/games/' + $routeParams.gameId + '/moves',
-//            {
-//              'downward': row < 3,
-//              'column': column
-//            }
-//          ).success(
-//            function (data) {
-//              vm.game.board[data.row][data.column] = data.number % 2 === 1 ? 1 : 2;
-//              vm.updateView();
-//            }
-//          ).error(
-//            function (error) {
-//              vm.addError(error);
-//            }
-//          );
         }
       }
 
