@@ -4,8 +4,7 @@ var GameState = require('../models/game').GameState;
 var Move = require('../models/move').Move;
 var Player = require('../models/player').Player;
 
-var config = require('../config');
-var continuumhelpers = require('../public/javascripts/continuumlogic/helpers');
+var continuumhelpers = require('../public/static/javascripts/continuum/helpers');
 
 exports.list = function(req, res) {
   Game.findOne({publicId: req.params.gameId})
@@ -92,9 +91,4 @@ function setMove(player, game, move) {
   game.markModified('board');
   game.moves.push(move);
   game.save();
-}
-
-if (config.testing) {
-  exports.isLegal = continuumhelpers.isLegal;
-  exports.isFinished = continuumhelpers.isFinished;
 }

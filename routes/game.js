@@ -21,7 +21,7 @@ exports.list = function(req, res) {
 
 exports.get = function(req, res, next) {
   Game.findOne({publicId: req.params.gameId})
-    .populate('owner opponent moves visitors')
+    .populate('owner opponent moves visitors revanche')
     .exec(function(err, game) {
       if (err) {
         res.status(500).send('Could not get game');
@@ -60,28 +60,49 @@ exports.post = function(req, res, next) {
   });
 };
 
-exports.put = function(req, res) {
+exports.put = function(req, res, next) {
   Game.findOne({publicId: req.params.gameId})
-    .populate('owner')
+    .populate('owner opponent')
     .exec(function(err, game) {
       if (err) {
         res.send(err);
+        return next();
       }
 
       if (game.owner.publicId !== req.session.userId) {
-        res.sendStatus(403);
+        // allow opponent to set the revanche
+        if (!req.body.opponentId && req.body.revancheId && game.opponent.publicId !== req.session.userId) {
+          res.sendStatus(403);
+          return next();
+        }
       }
 
-      Player.findOne(
-        {publicId: req.body.opponentId},
-        function(err, opponent) {
-          if (err) {
-            res.send(err);
+      if (req.body.opponentId) {
+        Player.findOne(
+          {publicId: req.body.opponentId},
+          function(err, opponent) {
+            if (err) {
+              res.send(err);
+              return next();
+            }
+            game.update({opponent: opponent._id}, function(err, game) {
+              res.json(game);
+            });
           }
-          game.update({opponent: opponent._id}, function(err, game) {
-            res.json(game);
-          });
-        }
-      );
+        );
+      } else if (req.body.revancheId) {
+        Game.findOne(
+          {publicId: req.body.revancheId},
+          function(err, revanche) {
+            if (err) {
+              res.send(err);
+              return next();
+            }
+            game.update({revanche: revanche._id}, function(err, game) {
+              res.json(game);
+            });
+          }
+        );
+      }
     });
 };

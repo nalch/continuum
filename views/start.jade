@@ -7,9 +7,9 @@ block content
         form(id="main-form")
           div(class="form-group")
 
-            input(type="text", class="form-control input-lg text-center", placeholder="Type in game id", ng-model="gameformData.publicId")
-            button(class="btn btn-primary btn-lg", ng-click="createGame()", ng-submit="$event.preventDefault()") Create game
-            button(class="btn btn-primary btn-lg", ng-click="joinGame()", ng-submit="$event.preventDefault()") Join game
+            input(type="text", class="form-control input-lg text-center", placeholder="Type in game id", ng-model="vm.gameformData.publicId")
+            button(class="btn btn-primary btn-lg", ng-click="vm.createGame()", ng-submit="$event.preventDefault()") Create game
+            button(class="btn btn-primary btn-lg", ng-click="vm.joinGame()", ng-submit="$event.preventDefault()") Join game
 
     div(class="row")
       div(class="col-sm-6 col-md-6")
@@ -21,9 +21,9 @@ block content
         span Type a game id and press the "Join game" button or click an existing game from the list below
 
   div(class="jumbotron")
-    h3 {{ games.length }} games available
+    h3 {{ vm.games.length }} games available
     div(class="list-group")
-      a(href="/#/lobby/{{ game.publicId }}", class="list-group-item", ng-repeat="game in games")
+      a(href="/#/lobby/{{ game.publicId }}", class="list-group-item", ng-repeat="game in vm.games")
         span(
           class="fa spaced-big",
           ng-class="{'fa-play': game.state === 1, 'fa-hourglass-start': game.state === 0}",

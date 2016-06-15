@@ -1,47 +1,53 @@
 extends baseView.jade
 
 include ./mixins/users.jade
-include ./mixins/errors.jade
 
 block content
-  input(type="hidden", name="userId", ng-model="userId", ng-init="userId='#{userId}'", value="#{userId}", disabled="disabled")
+  input(type="hidden", name="userId", ng-model="vm.userId", ng-init="vm.userId='#{userId}'", value="#{userId}", disabled="disabled")
   div(class="row row-offcanvas row-offcanvas-right")
     div(class="col-xs-12 col-sm-9")
       div(class="jumbotron")
 
-        h4(ng-if="game.state === 2 && !ownersTurn()")
-          The owner {{ game.owner.nick || game.owner.publicId }} has won the game
-        h4(ng-if="game.state === 2 && ownersTurn()")
-          The opponent {{ game.opponent.nick || game.opponent.publicId }} has won the game
+        div(ng-if="vm.game.state === vm.enumvalues.GameState.FINISHED")
+          h4(ng-if="vm.currentPlayer() !== vm.userId")
+            p You won this time
+            a(ng-click="vm.openRevengeGame()", class="btn btn-primary", role="button", ng-if="!vm.game.revanche") Play another round
+          h4(ng-if="vm.currentPlayer() === vm.userId")
+            p You lost this time
+            a(ng-click="vm.openRevengeGame()", class="btn btn-primary", role="button", ng-if="!vm.game.revanche") Get revenge on a revanche
 
-        table(class="table text-center", id="board", ng-Mouseout="activeRow=null; activeColumn=null;")
+          h4(ng-if="vm.game.revanche")
+            p Your opponent wants a revanche
+            a(ng-click="vm.location.path('/continuum/' + vm.game.revanche.publicId)", class="btn btn-primary", role="button") Join the revanche
+
+        table(class="table text-center", id="board", ng-Mouseout="vm.activeRow=null; vm.activeColumn=null;")
           tbody(class="board-body")
             tr
-              td(ng-repeat="column in columns", class="borderless", ng-Mouseover="hoverBoard(-1, column)")
+              td(ng-repeat="column in vm.columns", class="borderless", ng-Mouseover="vm.hoverBoard(-1, column)")
                 span(
                   class="fa fa-chevron-down",
                   aria-hidden="true",
-                  ng-show="column === activeColumn && activeRow < 3 && playersTurn()"
+                  ng-show="column === vm.activeColumn && vm.activeRow < 3 && vm.playersTurn()"
                 )
-            tr(ng-repeat="row in rows")
+            tr(ng-repeat="row in vm.rows")
               td(
-                ng-repeat="column in columns",
-                ng-Mouseover="hoverBoard(row, column)",
-                ng-Click="setMove(row, column)",
+                ng-repeat="column in vm.columns",
+                ng-Mouseover="vm.hoverBoard(row, column)",
+                ng-Click="vm.setMove(row, column)",
                 class="cell",
-                ng-class="{borderless:$parent.$first, 'alert-success winningcell':winningCells.indexOf('cell-{{ row }}-{{ column }}') > -1}"
+                ng-class="{borderless:$parent.$first, 'alert-success winningcell':vm.winningCells.indexOf('cell-{{ row }}-{{ column }}') > -1}"
               )
                 span(
                   class="fa",
-                  ng-class="{'fa-times': game.board[row][column] === 1, 'fa-circle-o': game.board[row][column] === 2}",
+                  ng-class="{'fa-times': vm.game.board[row][column] === 1, 'fa-circle-o': vm.game.board[row][column] === 2}",
                   aria-hidden="true"
                 )
             tr
-              td(ng-repeat="column in columns", class="borderless", ng-Mouseover="hoverBoard(5, column)")
+              td(ng-repeat="column in vm.columns", class="borderless", ng-Mouseover="vm.hoverBoard(5, column)")
                 span(
                   class="fa fa-chevron-up",
                   aria-hidden="true",
-                  ng-show="column === activeColumn && activeRow > 2 && playersTurn()"
+                  ng-show="column === vm.activeColumn && vm.activeRow > 2 && vm.playersTurn()"
                 )
 
     // sidebar
@@ -57,9 +63,9 @@ block content
           span(
             class="fa fa-chevron-left play-indicator",
             aria-hidden="true",
-            ng-if="ownersTurn()"
+            ng-if="vm.ownersTurn()"
           )
-          +nick("game.owner")
+          +nick("vm.game.owner")
       div(class="panel panel-default")
         div(class="panel-heading")
           span(
@@ -71,10 +77,10 @@ block content
           span(
             class="fa fa-chevron-left play-indicator",
             aria-hidden="true",
-            ng-if="!ownersTurn()"
+            ng-if="!vm.ownersTurn()"
           )
-          +nick("game.opponent")
+          +nick("vm.game.opponent")
       div(class="list-group")
-        b {{ game.visitors.length }} visitors
-        span(class="list-group-item", ng-repeat="visitor in game.visitors")
+        b {{ vm.game.visitors.length }} visitors
+        span(class="list-group-item", ng-repeat="visitor in vm.game.visitors")
           +nick("visitor")

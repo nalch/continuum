@@ -31,9 +31,35 @@ Otherwise start the services, enter the nodejs service and call
 
 ### Codestyle
 
-The codestyle is enforced via eslint. The stylebundle is eslint:recommended, proceeded with google.
+The codestyle is enforced via eslint. The stylebundle is:
+  - eslint:recommended
+  - google
+  - angular (for the angular components)
+
 Custom rulechanges:
   - modified linelength of 120.
+  - the angular controllers should be structured as follows
+```
+  angular.module('MyController', []).controller(
+  'MyController',
+  function($controller, ..., MyService, ..., myInitialValues, ...) {
+    // controller initialisation
+    var vm = this;
+    $controller('ErrorController', {vm: vm});      // inherited controller logic
+    vm.initialData = {};                           // initial data
+
+    // available functions
+    vm.myFunc = myFunc();
+
+    // controller start
+    vm.myFunc();
+
+    // function implementations
+    function myFunc() {
+      ...
+    }
+```
+
 The imports should follow the listed example and be ordered alphabetically inside their blocks:
 ```
 var npmModule = require('npm-package');

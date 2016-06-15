@@ -1,0 +1,6 @@
+{
+  "rules": {
+    "wrap-iife": [0],
+    "angular/definedundefined": [0]
+  }
+}

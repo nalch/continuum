@@ -35,3 +35,6 @@ node_modules
 
 # database directory
 database
+
+# bower components (get installed at deployment time)
+public/static/components

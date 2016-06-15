@@ -50,7 +50,7 @@ function play(req, res, next) {
       }
 
       // start game
-      if (GameState.PREPARED.is(game.state) && game.opponent) {
+      if (GameState.PREPARED.is(game.state) && game.opponent && req.session.userId === game.owner.publicId) {
         game.state = GameState.PLAYING.value;
         game.save();
       }

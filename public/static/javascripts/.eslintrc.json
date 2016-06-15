@@ -1,0 +1,20 @@
+{
+    "extends": [
+      "eslint:recommended",
+      "google",
+      "angular"
+    ],
+    "rules": {
+      "angular/di": [2, "array"],
+      "max-len": [1, 120, 2]
+    },
+    "env": {
+      "browser": true,
+      "jquery": true
+    },
+    "globals": {
+      "enumvalues": false,
+      "continuumhelpers": false
+    },
+    "installedESLint": true
+}
