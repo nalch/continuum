@@ -67,7 +67,7 @@ angular.module('StartController', []).controller('StartController', [
         data = vm.gameformData;
       }
       GameService.save(data, function(game) {
-        $location.path('/lobby/' + game.publicId);
+        $location.path('/lobby/' + game.publicId + '/');
       }, function(error) {
         vm.addError(error);
       });
@@ -76,7 +76,7 @@ angular.module('StartController', []).controller('StartController', [
     function joinGame() {
       if (vm.gameformData) {
         GameService.get({gameId: vm.gameformData.publicId}, function(game) {
-          $location.path('/lobby/' + game.publicId);
+          $location.path('/lobby/' + game.publicId + '/');
         }, function() {
           vm.addError('Game does not exist');
         });

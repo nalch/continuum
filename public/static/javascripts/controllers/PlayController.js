@@ -142,7 +142,7 @@ angular.module('PlayController', []).controller(
                   {gameId: vm.game.publicId},
                   {revancheId: revanchegame.publicId},
                   function() {
-                    $location.path('/continuum/' + revanchegame.publicId);
+                    $location.path('/continuum/' + revanchegame.publicId + '/');
                   },
                   function() {
                     vm.addError('Could not set revanche');

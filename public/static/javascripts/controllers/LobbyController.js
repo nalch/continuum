@@ -25,7 +25,7 @@ angular.module('LobbyController', []).controller('LobbyController', [
     // function implementations
     function forwardPlaying(game) {
       if (!isOwner() && game.state === enumvalues.GameState.PLAYING) {
-        $location.path('/continuum/' + $routeParams.gameId);
+        $location.path('/continuum/' + $routeParams.gameId + '/');
       }
     }
 
@@ -51,7 +51,7 @@ angular.module('LobbyController', []).controller('LobbyController', [
         if (game.state === enumvalues.GameState.FINISHED) {
           vm.addError('Game is finished');
         } else {
-          $location.path('/continuum/' + $routeParams.gameId);
+          $location.path('/continuum/' + $routeParams.gameId + '/');
         }
       });
     }
