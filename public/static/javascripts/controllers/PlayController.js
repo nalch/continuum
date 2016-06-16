@@ -70,7 +70,9 @@ angular.module('PlayController', []).controller(
       }
 
       function afterUpdate(game) {
-
+        if (vm.game.moves.length > 0) {
+          vm.lastMove = vm.game.moves[vm.game.moves.length - 1];
+        }
         if (vm.game.state === enumvalues.GameState.FINISHED) {
           vm.prepareWinningMoves(vm.game.moves[vm.game.moves.length - 1]);
         }

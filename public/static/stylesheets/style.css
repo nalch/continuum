@@ -123,6 +123,10 @@ a {
   background-color: #dff0d8;
 }
 
+#board .lastMove {
+  color: #2890ab;
+}
+
 #sidebar .panel-heading .fa {
   float: left;
   font-size: 16px;

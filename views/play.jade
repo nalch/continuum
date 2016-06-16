@@ -35,7 +35,7 @@ block content
                 ng-Mouseover="vm.hoverBoard(row, column)",
                 ng-Click="vm.setMove(row, column)",
                 class="cell",
-                ng-class="{borderless:$parent.$first, 'alert-success winningcell':vm.winningCells.indexOf('cell-{{ row }}-{{ column }}') > -1}"
+                ng-class="{borderless:$parent.$first, 'alert-success winningcell':vm.winningCells.indexOf('cell-{{ row }}-{{ column }}') > -1, 'lastMove': vm.lastMove.row == {{ row }} && vm.lastMove.column == {{ column }}}"
               )
                 span(
                   class="fa",
