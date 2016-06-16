@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node app.js",
-    "test": "TESTING=true mocha",
+    "test": "NODE_ENV=testing mocha",
     "lint": "eslint 'configs/**' 'middlewares/**' 'models/**' 'routes/**' 'test/**' '*.js' 'public/static/javascripts/**'",
     "postinstall": "HOME=$OPENSHIFT_REPO_DIR bower install || node_modules/.bin/bower install"
   },
@@ -22,7 +22,7 @@
     "node-matrix": "*",
     "connect-mongo": "*",
     "extend": "*",
-    "jade": "*",
+    "pug": "*",
     "bower": "*"
   },
   "devDependencies": {
