@@ -22,7 +22,7 @@
     "node-matrix": "*",
     "connect-mongo": "*",
     "extend": "*",
-    "pug": "*",
+    "jade": "*",
     "bower": "*"
   },
   "devDependencies": {
