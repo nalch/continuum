@@ -105,4 +105,18 @@
   exports.isFinished = function(game, move) {
     return exports.winningCells(game, move).length > 0;
   };
+
+  exports.computeRow = function(game, downward, column) {
+    var row = 2;
+    if (downward) {
+      while (row >= 0 && game.board[row][column] !== 0) {
+        row--;
+      }
+    } else {
+      while (row < 5 && game.board[row][column] !== 0) {
+        row++;
+      }
+    }
+    return row;
+  };
 }(typeof exports === 'undefined' ? this.continuumhelpers = {} : exports));

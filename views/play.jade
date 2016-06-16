@@ -35,11 +35,11 @@ block content
                 ng-Mouseover="vm.hoverBoard(row, column)",
                 ng-Click="vm.setMove(row, column)",
                 class="cell",
-                ng-class="{borderless:$parent.$first, 'alert-success winningcell':vm.winningCells.indexOf('cell-{{ row }}-{{ column }}') > -1}"
+                ng-class="{borderless:$parent.$first, 'alert-success winningcell':vm.winningCells.indexOf('cell-{{ row }}-{{ column }}') > -1, 'lastMove': vm.lastMove.row == {{ row }} && vm.lastMove.column == {{ column }}}"
               )
                 span(
                   class="fa",
-                  ng-class="{'fa-times': vm.game.board[row][column] === 1, 'fa-circle-o': vm.game.board[row][column] === 2}",
+                  ng-class="{'fa-times': vm.game.board[row][column] === 1 || (vm.isPossibleRow(row, column) && vm.ownersTurn()), 'fa-circle-o': vm.game.board[row][column] === 2 || (vm.isPossibleRow(row, column) && !vm.ownersTurn()), 'possibleRow': vm.isPossibleRow(row, column)}",
                   aria-hidden="true"
                 )
             tr

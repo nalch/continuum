@@ -4,7 +4,6 @@ language: node_js
 node_js:
   - '6'
   - '5'
-  - '0.10'
 
 before_script:
   - npm install mocha chai sinon eslint
@@ -15,7 +14,7 @@ script:
 
 env:
   matrix:
-  - STAGE=development TESTING=true
+  - STAGE=development NODE_ENV=testing
   global:
     secure: iAVx3tVBKQ7dDXsWUQvqAZTy6C5Kg38IxqSw8T0kYNmbvrDZ5spPZ3Q+VAMVHnxaCH0VMIU98eWgdHDRUPJFt1nXsA8VRY41rSRndZiWCHW5YMp4/k/palKSfLGGaah0CwZcCXFK9MwrwHYdnkyMn2kgZqaavG+QvnBp2HRYQ/eMVoto3PA/XRP34v67TUF3HOmNUScawbdnSqUnqqyR9RX4h/ELhGtprj0OIVRLUiM4QSNK+yKAph65cpNKEY8RKNWIbmcyDRBMiu/Z4MFNLSK9Qt08V5j+Lq4Cdjyz871y28Wo5GELZd2By6OzT69ERzlSTRx41JfbnugG49dXH4YkBu2j6VcwaBJ8sS/clA+beGMGdlNtFqxnUcXjm7hLmnzBKfWt27xJIaNhY2GPis3KGHHRaAb70ROD+xvwvvhmRfJHvtz569gyH6IWhTKOw7KqdUgus5UK7yteyg92SgfJrUysdULIHjdNCmGCwKdJ+nypc1Cjl0oWPmLuwtm7U4pSdoXxs9yQ4Xh5nxQ9k8YGNxbz3Z/76ER2zqwSbuHgU41MCLuNSCQZl4gVz4Lz3w0O5VqggQM80fP8fEWFO5D+/k5ZSeF6pVooHf5EMJ1nQLkp+5gxiUtXl04PHhDMNBvJ640aHjmHEmAaor9RkwdQ39LJ8J8AZ/rx2KH3AH4=
 

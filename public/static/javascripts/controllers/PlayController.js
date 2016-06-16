@@ -32,6 +32,7 @@ angular.module('PlayController', []).controller(
       // available functions
       vm.isOwner = isOwner;
       vm.hoverBoard = hoverBoard;
+      vm.isPossibleRow = isPossibleRow;
       vm.afterUpdate = afterUpdate;
       vm.setMove = setMove;
       vm.playersTurn = playersTurn;
@@ -43,6 +44,18 @@ angular.module('PlayController', []).controller(
       vm.setNick = UserUtilsService.setNick;
 
       // controller start
+      vm.rows = Array.apply(
+        null,
+        new Array(vm.game.board.numRows)).map(function(_, i) {
+          return i;
+        }
+      );
+      vm.columns = Array.apply(
+        null,
+        new Array(vm.game.board.numCols)).map(function(_, i) {
+          return i;
+        }
+      );
       if (vm.game.state === enumvalues.GameState.FINISHED) {
         vm.prepareWinningMoves(vm.game.moves[vm.game.moves.length - 1]);
       }
@@ -55,23 +68,19 @@ angular.module('PlayController', []).controller(
       function hoverBoard(row, column) {
         vm.activeColumn = column;
         vm.activeRow = row;
+        vm.possibleRow = continuumhelpers.computeRow(vm.game, row < 3, column);
+      }
+
+      function isPossibleRow(row, column) {
+        return column === vm.activeColumn && row === vm.possibleRow;
       }
 
       function afterUpdate(game) {
-        vm.rows = Array.apply(
-          null,
-          new Array(game.board.numRows)).map(function(_, i) {
-            return i;
-          }
-        );
-        vm.columns = Array.apply(
-          null,
-          new Array(game.board.numCols)).map(function(_, i) {
-            return i;
-          }
-        );
-        if (vm.game.state === enumvalues.GameState.FINISHED) {
-          vm.prepareWinningMoves(vm.game.moves[vm.game.moves.length - 1]);
+        if (game.moves.length > 0) {
+          vm.lastMove = game.moves[game.moves.length - 1];
+        }
+        if (game.state === enumvalues.GameState.FINISHED) {
+          vm.prepareWinningMoves(game.moves[game.moves.length - 1]);
         }
       }
 
@@ -87,6 +96,7 @@ angular.module('PlayController', []).controller(
             },
             function(move) {
               vm.game.board[move.row][move.column] = move.number % 2 === 1 ? 1 : 2;
+              vm.hoverBoard(vm.activeRow, vm.activeColumn);
               vm.updateView();
             },
             function(error) {
