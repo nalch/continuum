@@ -43,6 +43,18 @@ angular.module('PlayController', []).controller(
       vm.setNick = UserUtilsService.setNick;
 
       // controller start
+      vm.rows = Array.apply(
+        null,
+        new Array(vm.game.board.numRows)).map(function(_, i) {
+          return i;
+        }
+      );
+      vm.columns = Array.apply(
+        null,
+        new Array(vm.game.board.numCols)).map(function(_, i) {
+          return i;
+        }
+      );
       if (vm.game.state === enumvalues.GameState.FINISHED) {
         vm.prepareWinningMoves(vm.game.moves[vm.game.moves.length - 1]);
       }
@@ -58,18 +70,7 @@ angular.module('PlayController', []).controller(
       }
 
       function afterUpdate(game) {
-        vm.rows = Array.apply(
-          null,
-          new Array(game.board.numRows)).map(function(_, i) {
-            return i;
-          }
-        );
-        vm.columns = Array.apply(
-          null,
-          new Array(game.board.numCols)).map(function(_, i) {
-            return i;
-          }
-        );
+
         if (vm.game.state === enumvalues.GameState.FINISHED) {
           vm.prepareWinningMoves(vm.game.moves[vm.game.moves.length - 1]);
         }
