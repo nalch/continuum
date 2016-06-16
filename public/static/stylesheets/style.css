@@ -127,6 +127,10 @@ a {
   color: #2890ab;
 }
 
+#board .possibleRow {
+  color: #dddddd;
+}
+
 #sidebar .panel-heading .fa {
   float: left;
   font-size: 16px;

@@ -32,6 +32,7 @@ angular.module('PlayController', []).controller(
       // available functions
       vm.isOwner = isOwner;
       vm.hoverBoard = hoverBoard;
+      vm.isPossibleRow = isPossibleRow;
       vm.afterUpdate = afterUpdate;
       vm.setMove = setMove;
       vm.playersTurn = playersTurn;
@@ -67,6 +68,11 @@ angular.module('PlayController', []).controller(
       function hoverBoard(row, column) {
         vm.activeColumn = column;
         vm.activeRow = row;
+        vm.possibleRow = continuumhelpers.computeRow(vm.game, row < 3, column);
+      }
+
+      function isPossibleRow(row, column) {
+        return column === vm.activeColumn && row === vm.possibleRow;
       }
 
       function afterUpdate(game) {
@@ -90,6 +96,7 @@ angular.module('PlayController', []).controller(
             },
             function(move) {
               vm.game.board[move.row][move.column] = move.number % 2 === 1 ? 1 : 2;
+              vm.hoverBoard(vm.activeRow, vm.activeColumn);
               vm.updateView();
             },
             function(error) {

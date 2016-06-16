@@ -73,16 +73,7 @@ exports.post = function(req, res, next) {
 };
 
 function setMove(player, game, move) {
-  var row = 2;
-  if (move.downward) {
-    while (row >= 0 && !BoardPiece.UNDEFINED.is(game.board[row][move.column])) {
-      row--;
-    }
-  } else {
-    while (row < 5 && !BoardPiece.UNDEFINED.is(game.board[row][move.column])) {
-      row++;
-    }
-  }
+  var row = continuumhelpers.computeRow(game, move.downward, move.column);
   move.row = row;
   move.save();
 
