@@ -50,6 +50,12 @@ body {
   font-size: 24px;
 }
 
+.trunctext {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .show-hide {
   transition: all linear 0.5s;
 }
