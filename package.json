@@ -5,25 +5,28 @@
   "scripts": {
     "start": "node app.js",
     "test": "NODE_ENV=testing mocha",
-    "lint": "eslint 'configs/**' 'middlewares/**' 'models/**' 'routes/**' 'test/**' '*.js' 'public/static/javascripts/**'",
-    "postinstall": "HOME=$OPENSHIFT_REPO_DIR bower install || node_modules/.bin/bower install"
+    "lint": "eslint 'configs/**' 'middlewares/**' 'models/**' 'routes/**' 'tasks/**' 'test/**' '*.js' 'public/static/javascripts/**'",
+    "postinstall": "HOME=$OPENSHIFT_REPO_DIR bower install || node_modules/.bin/bower install && node_modules/migration/bin/migrate"
   },
   "main": "app.js",
   "dependencies": {
+    "body-parser": "*",
+    "bower": "*",
+    "connect-mongo": "*",
+    "enum": "*",
     "express": "4",
     "express-session": "*",
-    "serve-favicon": "*",
-    "method-override": "*",
-    "morgan": "*",
-    "mongoose": "*",
-    "mongoose-unique-validator": "*",
-    "body-parser": "*",
-    "enum": "*",
-    "node-matrix": "*",
-    "connect-mongo": "*",
     "extend": "*",
     "jade": "*",
-    "bower": "*"
+    "method-override": "*",
+    "migration": "^0.3.0",
+    "moment": "^2.13.0",
+    "mongoose": "*",
+    "mongoose-unique-validator": "*",
+    "morgan": "*",
+    "node-cron": "^1.1.1",
+    "node-matrix": "*",
+    "serve-favicon": "*"
   },
   "devDependencies": {
     "eslint-plugin-angular": "*",

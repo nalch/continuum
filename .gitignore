@@ -38,3 +38,5 @@ database
 
 # bower components (get installed at deployment time)
 public/static/components
+
+migrations/.migrate-*
