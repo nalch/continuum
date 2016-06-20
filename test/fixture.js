@@ -2,18 +2,14 @@ var mongoose = require('mongoose');
 
 var Matrix = require('node-matrix');
 
-var config = require('../config');
+var database = require('../database');
 
 var BoardPiece = require('../models/game').BoardPiece;
 var Game = require('../models/game').Game;
 var GameState = require('../models/game').GameState;
 var Player = require('../models/player').Player;
 
-mongoose.connect(
-  'mongodb://' +
-  config.db.host + ':' + config.db.port + '/' +
-  'test_' + config.db.database
-);
+database.connect();
 
 exports.createTestDB = function(done) {
   Player.create({publicId: 'testplayer1'}).then(function(player1) {
@@ -45,3 +41,4 @@ exports.dropTestDB = function() {
 exports.player1 = Player.findOne({publicId: 'testplayer1'});
 exports.player2 = Player.findOne({publicId: 'testplayer2'});
 exports.testgamePlaying = Game.findOne({publicId: 'testgame-playing'});
+exports.testgames = Game.find({});
