@@ -1,6 +1,6 @@
 FROM node:6-onbuild
 
 RUN npm install -g nodemon
-CMD [ "nodemon", "app.js" ]
+CMD [ "nodemon" ]
 
 EXPOSE 8300
