@@ -6,7 +6,7 @@ var Schema = mongoose.Schema;
 var playerSchema = new Schema({
   publicId: {type: String, unique: true, required: true},
   nick: String
-},{
+}, {
   timestamps: {}
 });
 playerSchema.plugin(uniqueValidator);

@@ -9,7 +9,7 @@ var moveSchema = new Schema({
   column: {type: Number, required: true},
   row: {type: Number},
   downward: {type: Boolean, required: true}
-},{
+}, {
   timestamps: {}
 });
 moveSchema.plugin(uniqueValidator);
