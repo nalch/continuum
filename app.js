@@ -19,7 +19,7 @@ var database = require('./database');
 var middlewares = require('./middlewares');
 var routes = require('./routes');
 
-var GameCleanupTask = require('./tasks/gameCleanup').GameCleanupTask;
+var gameCleanupTask = require('./tasks/gameCleanup').gameCleanupTask;
 
 database.connect();
 
@@ -58,4 +58,4 @@ if (config.web.ip) {
   http.createServer(app).listen(config.web.port);
 }
 
-GameCleanupTask(config.tasks.gameCleanup).start();
+gameCleanupTask(config.tasks.gameCleanup).start();
