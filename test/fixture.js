@@ -1,5 +1,3 @@
-var mongoose = require('mongoose');
-
 var Matrix = require('node-matrix');
 
 var database = require('../database');

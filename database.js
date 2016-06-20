@@ -1,4 +1,6 @@
 var mongoose = require('mongoose');
+// Use native promises
+mongoose.Promise = global.Promise;
 
 var config = require('./config');
 
@@ -10,7 +12,6 @@ exports.connect = function() {
     if (config.testing) {
       mongodbConnectionString += '_testdb';
     }
-    console.log(mongodbConnectionString);
     if (process.env.OPENSHIFT_MONGODB_DB_URL) {
       mongodbConnectionString = process.env.OPENSHIFT_MONGODB_DB_URL + config.db.database;
     }
