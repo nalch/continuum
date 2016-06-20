@@ -5,6 +5,7 @@ var database = require('../database');
 var BoardPiece = require('../models/game').BoardPiece;
 var Game = require('../models/game').Game;
 var GameState = require('../models/game').GameState;
+var Move = require('../models/move').Move;
 var Player = require('../models/player').Player;
 
 database.connect();
@@ -34,6 +35,7 @@ exports.createTestDB = function(done) {
 exports.dropTestDB = function() {
   Player.find().remove().exec();
   Game.find().remove().exec();
+  Move.find().remove().exec();
 };
 
 exports.player1 = Player.findOne({publicId: 'testplayer1'});
