@@ -58,4 +58,4 @@ if (config.web.ip) {
   http.createServer(app).listen(config.web.port);
 }
 
-GameCleanupTask('*/5 * * * * *').start();
+GameCleanupTask(config.tasks.gameCleanup).start();
