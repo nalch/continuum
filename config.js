@@ -5,11 +5,14 @@ var stageConfig = require('./configs/' + stage);
 
 // setting defaults
 var config = {
-  stage: stage,
-  testing: process.env.NODE_ENV === 'testing',
   session: {
     secretKey: ''
   },
+  stage: stage,
+  tasks: {
+    gameCleanup: '0 30 4 * * *'
+  },
+  testing: process.env.NODE_ENV === 'testing',
   web: {
     port: process.env.WEB_PORT || 8300
   }
