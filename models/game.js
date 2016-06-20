@@ -15,6 +15,8 @@ var gameSchema = new Schema({
   state: {type: Schema.Types.Mixed},
   board: {type: Schema.Types.Mixed},
   revanche: {type: Schema.Types.ObjectId, ref: 'Game'}
+},{
+  timestamps: {}
 });
 gameSchema.plugin(uniqueValidator);
 
