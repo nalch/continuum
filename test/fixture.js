@@ -1,21 +1,25 @@
 var Matrix = require('node-matrix');
+var when = require('when');
 
 var database = require('../database');
 
 var BoardPiece = require('../models/game').BoardPiece;
 var Game = require('../models/game').Game;
 var GameState = require('../models/game').GameState;
+var Move = require('../models/move').Move;
 var Player = require('../models/player').Player;
 
 database.connect();
 
-exports.createTestDB = function(done) {
-  Player.create({publicId: 'testplayer1'}).then(function(player1) {
-    Player.create({publicId: 'testplayer2'}).then(function(player2) {
+exports.createTestDB = function() {
+  return new Promise(function(resolve, reject) {
+    var player1Promise = Player.create({publicId: 'testplayer1'});
+    var player2Promise = Player.create({publicId: 'testplayer2'});
+    when.join(player1Promise, player2Promise).then(function(players) {
       Game.create({
         publicId: 'testgame-playing',
-        opponent: player2._id,
-        owner: player1._id,
+        opponent: players[1]._id,
+        owner: players[0]._id,
         state: GameState.PLAYING,
         board: new Matrix(
           {
@@ -25,15 +29,18 @@ exports.createTestDB = function(done) {
           }
         )
       }).then(function() {
-        done();
+        resolve();
+      }).catch(function(err) {
+        reject(err);
       });
     });
   });
-};
+}
 
 exports.dropTestDB = function() {
   Player.find().remove().exec();
   Game.find().remove().exec();
+  Move.find().remove().exec();
 };
 
 exports.player1 = Player.findOne({publicId: 'testplayer1'});
