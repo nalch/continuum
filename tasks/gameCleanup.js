@@ -29,6 +29,11 @@ function closeStaleGames() {
   });
 }
 
+/**
+ * Schedule closeStaleGames according to the parameter
+ * @param {String} crontab the crontab for this job
+ * @return {CronJob} the scheduled CronJob to start(), stop() or destroy()
+ */
 exports.gameCleanupTask = function(crontab) {
   return cron.schedule(crontab, closeStaleGames);
 };
