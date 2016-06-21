@@ -35,7 +35,7 @@ exports.createTestDB = function() {
       });
     });
   });
-}
+};
 
 exports.dropTestDB = function() {
   Player.find().remove().exec();

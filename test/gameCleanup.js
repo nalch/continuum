@@ -52,7 +52,6 @@ describe('Test for Tasks', function() {
         return when.all(closeStaleGames()).then(function() {
           expect(fixtureDict.testgamePlaying.state).to.equal(GameState.PLAYING.value);
         });
-
       });
     });
   });
