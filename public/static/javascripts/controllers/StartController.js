@@ -54,7 +54,7 @@ angular.module('StartController', []).controller('StartController', [
 
     function startViewUpdate() {
       vm.updateView();
-      vm.heartbeat = $interval(vm.updateView, 1000);
+      vm.heartbeat = $interval(vm.updateView, 60000);
     }
 
     function stopViewUpdate() {
