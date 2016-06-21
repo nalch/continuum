@@ -74,7 +74,7 @@ angular.module('StartController', []).controller('StartController', [
     }
 
     function joinGame() {
-      if (vm.gameformData) {
+      if (vm.gameformData && vm.gameformData.publicId !== '') {
         GameService.get({gameId: vm.gameformData.publicId}, function(game) {
           $location.path('/lobby/' + game.publicId + '/');
         }, function() {
