@@ -70,3 +70,11 @@ var ownModule = require('../own/module');
 
 var npmModuleClass = require('../own/module').Class;
 ```
+
+## API
+
+The core functionality of continuum is implemented through a REST-API. It deals with players, games and moves.
+
+### Player
+
+
