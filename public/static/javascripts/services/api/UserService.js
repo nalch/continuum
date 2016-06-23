@@ -1,5 +1,5 @@
 angular.module('services').factory('UserService', ['$resource', function($resource) {
-  return $resource('/players/:publicId', {}, {
+  return $resource('/api/players/:publicId', {}, {
     patch: {
       method: 'PUT'
     }

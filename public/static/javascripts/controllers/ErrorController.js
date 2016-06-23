@@ -7,9 +7,9 @@ angular.module('ErrorController', []).controller(
       vm.errors = [];
 
       vm.addError = function(error) {
-        vm.errors.push(error);
+        vm.errors.unshift(error);
         $timeout(function() {
-          vm.errors.pop(0);
+          vm.errors.pop();
         }, 5000);
         return false;
       };
