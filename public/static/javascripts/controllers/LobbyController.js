@@ -15,20 +15,19 @@ angular.module('LobbyController', []).controller('LobbyController', [
     vm.location = $location;
 
     // available functions
-    vm.afterUpdate = forwardPlaying;
     vm.isOwner = isOwner;
     vm.setNick = UserUtilsService.setNick;
     vm.challengeUser = challengeUser;
     vm.startGame = startGame;
 
     // controller start
-    // function implementations
-    function forwardPlaying(game) {
+    $scope.$on('updateViewFinished', function(event, game) {
       if (!isOwner() && game.state === enumvalues.GameState.PLAYING) {
         $location.path('/continuum/' + $routeParams.gameId + '/');
       }
-    }
+    });
 
+    // function implementations
     function isOwner() {
       return vm.userId === vm.game.owner.publicId;
     }

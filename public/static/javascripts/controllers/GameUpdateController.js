@@ -21,9 +21,7 @@ angular.module('GameUpdateController', []).controller(
       function updateView() {
         GameService.get({gameId: $routeParams.gameId}, function(game) {
           vm.game = game;
-          if (vm.afterUpdate) {
-            vm.afterUpdate(game);
-          }
+          $scope.$broadcast('updateViewFinished', game);
         }, function() {
           vm.addError('Could not get game');
         });
