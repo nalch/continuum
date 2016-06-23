@@ -14,7 +14,7 @@ exports.aboutme = function(req, res, next) {
   }).catch(function(err) {
     next(err);
   });
-}
+};
 
 exports.get = function(req, res, next) {
     // you're only allowed to see your own details
