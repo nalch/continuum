@@ -40,8 +40,8 @@ var prepareBoard = function(mapping) {
 };
 
 describe('Test for Routes: Move', function() {
-  before(function(done) {
-    fixture.createTestDB(done);
+  before(function() {
+    return fixture.createTestDB();
   });
 
   after(function() {

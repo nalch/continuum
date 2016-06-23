@@ -14,7 +14,7 @@ var config = {
   },
   testing: process.env.NODE_ENV === 'testing',
   web: {
-    port: process.env.WEB_PORT || 8300
+    port: process.env.WEB_PORT || (process.env.NODE_ENV === 'testing' ? 8383 : 8300)
   }
 };
 

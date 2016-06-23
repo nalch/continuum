@@ -101,4 +101,6 @@ exports.registerRoutes = function(app) {
   app.get('/api/players', player.list);
   app.get('/api/players/:playerId', player.get);
   app.put('/api/players/:playerId', player.put);
+
+  app.get('/api/aboutme', player.aboutme);
 };
