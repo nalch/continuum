@@ -45,7 +45,7 @@ describe('Test for Routes: Move', function() {
   });
 
   after(function() {
-    fixture.dropTestDB();
+    return fixture.dropTestDB();
   });
 
   beforeEach(function() {

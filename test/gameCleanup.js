@@ -10,11 +10,11 @@ var GameState = require('../models/game').GameState;
 
 describe('Test for Tasks', function() {
   before(function(done) {
-    fixture.createTestDB(done);
+    return fixture.createTestDB(done);
   });
 
   after(function() {
-    fixture.dropTestDB();
+    return fixture.dropTestDB();
   });
 
   beforeEach(function() {
