@@ -1,5 +1,6 @@
-var Matrix = require('node-matrix');
 var when = require('when');
+
+var Matrix = require('node-matrix');
 
 var database = require('../database');
 
@@ -38,9 +39,11 @@ exports.createTestDB = function() {
 };
 
 exports.dropTestDB = function() {
-  Player.find().remove().exec();
-  Game.find().remove().exec();
-  Move.find().remove().exec();
+  return when.join(
+    Player.find().remove(),
+    Game.find().remove(),
+    Move.find().remove()
+  );
 };
 
 exports.player1 = Player.findOne({publicId: 'testplayer1'});
