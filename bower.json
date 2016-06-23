@@ -11,6 +11,8 @@
     "bootstrap-css": "~3.1.x",
     "angular-route": "1.4.x",
     "angular-animate": "1.4.x",
-    "angular-resource": "1.4.x"
+    "angular-resource": "1.4.x",
+    "swagger-ui": "2.1.4",
+    "swagger-js": "2.1.15"
   }
 }

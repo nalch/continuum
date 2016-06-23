@@ -1,0 +1,89 @@
+swagger: '2.0'
+
+info:
+  title: Continuum
+  description: |
+    A connect four derivative with the possiblity to connect over the edges
+    and set pieces from the top and bottom falling to the middle of the board.
+  version: "1.1.1"
+
+# the domain of the service
+host: continuum-nalch.rhcloud.com
+# array of all schemes that your API supports
+schemes:
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+
+paths:
+  /api/players:
+    get:
+      description: |
+        Gets all `Player` objects.
+      tags:
+        - Player
+      responses:
+        200:
+          description: Successful response
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Player'
+
+  /api/players/{publicId}:
+    parameters:
+      - name: publicId
+        description: The player's publicId. Has to be the current player (stored in the session)
+        in: path
+        type: string
+        required: true
+
+    get:
+      description: |
+        Gets the detailed `Player` object for the user in the session
+      tags:
+        - Player
+      responses:
+        200:
+          description: Successful response
+          schema:
+            $ref: '#/definitions/Player'
+        403:
+          description: You're only allowed to see your own details
+
+    put:
+      description: |
+        Change an existing player
+      tags:
+        - Player
+      parameters:
+        - name: nick
+          in: body
+          description: The player's new nickname
+          schema:
+            $ref: '#/definitions/newPlayer'
+      responses:
+        200:
+          description: Successful change of player
+          schema:
+            $ref: '#/definitions/Player'
+        403:
+          description: You're only allowed to change your own details
+
+definitions:
+  Player:
+    type: object
+    properties:
+      publicId:
+        type: string
+        description: Unique identifier representing a specific player. F.e. 2d8b03f0-4812-6385-8651-6a85efa1eeb1
+      nick:
+        type: string
+        description: The player's nickname, if it was set
+  newPlayer:
+    type: object
+    properties:
+      nick:
+        type: string

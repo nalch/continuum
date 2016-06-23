@@ -85,6 +85,7 @@ angular.module('PlayController', []).controller(
       }
 
       function setMove(row, column) {
+        // disable if move was made
         if (vm.playersTurn()) {
           MoveService.save(
             {
