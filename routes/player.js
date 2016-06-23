@@ -8,6 +8,14 @@ exports.list = function(req, res, next) {
   });
 };
 
+exports.aboutme = function(req, res, next) {
+  Player.findOne({publicId: req.session.userId}).then(function(player) {
+    res.json(player);
+  }).catch(function(err) {
+    next(err);
+  });
+}
+
 exports.get = function(req, res, next) {
     // you're only allowed to see your own details
   if (req.params.playerId === req.session.userId) {
