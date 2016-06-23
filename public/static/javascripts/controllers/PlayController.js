@@ -85,7 +85,6 @@ angular.module('PlayController', []).controller(
       }
 
       function setMove(row, column) {
-        // disable if move was made
         if (vm.playersTurn()) {
           MoveService.save(
             {
@@ -122,7 +121,7 @@ angular.module('PlayController', []).controller(
         }
 
         // active player
-        if (vm.userId === vm.currentPlayer()) {
+        if (vm.userId === vm.currentPlayer() && !vm.updatingView) {
           return true;
         }
 
