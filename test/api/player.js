@@ -38,6 +38,7 @@ describe('API: Player', function() {
 
           // test actual response
           var players = res.body;
+          console.log(players);
           expect(players).to.have.lengthOf(2);
           for (var playerIndex = 0; playerIndex < players.length; playerIndex++) {
             var player = players[playerIndex];
