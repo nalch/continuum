@@ -8,16 +8,27 @@ info:
   version: "1.1.1"
 
 # the domain of the service
-host: continuum-nalch.rhcloud.com
+# host: continuum-nalch.rhcloud.com
 # array of all schemes that your API supports
-schemes:
-  - https
+# schemes:
+#  - https
 consumes:
   - application/json
 produces:
   - application/json
 
 paths:
+  /api/aboutme:
+    get:
+      description: |
+        Get details about the current player. The current player is stored in the session
+      tags:
+        - Player
+      responses:
+        200:
+          description: Successful response
+          schema:
+            $ref: '#/definitions/Player'
   /api/players:
     get:
       description: |
