@@ -32,7 +32,7 @@ angular.module('GameUpdateController', []).controller(
 
       function startViewUpdate() {
         vm.updateView();
-        vm.heartbeat = $interval(vm.updateView, 1000);
+        vm.heartbeat = $interval(vm.updateView, 3000);
       }
 
       function stopViewUpdate() {

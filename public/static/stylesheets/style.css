@@ -46,8 +46,12 @@ body {
     padding: 0;
 }
 
-.navbar-right .helpicon {
+.navbar-right .navbar-icon {
+  color: #777;
   font-size: 24px;
+  line-height: 20px;
+  padding-bottom: 15px;
+  padding-top: 15px;
 }
 
 .trunctext {
@@ -56,12 +60,22 @@ body {
   white-space: nowrap;
 }
 
-.show-hide {
-  transition: all linear 0.5s;
+.show-hide.ng-enter, .show-hide.ng-leave {
+  transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
 }
 
-.show-hide.ng-hide {
-  opacity: 0;
+.show-hide.ng-enter,
+.show-hide.ng-leave.ng-leave-active {
+  opacity:0;
+}
+
+.show-hide.ng-leave,
+.show-hide.ng-enter.ng-enter-active {
+  opacity:1;
+}
+
+.show-hide.animate-enter-active {
+	opacity: 1;
 }
 
 .animate-repeat {

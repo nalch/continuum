@@ -9,9 +9,14 @@ nav(class="navbar navbar-default")
             i(class="fa fa-exclamation-circle", aria-hidden="true")
             span {{ error }}
       ul(class="nav navbar-nav navbar-right")
+        li(ng-if="vm.updatingView", class="show-hide")
+          i(
+            class="navbar-icon fa fa-spin fa-circle-o-notch",
+            aria-hidden="true"
+          )
         li
           a(
-            class="helpicon fa fa-question-circle-o",
+            class="navbar-icon fa fa-question-circle-o",
             aria-hidden="true",
           )
 
