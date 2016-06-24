@@ -60,7 +60,7 @@ angular.module('PlayController', []).controller(
         vm.prepareWinningMoves(vm.game.moves[vm.game.moves.length - 1]);
       }
 
-      $scope.$on('updateViewFinished', function (event, game) {
+      $scope.$on('updateViewFinished', function(event, game) {
         if (game.moves.length > 0) {
           vm.lastMove = game.moves[game.moves.length - 1];
         }
@@ -96,6 +96,7 @@ angular.module('PlayController', []).controller(
             },
             function(move) {
               vm.game.board[move.row][move.column] = move.number % 2 === 1 ? 1 : 2;
+              vm.game.moves.push(move);
               vm.hoverBoard(vm.activeRow, vm.activeColumn);
               vm.updateView();
             },
