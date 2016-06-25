@@ -83,6 +83,20 @@ paths:
         403:
           description: You're only allowed to change your own details
 
+  /api/games:
+    get:
+      description: |
+        Gets an overview over all games (moves and revanche are not populated for this overview)
+      tags:
+        - Game
+      responses:
+        200:
+          description: Successful response
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/SimplifiedGame'
+
 definitions:
   Player:
     type: object
@@ -98,3 +112,37 @@ definitions:
     properties:
       nick:
         type: string
+  SimplifiedGame:
+    type: object
+    properties:
+      publicId:
+        type: string
+        description: Unique identifier representing a specific player. F.e. 2d8b03f0-4812-6385-8651-6a85efa1eeb1
+      owner:
+        required: true
+        schema:
+          $ref: '#/definitions/Player'
+      opponent:
+        schema:
+          $ref: '#/definitions/Player'
+      visitors:
+        schema:
+          type: array
+          items:
+            type: string
+      moves:
+        schema:
+          type: array
+          items:
+            type: string
+      state:
+        type: number
+      board:
+        schema:
+          $ref: '#/definitions/Board'
+      revanche:
+        type: string
+      createdAt:
+        type: Date
+      updatedAt:
+        type: Date
