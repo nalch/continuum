@@ -128,12 +128,6 @@ definitions:
       nick:
         type: string
         description: The player's nickname, if it was set
-      createdAt:
-        type: string
-        format: date-time
-      updatedAt:
-        type: string
-        format: date-time
   newPlayer:
     type: object
     properties:
@@ -169,12 +163,6 @@ definitions:
           $ref: '#/definitions/Board'
       revanche:
         type: string
-      createdAt:
-        type: string
-        format: date-time
-      updatedAt:
-        type: string
-        format: date-time
   Game:
     type: object
     properties:
@@ -208,12 +196,6 @@ definitions:
       revanche:
         schema:
           $ref: '#/definitions/Game'
-      createdAt:
-        type: string
-        format: date-time
-      updatedAt:
-        type: string
-        format: date-time
   Move:
     type: object
     properties:
@@ -237,9 +219,3 @@ definitions:
         type: boolean
         description: |
           If the token was tossed from above (true) or below (false)
-      createdAt:
-        type: string
-        format: date-time
-      updatedAt:
-        type: string
-        format: date-time
