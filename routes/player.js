@@ -3,6 +3,7 @@ var Player = require('../models/player').Player;
 exports.list = function(req, res, next) {
   Player.find().then(function(players) {
     res.json(players);
+    next();
   }).catch(function(err) {
     next(err);
   });
@@ -11,6 +12,7 @@ exports.list = function(req, res, next) {
 exports.aboutme = function(req, res, next) {
   Player.findOne({publicId: req.session.userId}).then(function(player) {
     res.json(player);
+    next();
   }).catch(function(err) {
     next(err);
   });
@@ -41,6 +43,7 @@ exports.put = function(req, res, next) {
       }
 
       res.json(player);
+      next();
     }).catch(function(err) {
       next(err);
     });

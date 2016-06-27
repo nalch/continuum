@@ -50,8 +50,6 @@ describe('API: Player', function() {
           expect(player).to.be.a('object');
 
           // test actual response
-          expect(player).to.have.property('createdAt');
-          expect(player).to.have.property('updatedAt');
           expect(player).to.have.property('publicId');
           expect(player.publicId).to.equal(expectedPlayerId);
         });

@@ -6,7 +6,7 @@ var Player = require('../models/player').Player;
 
 var continuumhelpers = require('../public/static/javascripts/continuum/helpers');
 
-exports.list = function(req, res) {
+exports.list = function(req, res, next) {
   Game.findOne({publicId: req.params.gameId})
     .populate('moves')
     .exec(function(err, game) {
@@ -15,6 +15,7 @@ exports.list = function(req, res) {
       }
       if (game) {
         res.json(game.moves);
+        next();
       } else {
         res.status(404).send('Not found');
       }
@@ -58,6 +59,7 @@ exports.post = function(req, res, next) {
                   game.state = GameState.FINISHED;
                 }
                 res.json(move);
+                next();
               }
             );
           } else {

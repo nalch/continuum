@@ -18,6 +18,21 @@ var gameSchema = new Schema({
 }, {
   timestamps: {}
 });
+gameSchema.set('toJSON', {
+  transform: function(doc, ret) {
+    var retJson = {
+      publicId: ret.publicId,
+      owner: ret.owner,
+      opponent: ret.opponent,
+      visitors: ret.visitors,
+      moves: ret.moves,
+      state: ret.state,
+      board: ret.board,
+      revanche: ret.revanche
+    };
+    return retJson;
+  }
+});
 gameSchema.plugin(uniqueValidator);
 
 exports.GameState = new Enum(continuumEnumvalues.GameState);

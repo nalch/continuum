@@ -12,6 +12,18 @@ var moveSchema = new Schema({
 }, {
   timestamps: {}
 });
+moveSchema.set('toJSON', {
+  transform: function(doc, ret) {
+    var retJson = {
+      game: ret.game,
+      number: ret.number,
+      column: ret.column,
+      row: ret.row,
+      downward: ret.downward
+    };
+    return retJson;
+  }
+});
 moveSchema.plugin(uniqueValidator);
 
 exports.Move = mongoose.model('Move', moveSchema);

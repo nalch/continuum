@@ -7,7 +7,7 @@ var GameState = require('../models/game').GameState;
 var BoardPiece = require('../models/game').BoardPiece;
 var Player = require('../models/player').Player;
 
-exports.list = function(req, res) {
+exports.list = function(req, res, next) {
   Game.find()
     .populate('owner opponent')
     .exec(function(err, games) {
@@ -15,6 +15,7 @@ exports.list = function(req, res) {
         res.send(err);
       } else {
         res.json(games);
+        next();
       }
     });
 };
@@ -29,6 +30,7 @@ exports.get = function(req, res, next) {
       }
       if (game) {
         res.json(game);
+        next();
       } else {
         res.status(404).send('Not found');
       }
@@ -55,6 +57,7 @@ exports.post = function(req, res, next) {
           return next();
         }
         res.json(game);
+        next();
       });
     }
   });
@@ -87,6 +90,7 @@ exports.put = function(req, res, next) {
             }
             game.update({opponent: opponent._id}, function(err, game) {
               res.json(game);
+              next();
             });
           }
         );
@@ -100,6 +104,7 @@ exports.put = function(req, res, next) {
             }
             game.update({revanche: revanche._id}, function(err, game) {
               res.json(game);
+              next();
             });
           }
         );

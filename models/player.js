@@ -9,6 +9,15 @@ var playerSchema = new Schema({
 }, {
   timestamps: {}
 });
+playerSchema.set('toJSON', {
+  transform: function(doc, ret) {
+    var retJson = {
+      publicId: ret.publicId,
+      nick: ret.nick
+    };
+    return retJson;
+  }
+});
 playerSchema.plugin(uniqueValidator);
 
 exports.Player = mongoose.model('Player', playerSchema);
