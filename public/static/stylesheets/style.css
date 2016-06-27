@@ -46,16 +46,36 @@ body {
     padding: 0;
 }
 
-.navbar-right .helpicon {
+.navbar-right .navbar-icon {
+  color: #777;
   font-size: 24px;
+  line-height: 20px;
+  padding-bottom: 15px;
+  padding-top: 15px;
 }
 
-.show-hide {
-  transition: all linear 0.5s;
+.trunctext {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-.show-hide.ng-hide {
-  opacity: 0;
+.show-hide.ng-enter, .show-hide.ng-leave {
+  transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+}
+
+.show-hide.ng-enter,
+.show-hide.ng-leave.ng-leave-active {
+  opacity:0;
+}
+
+.show-hide.ng-leave,
+.show-hide.ng-enter.ng-enter-active {
+  opacity:1;
+}
+
+.show-hide.animate-enter-active {
+	opacity: 1;
 }
 
 .animate-repeat {
@@ -67,20 +87,33 @@ body {
 .animate-repeat.ng-move,
 .animate-repeat.ng-enter,
 .animate-repeat.ng-leave {
-  -webkit-transition:all linear 1s;
-  transition:all linear 1s;
+  /*-webkit-transition:all linear 1s;
+  transition:all linear 1s;*/
+  -webkit-transition: 400ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+  -moz-transition: 400ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+  -ms-transition: 400ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+  -o-transition: 400ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+  transition: 400ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+  position: relative;
+  display: block;
 }
+
+
 
 .animate-repeat.ng-leave.ng-leave-active,
 .animate-repeat.ng-move,
 .animate-repeat.ng-enter {
-  opacity:0;
+  opacity: 0;
+  left: -150px;
+  width: 0px;
 }
 
 .animate-repeat.ng-leave,
 .animate-repeat.ng-move.ng-move-active,
 .animate-repeat.ng-enter.ng-enter-active {
-  opacity:1;
+    opacity: 1;
+    left: 0;
+    width: 150px;
 }
 
 a {

@@ -90,15 +90,17 @@ exports.registerRoutes = function(app) {
   app.get('/lobby/:gameId', lobby);
   app.get('/continuum/:gameId', play);
 
-  app.get('/games', game.list);
-  app.post('/games', game.post);
-  app.put('/games/:gameId', game.put);
-  app.get('/games/:gameId', game.get);
+  app.get('/api/games', game.list);
+  app.post('/api/games', game.post);
+  app.put('/api/games/:gameId', game.put);
+  app.get('/api/games/:gameId', game.get);
 
-  app.get('/games/:gameId/moves', move.list);
-  app.post('/games/:gameId/moves', move.post);
+  app.get('/api/games/:gameId/moves', move.list);
+  app.post('/api/games/:gameId/moves', move.post);
 
-  app.get('/players', player.list);
-  app.get('/players/:playerId', player.get);
-  app.put('/players/:playerId', player.put);
+  app.get('/api/players', player.list);
+  app.get('/api/players/:playerId', player.get);
+  app.put('/api/players/:playerId', player.put);
+
+  app.get('/api/aboutme', player.aboutme);
 };

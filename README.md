@@ -3,6 +3,10 @@
 A connect four derivative, that allows connections over the boards borders and insertions of pieces at the bottom and top falling to the middle of the board.
 Based on the idea and rules of [kraiz](https://github.com/kraiz)
 
+## API
+
+The REST-API, that handles the core functionality of organizing players, games and moves is documented with swagger.
+The documentation and possibility to send requests is found under `<host>/api/api-doc.html`.
 
 ## Docker
 

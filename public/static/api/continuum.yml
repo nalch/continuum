@@ -1,0 +1,221 @@
+swagger: '2.0'
+
+info:
+  title: Continuum
+  description: |
+    A connect four derivative with the possiblity to connect over the edges
+    and set pieces from the top and bottom falling to the middle of the board.
+  version: "1.1.1"
+
+# the domain of the service
+# host: continuum-nalch.rhcloud.com
+# array of all schemes that your API supports
+# schemes:
+#  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+
+paths:
+  /api/aboutme:
+    get:
+      description: |
+        Get details about the current player. The current player is stored in the session
+      tags:
+        - Player
+      responses:
+        200:
+          description: Successful response
+          schema:
+            $ref: '#/definitions/Player'
+  /api/players:
+    get:
+      description: |
+        Gets all `Player` objects.
+      tags:
+        - Player
+      responses:
+        200:
+          description: Successful response
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Player'
+
+  /api/players/{publicId}:
+    parameters:
+      - name: publicId
+        description: The player's publicId. Has to be the current player (stored in the session)
+        in: path
+        type: string
+        required: true
+
+    get:
+      description: |
+        Gets the detailed `Player` object for the user in the session
+      tags:
+        - Player
+      responses:
+        200:
+          description: Successful response
+          schema:
+            $ref: '#/definitions/Player'
+        403:
+          description: You're only allowed to see your own details
+
+    put:
+      description: |
+        Change an existing player
+      tags:
+        - Player
+      parameters:
+        - name: nick
+          in: body
+          description: The player's new nickname
+          schema:
+            $ref: '#/definitions/newPlayer'
+      responses:
+        200:
+          description: Successful change of player
+          schema:
+            $ref: '#/definitions/Player'
+        403:
+          description: You're only allowed to change your own details
+
+  /api/games:
+    get:
+      description: |
+        Gets an overview over all games (moves and revanche are not populated for this overview)
+      tags:
+        - Game
+      responses:
+        200:
+          description: Successful response
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/SimplifiedGame'
+
+  /api/games/{publicId}:
+    parameters:
+      - name: publicId
+        description: The game's publicId
+        in: path
+        type: string
+        required: true
+
+    get:
+      description: |
+        Gets the detailed `Game` object for this public id
+      tags:
+        - Game
+      responses:
+        200:
+          description: Successful response
+          schema:
+            $ref: '#/definitions/Game'
+        404:
+          description: No such game
+
+definitions:
+  Player:
+    type: object
+    properties:
+      publicId:
+        type: string
+        description: Unique identifier representing a specific player. F.e. 2d8b03f0-4812-6385-8651-6a85efa1eeb1
+      nick:
+        type: string
+        description: The player's nickname, if it was set
+  newPlayer:
+    type: object
+    properties:
+      nick:
+        type: string
+  SimplifiedGame:
+    type: object
+    properties:
+      publicId:
+        type: string
+        description: Unique identifier representing a specific player. F.e. 2d8b03f0-4812-6385-8651-6a85efa1eeb1
+      owner:
+        required: true
+        schema:
+          $ref: '#/definitions/Player'
+      opponent:
+        schema:
+          $ref: '#/definitions/Player'
+      visitors:
+        schema:
+          type: array
+          items:
+            type: string
+      moves:
+        schema:
+          type: array
+          items:
+            type: string
+      state:
+        type: number
+      board:
+        schema:
+          $ref: '#/definitions/Board'
+      revanche:
+        type: string
+  Game:
+    type: object
+    properties:
+      publicId:
+        type: string
+        description: Unique identifier representing a specific player. F.e. 2d8b03f0-4812-6385-8651-6a85efa1eeb1
+      owner:
+        required: true
+        schema:
+          $ref: '#/definitions/Player'
+      opponent:
+        schema:
+          $ref: '#/definitions/Player'
+      visitors:
+        schema:
+          type: array
+          items:
+            schema:
+              $ref: '#/definitions/Player'
+      moves:
+        schema:
+          type: array
+          items:
+            schema:
+              $ref: '#/definitions/Move'
+      state:
+        type: number
+      board:
+        schema:
+          $ref: '#/definitions/Board'
+      revanche:
+        schema:
+          $ref: '#/definitions/Game'
+  Move:
+    type: object
+    properties:
+      game:
+        type: number
+        description: |
+          The game, this move is made on
+      number:
+        type: number
+        description: |
+          Which move in the progression of the game, this was
+      column:
+        type: number
+        description: |
+          Which column the move was set in
+      row:
+        type: number
+        description: |
+          Which row the token fell/rose to
+      downward:
+        type: boolean
+        description: |
+          If the token was tossed from above (true) or below (false)

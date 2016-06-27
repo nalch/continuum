@@ -1,38 +1,43 @@
 {
   "name": "continuum",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "private": true,
   "scripts": {
     "start": "node app.js",
     "test": "NODE_ENV=testing mocha",
-    "lint": "eslint 'configs/**' 'middlewares/**' 'models/**' 'routes/**' 'test/**' '*.js' 'public/static/javascripts/**'",
-    "postinstall": "HOME=$OPENSHIFT_REPO_DIR bower install || node_modules/.bin/bower install"
+    "lint": "eslint 'configs/**' 'middlewares/**' 'models/**' 'routes/**' 'tasks/**' 'test/**' '*.js' 'public/static/javascripts/**'",
+    "postinstall": "HOME=$OPENSHIFT_REPO_DIR bower install || node_modules/.bin/bower install && node_modules/migration/bin/migrate"
   },
   "main": "app.js",
   "dependencies": {
+    "body-parser": "*",
+    "bower": "*",
+    "connect-mongo": "*",
+    "enum": "*",
     "express": "4",
     "express-session": "*",
-    "serve-favicon": "*",
-    "method-override": "*",
-    "morgan": "*",
-    "mongoose": "*",
-    "mongoose-unique-validator": "*",
-    "body-parser": "*",
-    "enum": "*",
-    "node-matrix": "*",
-    "connect-mongo": "*",
     "extend": "*",
     "jade": "*",
-    "bower": "*"
+    "method-override": "*",
+    "migration": "^0.3.0",
+    "moment": "^2.13.0",
+    "mongoose": "*",
+    "mongoose-unique-validator": "*",
+    "morgan": "*",
+    "node-cron": "^1.1.1",
+    "node-matrix": "*",
+    "serve-favicon": "*",
+    "when": "^3.7.7"
   },
   "devDependencies": {
-    "eslint-plugin-angular": "*",
-    "eslint-config-google": "~0.5.0",
-    "eslint": "~2.11.1",
-    "mocha": "*",
     "chai": "*",
+    "chai-http": "^3.0.0",
     "dirty-chai": "*",
-    "sinon": "*",
-    "eslint-config-angular": "~0.5.0"
+    "eslint": "~2.11.1",
+    "eslint-config-angular": "~0.5.0",
+    "eslint-config-google": "~0.5.0",
+    "eslint-plugin-angular": "*",
+    "mocha": "*",
+    "sinon": "*"
   }
 }

@@ -15,6 +15,23 @@ var gameSchema = new Schema({
   state: {type: Schema.Types.Mixed},
   board: {type: Schema.Types.Mixed},
   revanche: {type: Schema.Types.ObjectId, ref: 'Game'}
+}, {
+  timestamps: {}
+});
+gameSchema.set('toJSON', {
+  transform: function(doc, ret) {
+    var retJson = {
+      publicId: ret.publicId,
+      owner: ret.owner,
+      opponent: ret.opponent,
+      visitors: ret.visitors,
+      moves: ret.moves,
+      state: ret.state,
+      board: ret.board,
+      revanche: ret.revanche
+    };
+    return retJson;
+  }
 });
 gameSchema.plugin(uniqueValidator);
 

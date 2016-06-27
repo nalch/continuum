@@ -19,19 +19,20 @@ angular.module('GameUpdateController', []).controller(
 
       // function implementations
       function updateView() {
+        vm.updatingView = true;
         GameService.get({gameId: $routeParams.gameId}, function(game) {
           vm.game = game;
-          if (vm.afterUpdate) {
-            vm.afterUpdate(game);
-          }
+          $scope.$broadcast('updateViewFinished', game);
+          vm.updatingView = false;
         }, function() {
           vm.addError('Could not get game');
+          vm.updatingView = false;
         });
       }
 
       function startViewUpdate() {
         vm.updateView();
-        vm.heartbeat = $interval(vm.updateView, 1000);
+        vm.heartbeat = $interval(vm.updateView, 3000);
       }
 
       function stopViewUpdate() {

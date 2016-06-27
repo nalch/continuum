@@ -54,7 +54,7 @@ angular.module('StartController', []).controller('StartController', [
 
     function startViewUpdate() {
       vm.updateView();
-      vm.heartbeat = $interval(vm.updateView, 1000);
+      vm.heartbeat = $interval(vm.updateView, 60000);
     }
 
     function stopViewUpdate() {
@@ -74,7 +74,7 @@ angular.module('StartController', []).controller('StartController', [
     }
 
     function joinGame() {
-      if (vm.gameformData) {
+      if (vm.gameformData && vm.gameformData.publicId !== '') {
         GameService.get({gameId: vm.gameformData.publicId}, function(game) {
           $location.path('/lobby/' + game.publicId + '/');
         }, function() {

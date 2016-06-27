@@ -39,7 +39,13 @@ block content
               )
                 span(
                   class="fa",
-                  ng-class="{'fa-times': vm.game.board[row][column] === 1 || (vm.isPossibleRow(row, column) && vm.ownersTurn()), 'fa-circle-o': vm.game.board[row][column] === 2 || (vm.isPossibleRow(row, column) && !vm.ownersTurn()), 'possibleRow': vm.isPossibleRow(row, column)}",
+                  ng-class="{'fa-times': vm.game.board[row][column] === 1, 'fa-circle-o': vm.game.board[row][column] === 2}",
+                  aria-hidden="true"
+                )
+                span(
+                  ng-if="vm.game.board[row][column] === 0 && vm.game.state !== 2 && vm.playersTurn()",
+                  class="fa",
+                  ng-class="{'fa-times': vm.isPossibleRow(row, column) && vm.ownersTurn(), 'fa-circle-o': vm.isPossibleRow(row, column) && !vm.ownersTurn(), 'possibleRow': vm.isPossibleRow(row, column)}",
                   aria-hidden="true"
                 )
             tr

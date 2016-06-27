@@ -9,6 +9,20 @@ var moveSchema = new Schema({
   column: {type: Number, required: true},
   row: {type: Number},
   downward: {type: Boolean, required: true}
+}, {
+  timestamps: {}
+});
+moveSchema.set('toJSON', {
+  transform: function(doc, ret) {
+    var retJson = {
+      game: ret.game,
+      number: ret.number,
+      column: ret.column,
+      row: ret.row,
+      downward: ret.downward
+    };
+    return retJson;
+  }
 });
 moveSchema.plugin(uniqueValidator);
 

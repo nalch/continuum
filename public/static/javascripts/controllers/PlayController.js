@@ -33,7 +33,6 @@ angular.module('PlayController', []).controller(
       vm.isOwner = isOwner;
       vm.hoverBoard = hoverBoard;
       vm.isPossibleRow = isPossibleRow;
-      vm.afterUpdate = afterUpdate;
       vm.setMove = setMove;
       vm.playersTurn = playersTurn;
       vm.currentPlayer = currentPlayer;
@@ -56,9 +55,19 @@ angular.module('PlayController', []).controller(
           return i;
         }
       );
+
       if (vm.game.state === enumvalues.GameState.FINISHED) {
         vm.prepareWinningMoves(vm.game.moves[vm.game.moves.length - 1]);
       }
+
+      $scope.$on('updateViewFinished', function(event, game) {
+        if (game.moves.length > 0) {
+          vm.lastMove = game.moves[game.moves.length - 1];
+        }
+        if (game.state === enumvalues.GameState.FINISHED) {
+          vm.prepareWinningMoves(game.moves[game.moves.length - 1]);
+        }
+      });
 
       // function implementations
       function isOwner() {
@@ -75,15 +84,6 @@ angular.module('PlayController', []).controller(
         return column === vm.activeColumn && row === vm.possibleRow;
       }
 
-      function afterUpdate(game) {
-        if (game.moves.length > 0) {
-          vm.lastMove = game.moves[game.moves.length - 1];
-        }
-        if (game.state === enumvalues.GameState.FINISHED) {
-          vm.prepareWinningMoves(game.moves[game.moves.length - 1]);
-        }
-      }
-
       function setMove(row, column) {
         if (vm.playersTurn()) {
           MoveService.save(
@@ -96,6 +96,7 @@ angular.module('PlayController', []).controller(
             },
             function(move) {
               vm.game.board[move.row][move.column] = move.number % 2 === 1 ? 1 : 2;
+              vm.game.moves.push(move);
               vm.hoverBoard(vm.activeRow, vm.activeColumn);
               vm.updateView();
             },
@@ -121,7 +122,7 @@ angular.module('PlayController', []).controller(
         }
 
         // active player
-        if (vm.userId === vm.currentPlayer()) {
+        if (vm.userId === vm.currentPlayer() && !vm.updatingView) {
           return true;
         }
 

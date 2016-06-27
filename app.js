@@ -2,27 +2,26 @@
  * Module dependencies.
  */
 
-var express = require('express');
-var config = require('./config');
 var bodyParser = require('body-parser');
+var express = require('express');
+var session = require('express-session');
+var http = require('http');
+var methodOverride = require('method-override');
+var mongoose = require('mongoose');
+// var morgan = require('morgan');
+var path = require('path');
+var favicon = require('serve-favicon');
+
+var MongoStore = require('connect-mongo')(session);
+
+var config = require('./config');
+var database = require('./database');
 var middlewares = require('./middlewares');
 var routes = require('./routes');
-var http = require('http');
-var path = require('path');
-var session = require('express-session');
-var favicon = require('serve-favicon');
-var methodOverride = require('method-override');
-// var morgan = require('morgan');
-var MongoStore = require('connect-mongo')(session);
-var mongoose = require('mongoose');
 
-var mongodbConnectionString = 'mongodb://' +
-  config.db.host + ':' + config.db.port + '/' +
-  config.db.database;
-if (process.env.OPENSHIFT_MONGODB_DB_URL) {
-  mongodbConnectionString = process.env.OPENSHIFT_MONGODB_DB_URL + config.db.database;
-}
-mongoose.connect(mongodbConnectionString);
+var gameCleanupTask = require('./tasks/gameCleanup').gameCleanupTask;
+
+database.connect();
 
 var app = express();
 
@@ -53,8 +52,13 @@ app.use(express.static(path.join(__dirname, 'public', 'static')));
 
 routes.registerRoutes(app);
 
+var server = null;
 if (config.web.ip) {
-  http.createServer(app).listen(config.web.port, config.web.ip);
+  server = http.createServer(app).listen(config.web.port, config.web.ip);
 } else {
-  http.createServer(app).listen(config.web.port);
+  server = http.createServer(app).listen(config.web.port);
 }
+
+gameCleanupTask(config.tasks.gameCleanup).start();
+
+exports.server = server;
