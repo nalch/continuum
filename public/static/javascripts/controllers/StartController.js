@@ -29,12 +29,19 @@ angular.module('StartController', []).controller('StartController', [
     });
 
     // function implementations
+
+    /**
+     * filter the given games for not finished games and order by playing state (created < playing)
+     * @param {array} games the games to be filtered
+     * @return {array} all not finished games ordered by their playing state
+     */
     function filterGames(games) {
       return $filter('orderBy')(
         $filter('filter')(
           games,
           function(value) {
-            return value.state !== 2;
+            // if game is not finished
+            return value.state !== enumvalues.GameState.FINISHED;
           },
           true
         ),
@@ -44,6 +51,9 @@ angular.module('StartController', []).controller('StartController', [
       );
     }
 
+    /**
+     * request game from server and update the viewmodel
+     */
     function updateView() {
       GameService.query(function(games) {
         vm.games = vm.filterGames(games);
@@ -52,15 +62,25 @@ angular.module('StartController', []).controller('StartController', [
       });
     }
 
+    /**
+     * update the view and schedule the viewupdate (@see updateView) every minute
+     */
     function startViewUpdate() {
       vm.updateView();
       vm.heartbeat = $interval(vm.updateView, 60000);
     }
 
+    /**
+     * stop the viewupdate (@see updateView)
+     */
     function stopViewUpdate() {
       $interval.cancel(vm.heartbeat);
     }
 
+    /**
+     * create a new game on the server adding the publicId typed in the gameformData if present
+     * reroute to lobby, if the creation was successful
+     */
     function createGame() {
       var data = {};
       if (vm.gameformData) {
@@ -73,6 +93,9 @@ angular.module('StartController', []).controller('StartController', [
       });
     }
 
+    /**
+     * enter the lobby of the game with the publicId typed in the gameformData
+     */
     function joinGame() {
       if (vm.gameformData && vm.gameformData.publicId !== '') {
         GameService.get({gameId: vm.gameformData.publicId}, function(game) {
