@@ -1,5 +1,6 @@
 {
     "rules": {
-      "array-callback-return": [0]
+      "array-callback-return": [0],
+      "valid-jsdoc": [0]
     }
 }

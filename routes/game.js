@@ -7,6 +7,9 @@ var GameState = require('../models/game').GameState;
 var BoardPiece = require('../models/game').BoardPiece;
 var Player = require('../models/player').Player;
 
+/**
+ * lists all available games (see swagger api for documentation)
+ */
 exports.list = function(req, res, next) {
   Game.find()
     .populate('owner opponent')
@@ -20,6 +23,9 @@ exports.list = function(req, res, next) {
     });
 };
 
+/**
+ * get a specific game (see swagger api for documentation)
+ */
 exports.get = function(req, res, next) {
   Game.findOne({publicId: req.params.gameId})
     .populate('owner opponent moves visitors revanche')
@@ -37,6 +43,9 @@ exports.get = function(req, res, next) {
     });
 };
 
+/**
+ * create a new game (see swagger api for documentation)
+ */
 exports.post = function(req, res, next) {
   Player.findOne({publicId: req.session.userId}, function(err, player) {
     if (err) {
@@ -63,6 +72,9 @@ exports.post = function(req, res, next) {
   });
 };
 
+/**
+ * change a specific game (see swagger api for documentation)
+ */
 exports.put = function(req, res, next) {
   Game.findOne({publicId: req.params.gameId})
     .populate('owner opponent')
