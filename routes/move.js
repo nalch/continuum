@@ -6,6 +6,9 @@ var Player = require('../models/player').Player;
 
 var continuumhelpers = require('../public/static/javascripts/continuum/helpers');
 
+/**
+ * lists all available moves (see swagger api for documentation)
+ */
 exports.list = function(req, res, next) {
   Game.findOne({publicId: req.params.gameId})
     .populate('moves')
@@ -22,6 +25,9 @@ exports.list = function(req, res, next) {
     });
 };
 
+/**
+ * creates a new move (see swagger api for documentation)
+ */
 exports.post = function(req, res, next) {
   Game.findOne({publicId: req.params.gameId})
     .populate('moves owner opponent')
@@ -74,6 +80,12 @@ exports.post = function(req, res, next) {
     });
 };
 
+/**
+ * computes the row, a move results in and saves this move and its owner to the game given
+ * @param {Player} player the current player
+ * @param {Game} game the current game
+ * @param {Move} move the attempted move
+ */
 function setMove(player, game, move) {
   var row = continuumhelpers.computeRow(game, move.downward, move.column);
   move.row = row;
