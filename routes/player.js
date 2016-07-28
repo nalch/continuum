@@ -1,5 +1,8 @@
 var Player = require('../models/player').Player;
 
+/**
+ * lists all available players (see swagger api for documentation)
+ */
 exports.list = function(req, res, next) {
   Player.find().then(function(players) {
     res.json(players);
@@ -9,6 +12,9 @@ exports.list = function(req, res, next) {
   });
 };
 
+/**
+ * return details about the current player (see swagger api for documentation)
+ */
 exports.aboutme = function(req, res, next) {
   Player.findOne({publicId: req.session.userId}).then(function(player) {
     res.json(player);
@@ -18,6 +24,9 @@ exports.aboutme = function(req, res, next) {
   });
 };
 
+/**
+ * get a specific player (see swagger api for documentation)
+ */
 exports.get = function(req, res, next) {
     // you're only allowed to see your own details
   if (req.params.playerId === req.session.userId) {
@@ -33,6 +42,9 @@ exports.get = function(req, res, next) {
   }
 };
 
+/**
+ * create a new player (see swagger api for documentation)
+ */
 exports.put = function(req, res, next) {
   // you're only allowed to change your own details
   if (req.params.playerId === req.session.userId) {
