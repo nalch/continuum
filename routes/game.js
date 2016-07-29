@@ -15,7 +15,7 @@ exports.list = function(req, res, next) {
     .populate('owner opponent')
     .exec(function(err, games) {
       if (err) {
-        res.send(err);
+        next(err);
       } else {
         res.json(games);
         next();
@@ -31,8 +31,7 @@ exports.get = function(req, res, next) {
     .populate('owner opponent moves visitors revanche')
     .exec(function(err, game) {
       if (err) {
-        res.status(500).send('Could not get game');
-        return next();
+        next('Could not get game');
       }
       if (game) {
         res.json(game);
@@ -80,15 +79,16 @@ exports.put = function(req, res, next) {
     .populate('owner opponent')
     .exec(function(err, game) {
       if (err) {
-        res.send(err);
-        return next();
+        next(err);
+        return;
       }
 
       if (game.owner.publicId !== req.session.userId) {
         // allow opponent to set the revanche
         if (!req.body.opponentId && req.body.revancheId && game.opponent.publicId !== req.session.userId) {
           res.sendStatus(403);
-          return next();
+          next();
+          return;
         }
       }
 
@@ -97,12 +97,17 @@ exports.put = function(req, res, next) {
           {publicId: req.body.opponentId},
           function(err, opponent) {
             if (err) {
-              res.send(err);
-              return next();
+              next(err);
+              return;
             }
             game.update({opponent: opponent._id}, function(err, game) {
+              if (err) {
+                next(err);
+                return;
+              }
               res.json(game);
               next();
+              return;
             });
           }
         );
@@ -111,12 +116,17 @@ exports.put = function(req, res, next) {
           {publicId: req.body.revancheId},
           function(err, revanche) {
             if (err) {
-              res.send(err);
-              return next();
+              next(err);
+              return;
             }
             game.update({revanche: revanche._id}, function(err, game) {
+              if (err) {
+                next(err);
+                return;
+              }
               res.json(game);
               next();
+              return;
             });
           }
         );
