@@ -35,6 +35,11 @@ function lobby(req, res, next) {
       }
 
       Player.findOne({publicId: req.session.userId}, function(err, player) {
+        if (err) {
+          next(err);
+          return;
+        }
+
         if (isNewVisitor(game, player)) {
           game.visitors.push(player._id);
           game.save();
@@ -68,6 +73,11 @@ function play(req, res, next) {
       }
 
       Player.findOne({publicId: req.session.userId}, function(err, player) {
+        if (err) {
+          next(err);
+          return;
+        }
+
         if (isNewVisitor(game, player)) {
           game.visitors.push(player._id);
           game.save();
