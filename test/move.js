@@ -72,6 +72,7 @@ describe('Test for Routes: Move', function() {
       });
     });
 
+    // todo uses promises and when.join
     it('should test for the right player\'s turn', function() {
       return fixture.player1.exec().then(function(player1) {
         return fixture.player2.exec().then(function(player2) {

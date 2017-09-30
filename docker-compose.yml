@@ -14,11 +14,10 @@ services:
       - .:/usr/src/app
     networks:
       - backtier
-  
+
   mongodb:
     image: mongo:3.2
     container_name: mongodb
-    restart: always
     ports:
      - "27017:27017"
     volumes:

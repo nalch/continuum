@@ -6,14 +6,23 @@ var Game = require('../models/game').Game;
 var GameState = require('../models/game').GameState;
 var Player = require('../models/player').Player;
 
+/**
+ * render index page
+ */
 function index(req, res) {
   res.render('layout');
 }
 
+/**
+ * render start page
+ */
 function start(req, res) {
   res.render('start');
 }
 
+/**
+ * render game lobby for preparing the game
+ */
 function lobby(req, res, next) {
   Game.findOne({publicId: req.params.gameId})
     .populate('owner opponent')
@@ -26,6 +35,11 @@ function lobby(req, res, next) {
       }
 
       Player.findOne({publicId: req.session.userId}, function(err, player) {
+        if (err) {
+          next(err);
+          return;
+        }
+
         if (isNewVisitor(game, player)) {
           game.visitors.push(player._id);
           game.save();
@@ -38,6 +52,9 @@ function lobby(req, res, next) {
     });
 }
 
+/**
+ * render play view
+ */
 function play(req, res, next) {
   Game.findOne({publicId: req.params.gameId})
     .populate('owner opponent')
@@ -56,6 +73,11 @@ function play(req, res, next) {
       }
 
       Player.findOne({publicId: req.session.userId}, function(err, player) {
+        if (err) {
+          next(err);
+          return;
+        }
+
         if (isNewVisitor(game, player)) {
           game.visitors.push(player._id);
           game.save();
