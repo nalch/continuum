@@ -14,7 +14,7 @@ function closeStaleGames() {
   return new Promise(function(resolve, reject) {
     var gamePromises = [];
     var now = new Date();
-    var staleInterval = now.setDate(now.getDate() - 5);
+    var staleInterval = now.setDate(now.getDate() - 1);
     Game.find({updatedAt: {$lte: staleInterval}, state: {$ne: GameState.FINISHED.value}}).then(function(games) {
       database.connect();
       for (var gameIndex = 0; gameIndex < games.length; gameIndex++) {

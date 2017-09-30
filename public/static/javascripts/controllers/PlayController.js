@@ -122,7 +122,7 @@ angular.module('PlayController', []).controller(
         }
 
         // active player
-        if (vm.userId === vm.currentPlayer() && !vm.updatingView) {
+        if (vm.userId === vm.currentPlayer()) {
           return true;
         }
 

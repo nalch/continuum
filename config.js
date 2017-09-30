@@ -10,7 +10,7 @@ var config = {
   },
   stage: stage,
   tasks: {
-    gameCleanup: '0 30 4 * * *'
+    gameCleanup: '0 0 16 * * *'
   },
   testing: process.env.NODE_ENV === 'testing',
   web: {

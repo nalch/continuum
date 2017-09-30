@@ -11,7 +11,7 @@ config.web = {
 config.db = {
   host: process.env.OPENSHIFT_MONGODB_DB_HOST,
   port: process.env.OPENSHIFT_MONGODB_DB_PORT,
-  database: 'continuum',
+  database: process.env.DATABASE_NAME,
   user: process.env.OPENSHIFT_MONGODB_DB_USERNAME,
   password: process.env.OPENSHIFT_MONGODB_DB_PASSWORD
 };

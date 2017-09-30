@@ -32,5 +32,4 @@ deploy:
   app: continuum
   on:
     branch: master
-    node: '5'
     repo: nalch/continuum
