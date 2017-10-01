@@ -6,7 +6,7 @@
     "start": "node app.js",
     "test": "NODE_ENV=testing mocha",
     "lint": "eslint 'configs/**' 'middlewares/**' 'models/**' 'routes/**' 'tasks/**' 'test/**' '*.js' 'public/static/javascripts/**'",
-    "postinstall": "HOME=$OPENSHIFT_REPO_DIR bower install || node_modules/.bin/bower install && node_modules/migration/bin/migrate"
+    "postinstall": "bower install || node_modules/.bin/bower install && node_modules/migration/bin/migrate"
   },
   "main": "app.js",
   "dependencies": {
