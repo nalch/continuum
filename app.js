@@ -19,8 +19,6 @@ var database = require('./database');
 var middlewares = require('./middlewares');
 var routes = require('./routes');
 
-var gameCleanupTask = require('./tasks/gameCleanup').gameCleanupTask;
-
 database.connect();
 
 var app = express();
@@ -58,7 +56,5 @@ if (config.web.ip) {
 } else {
   server = http.createServer(app).listen(config.web.port);
 }
-
-gameCleanupTask(config.tasks.gameCleanup).start();
 
 exports.server = server;
