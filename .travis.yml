@@ -10,19 +10,15 @@ script:
 env:
   matrix:
   - STAGE=development NODE_ENV=testing
-  global:
-    secure: IyJm6xUJUU7TfQIKScYd/NhbtDuaR9R1IYlT7fD9QgN534srOH0gGF0BIVg+18TmCcln2AXzTBug1G/llJd20fAbc8dZyGg5KDwZpjWzYo6VkblZVC3RgD6INsG0VjeOhc21/SFjP39/bR0/jSbJckKt6H6Tfk9Wlv4/43tUk4oIMSEPAehpQMwVSRX0Ii34ot0Lpzs/iKPYJlAuhuKFzwQa2mnon929eqB1JR5aruE0A0yNxbEY1GwX1JLELniM2CIcCxpTRvj3+r2guc8xVI3FBi0zxbSEqP8gYCIk0bnKrJ2VSPeg6KdSn0nm5VzIbxJz1o2Pb8P0LuMDeIcNbMprVXe4iBLmqS29H1JuWMFUIK1fKeuIyL8SCGy9E03OTaXhlFak782bAVmWO3c+6zfRJFuBlUzDMdy7Dfu26K+v6WBV4TpcZ9ka4nROXPjbGmNAPccEm4d3LJmvFQ4pAhlLU5/RxKceeSuSmTyx6S1UoBf1N84nIzmD1kMJBen7CZXpOCWQdIJJNY434nXdywmxJwxXFWBuE15YZZO3JrGsb6pKaIrfvUW0I8nvTXI1DrUOH9Xd4LMkVua2tIfOXNFRLhItmq8t7pBBdJfrJi/JVrh0l80LrHlx5zeuqCq6NtNgPYiMjLJgBnAkR+/gyvSBPDw7+uLJmgez5EzdyTo=
 notifications:
   email:
     on_success: change
     on_failure: always
 deploy:
-  provider: openshift
-  user: scholze.kristian@gmail.com
-  password:
-    secure: "$OPENSHIFT_PASSWORD"
-  domain: nalch
-  app: continuum
+  provider: heroku
+  app: nalch-continuum
   on:
     branch: master
     repo: nalch/continuum
+  api_key:
+    secure: QOjHnmOO9bKaPrdwk4RryyA4N8rAPX+Fc560hpbhZCBgIUe1IaQy48Zq7dFLxHgFxHVAzijCM69d4pqGr7eGI8hgHcpdcbh6YI3e5unw3hGuumdZzASaeZncca5VkLLfFGlZn7KlkUYPgKgagnDQ2Ufe7PjywDhiL7aXIhLucXqp51cW6nuyerbSG0xNINU6RbDH5isiksBNyCXtdKF/5rFtF2NhA7dyQs5p62XFvhCgaqTY2B27YFMiHOqlPZtRaYj/4phPLA75VXuvrRSkFm4dwKqEB1VheL0zDnnpojLs9uMLz6Q5Ir1HaoqgXCmssOkmNxqKYXlApVlmg8LNGXj6BrI1QU3/kRF6YOhpIpyj1kYQo00XJBwp8ODWOCZkrFixSOOXkNVmriX+iKAQ0ZUks2JSUYdW9ka7WEhHDY4B2bk+PwCfbloc9Tuaqcq7oq2YRB/Y+v6G+oRzUyZPSZdoV4P3anTmHL8JMuUayVKoB9Yj7tq5kntCVbDi9WLIm/l3N3iKQq4LI0GTO49AJ50xBHo1v7sxFQk2a+CxVKUNg5Zk/1mrrhHh7GKtJBpBejoahvbpjZqLlzEdZtR3EaU2hG8c311luFgbHSSvBfmU+zHsbBFt9Zezrc4YQNW5KWh/qZ0GbUwgLLst18l7TXsCIUVRUJNCjNd7tNE88zo=
