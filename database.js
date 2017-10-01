@@ -20,6 +20,8 @@ exports.connect = function() {
       mongodbConnectionString += '_testdb';
     }
 
-    mongoose.connect(mongodbConnectionString);
+    mongoose.connect(mongodbConnectionString, {
+      useMongoClient: true,
+    });
   }
 };
